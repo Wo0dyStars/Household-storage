@@ -12,14 +12,10 @@
             </div>
             <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
             <h4 class="items_container__item--name"><%= Item.name %></h4>
-            <div class="items_container__item--quantity">
-                <span>Stock quantity</span>
-                <span><%= Item.quantity %></span>
-            </div>
-            <div class="items_container__item--quantity items_container__item--reorder-quantity">
-                <span>Reorder quantity</span>
-                <span><%= Item.reorder_quantity %></span>
-            </div>
+            <div class="items_container__item--quantity items_container__item--quantity-text">Stock quantity</div>
+            <div class="items_container__item--quantity items_container__item--quantity-value"><%= Item.quantity %></div>
+            <span class="items_container__item--reorder items_container__item--reorder-text">Reorder quantity</span>
+            <span class="items_container__item--reorder items_container__item--reorder-value"><%= Item.reorder_quantity %></span>
         </div>
     <% }) %>
 </div>
