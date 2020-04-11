@@ -1,7 +1,16 @@
+// **********************************
+// IMPORTS
+// **********************************
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
+// **********************************
+// SCHEMA IMPORTS
+// **********************************
+const Items = require('./models/items');
+const Shoppings = require('./models/shoppings');
 
 mongoose
 	.connect('mongodb://localhost:27017/test__1', {
@@ -19,40 +28,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-// Create Items Schema
-const ItemsSchema = new mongoose.Schema({
-	name: String,
-	image: String,
-	quantity: Number,
-	reorder_quantity: Number
-});
-
-const Items = mongoose.model('Items', ItemsSchema);
-
-const ShoppingSchema = new mongoose.Schema({
-	item: {
-		id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Items'
-		},
-		quantity: String
-	}
-});
-
-const Shoppings = mongoose.model('Shoppings', ShoppingSchema);
-
-const newShopping = {
-	item: {
-		id: '5e9194cee66abe4194299d31',
-		quantity: 3
-	}
-};
-
-// Shoppings.create(newShopping, (err, new_) => {
-// 	if (err) console.log(err);
-// 	console.log(new_);
-// });
-
 Shoppings.find({}, (err, found) => {
 	if (err) console.log(err);
 	console.log(found[0].item.id);
@@ -62,18 +37,6 @@ Shoppings.find({}, (err, found) => {
 		console.log(found_);
 	});
 });
-
-const newItem = {
-	name: 'Onion',
-	image: 'image source',
-	quantity: 5,
-	reorder_quantity: 2
-};
-
-// Items.create(newItem, (err, Item_) => {
-// 	if (err) console.log(err);
-// 	console.log(Item_);
-// });
 
 app.get('/', (req, res) => {
 	res.send('home');
