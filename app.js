@@ -7,56 +7,56 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // **********************************
-// SCHEMA IMPORTS
+// ROUTE IMPORTS
 // **********************************
-const Items = require('./models/items');
-const Shoppings = require('./models/shoppings');
+const ItemsRoutes = require('./routes/items');
+const ShoppingRoutes = require('./routes/shoppings');
+const IndexRoutes = require('./routes/index');
 
+// **********************************
+// HANDLE MONGOOSE DEPRECATION
+// **********************************
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
+// **********************************
+// MONGOOSE CONNECTION
+// **********************************
+const URL = 'mongodb://localhost:27017/test__1';
 mongoose
-	.connect('mongodb://localhost:27017/test__1', {
-		useNewUrlParser: true,
-		useCreateIndex: true,
-		useFindAndModify: false,
-		useUnifiedTopology: true
-	})
-	.then(console.log('DB Connection Successful'))
-	.catch((err) => {
-		console.error(err);
-	});
+	.connect(URL)
+	.then(() => console.log('Successful connection to the Mongo server'))
+	.catch((err) => console.log('Error caught', err.stack));
 
+// **********************************
+// APP CONFIGURATIONS
+// **********************************
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-Shoppings.find({}, (err, found) => {
-	if (err) console.log(err);
-	console.log(found[0].item.id);
+// Shoppings.find({}, (err, found) => {
+// 	if (err) console.log(err);
+// 	console.log(found[0].item.id);
 
-	Items.findById(found[0].item.id, (err, found_) => {
-		if (err) console.log(err);
-		console.log(found_);
-	});
-});
+// 	Items.findById(found[0].item.id, (err, found_) => {
+// 		if (err) console.log(err);
+// 		console.log(found_);
+// 	});
+// });
 
-app.get('/', (req, res) => {
-	res.send('home');
-});
+// **********************************
+// DEFINE ROUTES
+// **********************************
+app.use('/', IndexRoutes);
+app.use('/items', ItemsRoutes);
+app.use('/shoppings', ShoppingRoutes);
 
-app.get('/items/new', (req, res) => {
-	res.render('items/new');
-});
-
-app.post('/items/new', (req, res) => {
-	const { name, image, quantity, reorder_quantity } = req.body.items;
-	const newItems = { name, image, quantity, reorder_quantity };
-
-	Items.create(newItems, (err, newItem) => {
-		if (err) console.log(err);
-		console.log(newItem);
-		res.redirect('/');
-	});
-});
-
+// **********************************
+// CONNECTING TO THE SERVER AT PORT 3000
+// **********************************
 app.listen(3000, (err) => {
 	console.log('Server is listening to port 3000.');
 });
