@@ -1,0 +1,11 @@
+<h1>This is index page for items</h1>
+
+<h1><%= Items %></h1>
+
+<% Items.forEach((Item, idx) => { %>
+    <h4><%= idx %>. item: </h4>
+    <div><%= Item.name %></div>
+    <div><%= Item.image %></div>
+    <div><%= Item.quantity %></div>
+    <div><%= Item.reorder_quantity %></div>
+<% }) %>

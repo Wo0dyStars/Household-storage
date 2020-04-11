@@ -37,16 +37,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-// Shoppings.find({}, (err, found) => {
-// 	if (err) console.log(err);
-// 	console.log(found[0].item.id);
-
-// 	Items.findById(found[0].item.id, (err, found_) => {
-// 		if (err) console.log(err);
-// 		console.log(found_);
-// 	});
-// });
-
 // **********************************
 // DEFINE ROUTES
 // **********************************

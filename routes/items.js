@@ -10,6 +10,21 @@ const router = express.Router();
 const Items = require('../models/items');
 
 // **********************************
+// GET ROUTE FOR DISPLAYING ALL ITEMS
+// **********************************
+router.get('/', (req, res) => {
+	Items.find({}, (err, items) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render('items/index', {
+				Items: items
+			});
+		}
+	});
+});
+
+// **********************************
 // GET ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 router.get('/new', (req, res) => {
@@ -28,6 +43,13 @@ router.post('/new', (req, res) => {
 		console.log(newItem);
 		res.redirect('new');
 	});
+});
+
+// **********************************
+// GET ROUTE FOR DISPLAYING AN ITEM
+// **********************************
+router.get('/show', (req, res) => {
+	res.render('items/show');
 });
 
 // **********************************
