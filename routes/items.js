@@ -48,8 +48,21 @@ router.post('/new', (req, res) => {
 // **********************************
 // GET ROUTE FOR DISPLAYING AN ITEM
 // **********************************
-router.get('/show', (req, res) => {
-	res.render('items/show');
+router.get('/:id', (req, res) => {
+	res.render('items/show', { ItemID: req.params.id });
+});
+
+// **********************************
+// DELETE ROUTE FOR DELETING ITEMS
+// **********************************
+router.delete('/:id', (req, res) => {
+	Items.findByIdAndRemove(req.params.id, (err) => {
+		if (err) {
+			res.redirect('/items');
+		} else {
+			res.redirect('/items');
+		}
+	});
 });
 
 // **********************************

@@ -1,11 +1,25 @@
+<%- include("../partials/header"); %>
+
 <h1>This is index page for items</h1>
 
-<h1><%= Items %></h1>
-
-<% Items.forEach((Item, idx) => { %>
-    <h4><%= idx %>. item: </h4>
-    <div><%= Item.name %></div>
-    <div><%= Item.image %></div>
-    <div><%= Item.quantity %></div>
-    <div><%= Item.reorder_quantity %></div>
-<% }) %>
+<div class="items_container">
+    <% Items.forEach((Item, idx) => { %>
+        <div class="items_container__item">
+            <div class="items_container__item--top">
+                <form action="/items/<%= Item._id %>?_method=DELETE" method="POST">
+                    <button class="delete-btn">X</button>
+                </form>
+            </div>
+            <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
+            <h4 class="items_container__item--name"><%= Item.name %></h4>
+            <div class="items_container__item--quantity">
+                <span>Stock quantity</span>
+                <span><%= Item.quantity %></span>
+            </div>
+            <div class="items_container__item--quantity items_container__item--reorder-quantity">
+                <span>Reorder quantity</span>
+                <span><%= Item.reorder_quantity %></span>
+            </div>
+        </div>
+    <% }) %>
+</div>

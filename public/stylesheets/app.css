@@ -1,2 +1,86 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+
 body {
-  background-color: green; }
+  font-family: sans-serif;
+  font-weight: 300;
+  line-height: 1.6; }
+
+.items_container {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(min-content, 1fr)); }
+  .items_container__item {
+    display: grid;
+    grid-template-rows: 0.2fr max-content .5fr .5fr .8fr;
+    grid-template-columns: 1fr;
+    background-color: white;
+    margin: 2rem;
+    border-top: 3px solid #f1950a;
+    border-bottom: 3px solid #f1950a;
+    border-radius: 2.2rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4); }
+    .items_container__item--top {
+      margin: 0 90% 0 .3rem;
+      grid-row: 1 / 2;
+      padding: .6rem;
+      border-top-left-radius: 2.2rem;
+      border-top-right-radius: 2.2rem; }
+    .items_container__item--name {
+      grid-row: 5 / 6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      font-size: 1.5rem;
+      color: #366fc0;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin: .2rem;
+      border-top: 1px solid #366fc0; }
+    .items_container__item--image {
+      grid-row: 2 / 3;
+      position: relative;
+      background-color: white;
+      width: 100%;
+      filter: sepia(0.3);
+      transform: scale(0.7); }
+    .items_container__item--quantity {
+      grid-row: 3 / 4;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      text-transform: uppercase;
+      font-weight: 500;
+      width: 100%;
+      height: 100%;
+      text-align: center; }
+      .items_container__item--quantity span:nth-of-type(1) {
+        align-self: center;
+        color: #366fc0;
+        background-color: #f1950a; }
+      .items_container__item--quantity span:nth-of-type(2) {
+        align-self: center;
+        color: #f1950a;
+        background-color: #366fc0; }
+    .items_container__item--reorder-quantity {
+      grid-row: 4 / 5; }
+
+.delete-btn {
+  padding: .5rem;
+  text-transform: uppercase;
+  background-color: rgba(255, 0, 0, 0.9);
+  text-decoration: none;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: .5rem; }
