@@ -1,7 +1,9 @@
 @keyframes FadeInFromBottom {
   0% {
+    transform: translateY(-100%);
     opacity: 0; }
   100% {
+    transform: translateY(0);
     opacity: 1; } }
 
 @keyframes FadeInFromTop {
@@ -10,6 +12,31 @@
     opacity: 0.5; }
   100% {
     transform: translateY(0) scale(1);
+    opacity: 1; } }
+
+@keyframes FadeInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.3; }
+  25% {
+    transform: translateX(50%);
+    opacity: 0.4; }
+  50% {
+    transform: translateX(-50%);
+    opacity: 0.5; }
+  75% {
+    transform: translateX(20%);
+    opacity: 0.8; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
+@keyframes FadeInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0.5; }
+  100% {
+    transform: translateX(0);
     opacity: 1; } }
 
 *,
@@ -72,8 +99,7 @@ body {
         outline: none;
         text-decoration: none;
         color: #fff;
-        cursor: pointer;
-        transition: all .2s ease; }
+        cursor: pointer; }
         .navigation ul li a:link:hover,
         .navigation ul li a:visited:hover {
           color: orange;
@@ -179,11 +205,12 @@ body {
 .newitem {
   background-color: rgba(247, 244, 244, 0.4);
   border-radius: 1rem;
-  width: 40%;
-  margin: 15rem auto;
+  width: 50%;
+  margin: 15rem auto auto auto;
   padding: 3rem;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0.1rem 0.4rem 0.1rem rgba(0, 0, 0, 0.3); }
+  box-shadow: 0.1rem 0.4rem 0.1rem rgba(0, 0, 0, 0.3);
+  animation: FadeInFromBottom .4s ease-out; }
   .newitem ul {
     list-style: none;
     color: rgba(255, 0, 0, 0.8);
@@ -212,7 +239,6 @@ body {
     border-bottom: 3px solid transparent;
     width: 100%;
     display: block;
-    transition: all .3s;
     border-bottom: 3px solid rgba(95, 97, 96, 0.1); }
     .newitem__form-input:focus {
       outline: none;
@@ -233,7 +259,7 @@ body {
     margin-top: .7rem;
     color: rgba(3, 116, 50, 0.5);
     display: block;
-    transition: all .3s; }
+    transition: opacity .9s; }
   .newitem [type="file"] {
     height: 0;
     overflow: hidden;
@@ -254,8 +280,7 @@ body {
     vertical-align: middle; }
     .newitem [type="file"] + label.upload-image {
       background-color: rgba(23, 24, 23, 0.3);
-      box-shadow: 0 6px rgba(23, 24, 23, 0.6);
-      transition: none; }
+      box-shadow: 0 6px rgba(23, 24, 23, 0.6); }
       .newitem [type="file"] + label.upload-image:hover {
         box-shadow: 0 4px rgba(23, 24, 23, 0.6);
         top: 2px; }
@@ -269,7 +294,6 @@ body {
     color: #fff;
     text-transform: uppercase;
     border-radius: .2rem;
-    transition: all .3s ease;
     margin-top: 2rem; }
     .newitem__form-group button:hover {
       background-color: #e20909; }
