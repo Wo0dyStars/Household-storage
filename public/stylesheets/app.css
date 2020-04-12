@@ -182,8 +182,8 @@ body {
   width: 40%;
   margin: 15rem auto;
   padding: 3rem;
-  border-right: 1px solid rgba(3, 116, 50, 0.3);
-  border-left: 1px solid rgba(3, 116, 50, 0.3); }
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0.1rem 0.4rem 0.1rem rgba(0, 0, 0, 0.3); }
   .newitem ul {
     list-style: none;
     color: rgba(255, 0, 0, 0.8);
@@ -198,8 +198,8 @@ body {
     font-weight: 300;
     letter-spacing: .5rem;
     color: rgba(95, 97, 96, 0.5); }
-  .newitem__form-group:not(:last-child) {
-    margin-bottom: 2rem; }
+  .newitem__form-group {
+    margin-bottom: 1rem; }
   .newitem__form-input {
     font-family: inherit;
     color: inherit;
@@ -269,7 +269,7 @@ body {
     color: #fff;
     text-transform: uppercase;
     border-radius: .2rem;
-    transition: all .3s ease; }
+    transition: all .3s ease;
+    margin-top: 2rem; }
     .newitem__form-group button:hover {
-      background-color: #e20909;
-      padding: 1.9rem; }
+      background-color: #e20909; }

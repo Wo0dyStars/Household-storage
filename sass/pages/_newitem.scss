@@ -4,8 +4,8 @@
 	width: 40%;
 	margin: 15rem auto;
 	padding: 3rem;
-	border-right: 1px solid rgba(3, 116, 50, 0.3);
-	border-left: 1px solid rgba(3, 116, 50, 0.3);
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	box-shadow: .1rem .4rem .1rem rgba(0, 0, 0, 0.3);
 
 	ul {
 		list-style: none;
@@ -27,8 +27,8 @@
 		color: rgba(95, 97, 96, 0.5);
 	}
 
-	&__form-group:not(:last-child) {
-		margin-bottom: 2rem;
+	&__form-group {
+		margin-bottom: 1rem;
 	}
 
 	&__form-input {
@@ -123,10 +123,10 @@
 		text-transform: uppercase;
 		border-radius: .2rem;
 		transition: all .3s ease;
+		margin-top: 2rem;
 
 		&:hover {
 			background-color: rgba(226, 9, 9, 1);
-			padding: 1.9rem;
 		}
 	}
 }
