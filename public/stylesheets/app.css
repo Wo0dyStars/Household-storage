@@ -2,6 +2,9 @@
   0% {
     transform: translateY(-100%);
     opacity: 0; }
+  50% {
+    transform: translateY(10%);
+    opacity: 0.5; }
   100% {
     transform: translateY(0);
     opacity: 1; } }
@@ -48,7 +51,8 @@
 
 html {
   box-sizing: border-box;
-  font-size: 62.5%; }
+  font-size: 62.5%;
+  margin-left: calc(100vw - 100%); }
 
 body {
   font-family: sans-serif;
@@ -210,7 +214,7 @@ body {
   padding: 3rem;
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0.1rem 0.4rem 0.1rem rgba(0, 0, 0, 0.3);
-  animation: FadeInFromBottom .4s ease-out; }
+  animation: FadeInFromBottom 1s ease-out; }
   .newitem ul {
     list-style: none;
     color: rgba(255, 0, 0, 0.8);
