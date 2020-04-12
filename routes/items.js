@@ -5,7 +5,12 @@ const express = require('express');
 const router = express.Router();
 const Multer = require('multer');
 const path = require('path');
-const { check, validationResult, matchedData, body } = require('express-validator');
+const { validationResult } = require('express-validator');
+
+// **********************************
+// MIDDLEWARE IMPORTS
+// **********************************
+const Validators = require('../middleware/validators');
 
 // **********************************
 // SET UP MULTER TO RECEIVE IMAGE FILES
@@ -18,16 +23,7 @@ const storage = Multer.diskStorage({
 	}
 });
 
-const Upload = Multer({
-	storage
-	//,
-	// fileFilter: (req, file, cb) => {
-	// 	if (!file.originalname.match(/\.(jpg|JPG|jpeg|jfif|JFIF|JPEG|png|PNG|gif|GIF)$/)) {
-	// 		cb(new Error('Only image files are allowed!'), false);
-	// 	}
-	// 	cb(null, true);
-	// }
-});
+const Upload = Multer({ storage });
 
 // **********************************
 // SCHEMA IMPORTS
@@ -53,60 +49,34 @@ router.get('/', (req, res) => {
 // GET ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 router.get('/new', (req, res) => {
-	res.render('items/new', { data: {}, filedata: {}, errors: {} });
+	res.render('items/new', { data: {}, errors: {} });
 });
 
 // **********************************
 // POST ROUTE FOR HANDLING NEW ITEMS
 // **********************************
-router.post(
-	'/new',
-	Upload.single('image'),
-	[
-		check('items[name]')
-			.isLength({ min: 5, max: 20 })
-			.withMessage('Name must be between 5 and 20 characters')
-			.trim(),
-		body('items[quantity]').custom((value) => {
-			if (value < 1) {
-				return Promise.reject('Quantity must be at least 1');
+
+router.post('/new', Upload.single('image'), [ Validators ], (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		res.render('items/new', {
+			data: req.body,
+			errors: errors.mapped()
+		});
+	} else {
+		const { name, quantity, reorder_quantity } = req.body.items;
+		const newItems = { name, quantity, reorder_quantity, image: req.file.filename };
+
+		Items.create(newItems, (err, newItem) => {
+			if (err) {
+				console.log(err);
 			} else {
-				return Promise.resolve();
+				req.flash('success', 'You just successfully added a new item!');
+				res.redirect('/items/new');
 			}
-		}),
-		body('items[reorder_quantity]').custom((value) => {
-			if (value < 1) {
-				return Promise.reject('Reorder quantity must be at least 1');
-			} else {
-				return Promise.resolve();
-			}
-		})
-	],
-	(req, res, next) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty() || !req.file.originalname.match(/\.(jpg|JPG|jpeg|jfif|JFIF|JPEG|png|PNG|gif|GIF)$/)) {
-			res.render('items/new', {
-				data: req.body,
-				filedata: { msg: 'Files must be either .JPG, .GIF, .PNG or .JFIF' },
-				errors: errors.mapped()
-			});
-		} else {
-			// const data = matchedData(req);
-			// console.log('Sanitized: ', data);
-
-			const { name, quantity, reorder_quantity } = req.body.items;
-			const newItems = { name, quantity, reorder_quantity, image: req.file.filename };
-
-			Items.create(newItems, (err, newItem) => {
-				if (err) console.log(err);
-				console.log(newItem);
-			});
-
-			req.flash('success', 'You just successfully added a new item!');
-			res.redirect('/items/new');
-		}
+		});
 	}
-);
+});
 
 // **********************************
 // GET ROUTE FOR DISPLAYING AN ITEM

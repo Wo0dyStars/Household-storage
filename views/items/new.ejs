@@ -13,7 +13,6 @@
                 <% Object.values(errors).forEach(error => { %>
                 <li><%= error.msg %></li>
                 <% }) %>
-                <li><%= filedata.msg %></li>
             </ul>
         <% } %>
         <div class="newitem__form-group">
@@ -32,7 +31,7 @@
         </div>
 
         <div class="newitem__form-group">
-            <input type="file" id="file" name="image">
+            <input type="file" id="file" name="image" accept="image/*">
             <label for="file" class="upload-image">Browse image</label>
         </div>
         
