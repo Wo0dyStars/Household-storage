@@ -1,0 +1,132 @@
+.newitem {
+	background-color: rgba(247, 244, 244, 0.4);
+	border-radius: 1rem;
+	width: 40%;
+	margin: 15rem auto;
+	padding: 3rem;
+	border-right: 1px solid rgba(3, 116, 50, 0.3);
+	border-left: 1px solid rgba(3, 116, 50, 0.3);
+
+	ul {
+		list-style: none;
+		color: rgba(255, 0, 0, .8);
+		margin: 1rem auto;
+	}
+
+	.error_header {
+		color: black;
+		text-transform: uppercase;
+	}
+
+	&__header {
+		text-transform: uppercase;
+		margin-bottom: 1.5rem;
+		text-align: center;
+		font-weight: 300;
+		letter-spacing: .5rem;
+		color: rgba(95, 97, 96, 0.5);
+	}
+
+	&__form-group:not(:last-child) {
+		margin-bottom: 2rem;
+	}
+
+	&__form-input {
+		// Input elements do not inherit colors and fonts
+		font-family: inherit;
+		color: inherit;
+
+		font-size: 1.5rem;
+		padding: 1.5rem 2rem;
+		padding-top: 1.1rem;
+		border-radius: .5rem;
+		background-color: rgba(255, 255, 255, .5);
+		border: 1px solid rgba(31, 29, 29, 0.1);
+		border-bottom: 3px solid transparent;
+		width: 100%;
+		display: block;
+		transition: all .3s;
+		border-bottom: 3px solid rgba(95, 97, 96, 0.1);
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 1rem 2rem rgba(0, 0, 0, .1);
+			border-bottom: 3px solid rgba(3, 116, 50, 0.5);
+		}
+
+		&:focus:invalid {
+			border-bottom: 3px solid rgba(240, 8, 8, 0.3);
+		}
+
+		&::-webkit-input-placeholder {
+			color: rgb(122, 121, 121);
+		}
+	}
+
+	&__form-input:placeholder-shown + &__form-label {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-4rem);
+	}
+
+	&__form-label {
+		font-size: 1.2rem;
+		font-weight: 700;
+		margin-left: 2rem;
+		margin-top: .7rem;
+		color: rgba(3, 116, 50, 0.5);
+		display: block;
+		transition: all .3s;
+	}
+
+	[type="file"] {
+		height: 0;
+		overflow: hidden;
+		width: 0;
+	}
+
+	[type="file"] + label {
+		background-color: rgba(23, 24, 23, 0.3);
+		border: none;
+		border-radius: 5px;
+		color: #fff;
+		cursor: pointer;
+		font-size: inherit;
+		font-weight: 600;
+		width: 40%;
+		outline: none;
+		padding: 1rem 5rem;
+		position: relative;
+		transition: all 0.3s;
+		vertical-align: middle;
+
+		&.upload-image {
+			background-color: rgba(23, 24, 23, 0.3);
+			box-shadow: 0 6px rgba(23, 24, 23, 0.6);
+			transition: none;
+
+			&:hover {
+				box-shadow: 0 4px rgba(23, 24, 23, 0.6);
+				top: 2px;
+			}
+		}
+	}
+
+	&__form-group button {
+		width: 100%;
+		outline: none;
+		padding: 1.8rem;
+		cursor: pointer;
+		border: none;
+		background-color: rgba(226, 9, 9, 0.8);
+		color: #fff;
+		text-transform: uppercase;
+		border-radius: .2rem;
+		transition: all .3s ease;
+
+		&:hover {
+			background-color: rgba(226, 9, 9, 1);
+			padding: 1.9rem;
+		}
+	}
+}

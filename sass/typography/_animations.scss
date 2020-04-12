@@ -7,3 +7,15 @@
 		opacity: 1;
 	}
 }
+
+@keyframes FadeInFromTop {
+	0% {
+		transform: translateY(-.5rem) scale(1.1);
+		opacity: 0.5;
+	}
+
+	100% {
+		transform: translateY(0) scale(1);
+		opacity: 1;
+	}
+}
