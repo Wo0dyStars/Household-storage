@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
 
+const Retrieve = require('./queries/retrieve');
+
 // **********************************
 // ROUTE IMPORTS
 // **********************************

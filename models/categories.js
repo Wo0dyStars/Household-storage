@@ -6,16 +6,17 @@ const mongoose = require('mongoose');
 // **********************************
 // DECLARATION OF SCHEMA
 // **********************************
-const ItemsSchema = new mongoose.Schema({
+const CategoriesSchema = new mongoose.Schema({
 	name: String,
-	image: String,
-	quantity: Number,
-	reorder_quantity: Number,
-	created_at: { type: Date },
-	updated_at: { type: Date, default: Date.now }
+	items: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Items'
+		}
+	]
 });
 
 // **********************************
 // EXPORTING SCHEMA
 // **********************************
-module.exports = mongoose.model('Items', ItemsSchema);
+module.exports = mongoose.model('Categories', CategoriesSchema);
