@@ -31,6 +31,14 @@
         </div>
 
         <div class="newitem__form-group">
+            <select>
+                <% categories.forEach(category => { %>
+                    <option value="<%= category %>"><%= category %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="newitem__form-group">
             <input type="file" id="file" name="image" accept="image/*">
             <label for="file" class="upload-image">Browse image</label>
         </div>

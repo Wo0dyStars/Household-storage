@@ -2,6 +2,7 @@
 // IMPORTS
 // **********************************
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Multer = require('multer');
 const path = require('path');
@@ -11,6 +12,7 @@ const { validationResult } = require('express-validator');
 // QUERY IMPORTS
 // **********************************
 const Create = require('../queries/create');
+const { getCategoryAll } = require('../queries/categories');
 
 // **********************************
 // MIDDLEWARE IMPORTS
@@ -53,8 +55,13 @@ router.get('/', (req, res) => {
 // **********************************
 // GET ROUTE FOR HANDLING NEW ITEMS
 // **********************************
-router.get('/new', (req, res) => {
-	res.render('items/new', { data: {}, errors: {} });
+router.get('/new', async (req, res) => {
+	const Categories = await getCategoryAll();
+	let Names = [];
+	Categories.forEach((category) => {
+		Names.push(category.name);
+	});
+	res.render('items/new', { data: {}, errors: {}, categories: Names });
 });
 
 // **********************************

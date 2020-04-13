@@ -16,7 +16,7 @@ const getCategoryByID = function(category_id) {
 const getCategoryAll = function() {
 	return Categories.find({}, (err, categories) => {
 		if (err) console.log(err);
-		console.log('\n>> Categories:\n', categories);
+		//console.log('\n>> Categories:\n', categories);
 	});
 };
 
@@ -49,3 +49,12 @@ const run = async function() {
 // RUN THIS STATEMENT ONLY WITH CARE
 // ****************************************************
 // run();
+
+const Category = {
+	getCategoryByID,
+	getCategoryAll,
+	DeleteCategoryAll,
+	DeleteCategoryByID
+};
+
+module.exports = Category;
