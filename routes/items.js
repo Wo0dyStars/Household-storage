@@ -8,6 +8,11 @@ const path = require('path');
 const { validationResult } = require('express-validator');
 
 // **********************************
+// QUERY IMPORTS
+// **********************************
+const Create = require('../queries/create');
+
+// **********************************
 // MIDDLEWARE IMPORTS
 // **********************************
 const Validators = require('../middleware/validators');
@@ -56,7 +61,7 @@ router.get('/new', (req, res) => {
 // POST ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 
-router.post('/new', Upload.single('image'), [ Validators ], (req, res, next) => {
+router.post('/new', Upload.single('image'), [ Validators ], async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		res.render('items/new', {
@@ -67,14 +72,10 @@ router.post('/new', Upload.single('image'), [ Validators ], (req, res, next) => 
 		const { name, quantity, reorder_quantity } = req.body.items;
 		const newItems = { name, quantity, reorder_quantity, image: req.file.filename };
 
-		Items.create(newItems, (err, newItem) => {
-			if (err) {
-				console.log(err);
-			} else {
-				req.flash('success', 'You just successfully added a new item!');
-				res.redirect('/items/new');
-			}
-		});
+		let CategoryID = await Create.FindCategoryIDByName('Vegetables and Fruits');
+		Create.createItem(CategoryID, newItems);
+		req.flash('success', 'You just successfully added a new item!');
+		res.redirect('/items/new');
 	}
 });
 
