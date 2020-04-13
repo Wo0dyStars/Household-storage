@@ -11,6 +11,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 
 const Retrieve = require('./queries/retrieve');
+const Create = require('./queries/create');
 
 // **********************************
 // ROUTE IMPORTS

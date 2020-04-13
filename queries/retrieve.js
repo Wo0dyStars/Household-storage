@@ -7,7 +7,7 @@ const Categories = require('../models/categories');
 // ****************************************************
 // RETRIEVE CATEGORY BY CATEGORY ID WITH POPULATE
 // ****************************************************
-const getCategory = function(category_id) {
+const getCategoryByID = function(category_id) {
 	return Categories.findById(category_id).populate('items');
 };
 
@@ -15,12 +15,32 @@ const getCategory = function(category_id) {
 // RETRIEVE ALL CATEGORIES
 // ****************************************************
 const getCategoryAll = function() {
-	return Categories.find({});
+	return Categories.find({}, (err, categories) => {
+		if (err) console.log(err);
+		console.log('\n>> Categories:\n', categories);
+	});
+};
+
+// ****************************************************
+// DELETE ALL CATEGORIES
+// ****************************************************
+const DeleteCategoryAll = function() {
+	return Categories.deleteMany({}, (err) => {
+		if (err) console.log(err);
+		console.log('\n>> Categories deleted.\n');
+	});
+};
+
+const DeleteCategoryByID = function(CategoryID) {
+	return Categories.deleteOne({ _id: CategoryID }, (err) => {
+		if (err) console.log(err);
+		console.log('\n>> Category deleted.\n');
+	});
 };
 
 const run = async function() {
+	//var DeletedCategories = await DeleteCategoryAll();
 	var categories = await getCategoryAll();
-	console.log('\n>> categories:\n', categories);
-
-	//console.log(await getCategory('5e9371a7235c002dacfb22ae'));
 };
+
+// run();
