@@ -12,6 +12,7 @@ const { validationResult } = require('express-validator');
 // QUERY IMPORTS
 // **********************************
 const Create = require('../queries/create');
+const ItemQueries = require('../queries/items');
 const { getCategoryAll } = require('../queries/categories');
 
 // **********************************
@@ -96,14 +97,9 @@ router.get('/:id', (req, res) => {
 // **********************************
 // DELETE ROUTE FOR DELETING ITEMS
 // **********************************
-router.delete('/:id', (req, res) => {
-	Items.findByIdAndRemove(req.params.id, (err) => {
-		if (err) {
-			res.redirect('/items');
-		} else {
-			res.redirect('/items');
-		}
-	});
+router.delete('/:id', async (req, res) => {
+	await ItemQueries.DeleteItemByID(req.params.id);
+	res.redirect('/items');
 });
 
 // **********************************

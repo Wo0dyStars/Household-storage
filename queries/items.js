@@ -65,3 +65,12 @@ const run = async function() {
 // RUN THIS STATEMENT ONLY WITH CARE
 // ****************************************************
 // run();
+
+const Item = {
+	getItemByID,
+	getItemAll,
+	DeleteItemAll,
+	DeleteItemByID
+};
+
+module.exports = Item;
