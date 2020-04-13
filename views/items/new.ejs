@@ -31,7 +31,8 @@
         </div>
 
         <div class="newitem__form-group">
-            <select>
+            <label for="items[category]" class="newitem__selectlabel">Please select a category from the list</label>
+            <select class="newitem__select" name="items[category]">
                 <% categories.forEach(category => { %>
                     <option value="<%= category %>"><%= category %></option>
                 <% }) %>

@@ -68,7 +68,7 @@ router.get('/new', async (req, res) => {
 // POST ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 
-router.post('/new', Upload.single('image'), [ Validators ], async (req, res, next) => {
+router.post('/new', Upload.single('image'), [ Validators ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		res.render('items/new', {
@@ -76,10 +76,10 @@ router.post('/new', Upload.single('image'), [ Validators ], async (req, res, nex
 			errors: errors.mapped()
 		});
 	} else {
-		const { name, quantity, reorder_quantity } = req.body.items;
-		const newItems = { name, quantity, reorder_quantity, image: req.file.filename };
+		const { name, quantity, reorder_quantity, category } = req.body.items;
+		const newItems = { name, quantity, reorder_quantity, image: req.file.filename, category };
 
-		let CategoryID = await Create.FindCategoryIDByName('Vegetables and Fruits');
+		let CategoryID = await Create.FindCategoryIDByName(category);
 		Create.createItem(CategoryID, newItems);
 		req.flash('success', 'You just successfully added a new item!');
 		res.redirect('/items/new');

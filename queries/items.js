@@ -55,7 +55,7 @@ const DeleteItemByID = function(ItemID) {
 };
 
 const run = async function() {
-	var DeletedItemsAll = await DeleteItemAll();
+	// var DeletedItemsAll = await DeleteItemAll();
 	//var DeletedItem = await DeleteItemByID('5e9476b65369324198bdbe68');
 	//var itemID = await getItemByID('5e9464116f7ba9202445e2e1');
 	var items = await getItemAll();
