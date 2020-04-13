@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
 
-const Retrieve = require('./queries/retrieve');
+const Items = require('./queries/items');
+const Categories = require('./queries/categories');
 const Create = require('./queries/create');
 
 // **********************************

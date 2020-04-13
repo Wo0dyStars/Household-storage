@@ -1,7 +1,6 @@
 // ****************************************************
 // SCHEMA IMPORTS
 // ****************************************************
-const Items = require('../models/items');
 const Categories = require('../models/categories');
 
 // ****************************************************
@@ -31,6 +30,9 @@ const DeleteCategoryAll = function() {
 	});
 };
 
+// ****************************************************
+// DELETE CATEGORY BY CATEGORY ID
+// ****************************************************
 const DeleteCategoryByID = function(CategoryID) {
 	return Categories.deleteOne({ _id: CategoryID }, (err) => {
 		if (err) console.log(err);
@@ -43,4 +45,7 @@ const run = async function() {
 	var categories = await getCategoryAll();
 };
 
-// run();
+// ****************************************************
+// RUN THIS STATEMENT ONLY WITH CARE
+// ****************************************************
+run();

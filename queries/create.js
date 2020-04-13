@@ -102,11 +102,14 @@ const FindCategoryIDByName = function(CategoryName) {
 // RUNNING CODE FOR STORING SAMPLE DATA
 // ****************************************************
 const run = async function() {
-	//GenerateCategories();
+	GenerateCategories();
 	SampleItems.forEach(async (SampleItem) => {
 		let CategoryID = await FindCategoryIDByName(SampleItem.Category);
 		await createItem(CategoryID, SampleItem.Item);
 	});
 };
 
+// ****************************************************
+// RUN THIS STATEMENT ONLY WITH CARE
+// ****************************************************
 // run();
