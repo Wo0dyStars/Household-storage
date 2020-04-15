@@ -11,6 +11,7 @@ const ItemsSchema = new mongoose.Schema({
 	image: String,
 	quantity: Number,
 	reorder_quantity: Number,
+	category_name: String,
 	created_at: { type: Date },
 	updated_at: { type: Date, default: Date.now }
 });

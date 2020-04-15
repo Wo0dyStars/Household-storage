@@ -7,7 +7,8 @@ const Categories = require('../models/categories');
 // ****************************************************
 // CREATE A NEW ITEM AND UPDATE CORRESPONDING CATEGORY
 // ****************************************************
-const createItem = function(category_id, item) {
+const createItem = function(category_id, category_name, item) {
+	item['category_name'] = category_name;
 	return Items.create(item).then((new_item) => {
 		console.log('\n>> Created item:\n', new_item);
 		console.log('\n>> Category ID:\n', category_id);
@@ -105,7 +106,7 @@ const run = async function() {
 	GenerateCategories();
 	SampleItems.forEach(async (SampleItem) => {
 		let CategoryID = await FindCategoryIDByName(SampleItem.Category);
-		await createItem(CategoryID, SampleItem.Item);
+		await createItem(CategoryID, SampleItem.Category, SampleItem.Item);
 	});
 };
 

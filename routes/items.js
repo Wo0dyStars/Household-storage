@@ -81,7 +81,7 @@ router.post('/new', Upload.single('image'), [ Validators ], async (req, res) => 
 		const newItems = { name, quantity, reorder_quantity, image: req.file.filename, category };
 
 		let CategoryID = await Create.FindCategoryIDByName(category);
-		Create.createItem(CategoryID, newItems);
+		Create.createItem(CategoryID, category, newItems);
 		req.flash('success', 'You just successfully added a new item!');
 		res.redirect('/items/new');
 	}

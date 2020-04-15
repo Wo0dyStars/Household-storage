@@ -41,7 +41,7 @@ const DeleteCategoryByID = function(CategoryID) {
 };
 
 const run = async function() {
-	// var DeletedCategories = await DeleteCategoryAll();
+	var DeletedCategories = await DeleteCategoryAll();
 	var categories = await getCategoryAll();
 };
 
