@@ -15,7 +15,11 @@ const UsersSchema = new mongoose.Schema({
 	country: String,
 	city: String,
 	phone: String,
-	team_name: String,
+	team_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Teams',
+		default: null
+	},
 	joined_at: { type: Date },
 	updated_at: { type: Date, default: Date.now }
 });

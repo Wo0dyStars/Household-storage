@@ -6,6 +6,7 @@ const Categories = require('../models/categories');
 const Users = require('../models/users');
 const Teams = require('../models/teams');
 
+const mongoose = require('mongoose');
 // ****************************************************
 // CREATE A NEW ITEM AND UPDATE CORRESPONDING CATEGORY
 // ****************************************************
@@ -24,35 +25,90 @@ const createItem = function(category_id, category_name, item) {
 };
 
 // ****************************************************
-// CREATE A NEW USER AND UPDATE CORRESPONDING TEAM
+// CREATE A NEW USER
 // ****************************************************
-const createUser = function(user, team_name = 'undefined', team_id = 'undefined') {
+const createUser = function(user) {
 	return Users.create(user).then((new_user) => {
 		console.log('\n>> Created user:\n', new_user);
-
-		if (team_id !== 'undefined') {
-			console.log('\n>> Team ID:\n', team_id);
-			user['team_name'] = team_name;
-			return Teams.findByIdAndUpdate(
-				team_id,
-				{ $push: { users: new_user._id } },
-				{ new: true, useFindAndModify: false }
-			);
-		}
 	});
 };
 
 // ****************************************************
 // CREATE A NEW TEAM FOR A SPECIFIC USER
 // ****************************************************
-const createTeam = function(user_id, team_name) {
+const createTeam = function(team_name, user_id) {
 	const team = {
 		name: team_name,
 		users: [ user_id ],
 		created_at: Date.now()
 	};
 	return Teams.create(team).then((new_team) => {
-		console.log('\n>> Created team:\n', new_team);
+		console.log(user_id, '\nhas just created the team:\n', new_team);
+
+		return Users.findByIdAndUpdate(user_id, { team_id: new_team._id }).then((err, updated_user) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('User ID ', user_id, ' has been updated with Team ID ', new_team._id);
+			}
+		});
+	});
+};
+
+const DeleteUsers = async function() {
+	await Users.find({}, (err, users) => {
+		users.forEach((user) => {
+			DeleteUserByID(user._id);
+		});
+	});
+};
+
+const DeleteUserByID = function(UserID) {
+	return Users.deleteOne({ _id: UserID }, (err) => {
+		if (err) console.log(err);
+		console.log('\n>> User deleted.\n');
+
+		// Delete User ID from corresponding team
+		Teams.updateOne({ users: UserID }, { $pull: { users: UserID } }, (err) => {
+			if (err) console.log(err);
+		});
+	});
+};
+
+const DeleteTeams = async function() {
+	await Teams.find({}, (err, teams) => {
+		if (err) console.log(err);
+		teams.forEach((team) => {
+			DeleteTeamByID(team._id);
+		});
+	});
+};
+
+const DeleteTeamByID = function(TeamID) {
+	return Teams.deleteOne({ _id: TeamID }, (err, team) => {
+		if (err) console.log(err);
+		console.log('\n>> Team deleted.\n');
+
+		// Delete Team ID from corresponding users
+		team.users.forEach((UserID) => {
+			Users.findByIdAndUpdate(UserID, { $pull: { team_id: null } }, (err) => {
+				if (err) console.log(err);
+			});
+		});
+	});
+};
+
+const printTeams = function() {
+	return Teams.find({}, (err, teams) => {
+		if (err) console.log(err);
+		console.log('\n>> Teams:\n', teams);
+	});
+};
+
+const printUsers = function() {
+	return Users.find({}, (err, users) => {
+		if (err) console.log(err);
+		console.log('\n>> Users:\n', users);
 	});
 };
 
@@ -169,7 +225,14 @@ const run = async function() {
 	// SampleUsers.forEach(async (SampleUser) => {
 	// 	await createUser(SampleUser);
 	// });
-	await createTeam('5e97f6b714a80831a0e943c1', 'Dream couple');
+	// await createTeam('Dream couple', '5e97f6b714a80831a0e943c1');
+	//console.log(await Users.findByIdAndUpdate('5e97f6b714a80831a0e943c1', { team_id: 'potato' }));
+
+	// await DeleteTeams();
+	await printTeams();
+	// await printUsers();
+	// await DeleteUsers();
+	// await createTeam('Newest team', '5e98c51d8987ca045c9637c1');
 };
 
 // ****************************************************
