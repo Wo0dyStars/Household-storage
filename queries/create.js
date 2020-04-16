@@ -4,6 +4,7 @@
 const Items = require('../models/items');
 const Categories = require('../models/categories');
 const Users = require('../models/users');
+const Teams = require('../models/teams');
 
 // ****************************************************
 // CREATE A NEW ITEM AND UPDATE CORRESPONDING CATEGORY
@@ -38,6 +39,20 @@ const createUser = function(user, team_name = 'undefined', team_id = 'undefined'
 				{ new: true, useFindAndModify: false }
 			);
 		}
+	});
+};
+
+// ****************************************************
+// CREATE A NEW TEAM FOR A SPECIFIC USER
+// ****************************************************
+const createTeam = function(user_id, team_name) {
+	const team = {
+		name: team_name,
+		users: [ user_id ],
+		created_at: Date.now()
+	};
+	return Teams.create(team).then((new_team) => {
+		console.log('\n>> Created team:\n', new_team);
 	});
 };
 
@@ -151,9 +166,10 @@ const run = async function() {
 	// 	await createItem(CategoryID, SampleItem.Category, SampleItem.Item);
 	// });
 
-	SampleUsers.forEach(async (SampleUser) => {
-		await createUser(SampleUser);
-	});
+	// SampleUsers.forEach(async (SampleUser) => {
+	// 	await createUser(SampleUser);
+	// });
+	await createTeam('5e97f6b714a80831a0e943c1', 'Dream couple');
 };
 
 // ****************************************************
