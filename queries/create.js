@@ -55,6 +55,25 @@ const createTeam = function(team_name, user_id) {
 	});
 };
 
+const AddUserToTeam = function(team_id, user_id) {
+	return Teams.findByIdAndUpdate(
+		team_id,
+		{ $push: { users: user_id } },
+		{ new: true, useFindAndModify: false }
+	).then((err, updatedTeam) => {
+		if (err) console.log(err);
+		console.log('Added user ID ', user_id, ' to team ', updatedTeam);
+
+		return Users.findByIdAndUpdate(user_id, { team_id: team_id }).then((err, updated_user) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('User ID ', user_id, ' has been updated to ', updated_user);
+			}
+		});
+	});
+};
+
 const DeleteUsers = async function() {
 	await Users.find({}, (err, users) => {
 		users.forEach((user) => {
@@ -69,7 +88,7 @@ const DeleteUserByID = function(UserID) {
 		console.log('\n>> User deleted.\n');
 
 		// Delete User ID from corresponding team
-		Teams.updateOne({ users: UserID }, { $pull: { users: UserID } }, (err) => {
+		Teams.updateMany({ users: UserID }, { $pull: { users: UserID } }, (err) => {
 			if (err) console.log(err);
 		});
 	});
@@ -90,11 +109,13 @@ const DeleteTeamByID = function(TeamID) {
 		console.log('\n>> Team deleted.\n');
 
 		// Delete Team ID from corresponding users
-		team.users.forEach((UserID) => {
-			Users.findByIdAndUpdate(UserID, { $pull: { team_id: null } }, (err) => {
-				if (err) console.log(err);
+		if (team.users) {
+			team.users.forEach((UserID) => {
+				Users.findByIdAndUpdate(UserID, { $pull: { team_id: null } }, (err) => {
+					if (err) console.log(err);
+				});
 			});
-		});
+		}
 	});
 };
 
@@ -221,18 +242,17 @@ const run = async function() {
 	// 	let CategoryID = await FindCategoryIDByName(SampleItem.Category);
 	// 	await createItem(CategoryID, SampleItem.Category, SampleItem.Item);
 	// });
-
 	// SampleUsers.forEach(async (SampleUser) => {
 	// 	await createUser(SampleUser);
 	// });
-	// await createTeam('Dream couple', '5e97f6b714a80831a0e943c1');
+	// await createTeam('Dream couple', '5e99468dc876782d5c9d3f99');
 	//console.log(await Users.findByIdAndUpdate('5e97f6b714a80831a0e943c1', { team_id: 'potato' }));
-
+	// await AddUserToTeam('5e99469f3ded2519c475652b', '5e99468dc876782d5c9d3f98');
 	// await DeleteTeams();
-	await printTeams();
-	// await printUsers();
+	// await printTeams();
+	await printUsers();
 	// await DeleteUsers();
-	// await createTeam('Newest team', '5e98c51d8987ca045c9637c1');
+	// await createTeam('Newest team', '5e9940840d935436d4d2bc8a');
 };
 
 // ****************************************************
