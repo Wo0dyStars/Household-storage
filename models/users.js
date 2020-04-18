@@ -29,5 +29,5 @@ const UsersSchema = new mongoose.Schema({
 // **********************************
 // EXPORTING SCHEMA
 // **********************************
-UsersSchema.plugin(passportLocalMongoose);
+UsersSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 module.exports = mongoose.model('Users', UsersSchema);
