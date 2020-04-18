@@ -92,6 +92,7 @@ const printTeams = function() {
 const run = async function() {
 	// await DeleteTeams();
 	await printTeams();
+	//await AddUserToTeam('5e99469f3ded2519c475652b', '5e9b182dd94263395ca0a91d');
 };
 
 // ****************************************************

@@ -15,8 +15,6 @@ const UsersSchema = new mongoose.Schema({
 	email: String,
 	password: String,
 	country: String,
-	city: String,
-	phone: String,
 	team_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Teams',
@@ -29,5 +27,5 @@ const UsersSchema = new mongoose.Schema({
 // **********************************
 // EXPORTING SCHEMA
 // **********************************
-UsersSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
+UsersSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model('Users', UsersSchema);
