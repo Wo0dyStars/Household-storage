@@ -12,7 +12,7 @@ const { validationResult } = require('express-validator');
 // QUERY IMPORTS
 // **********************************
 const ItemQueries = require('../queries/items');
-const { getCategoryAll } = require('../queries/categories');
+const { getCategories, FindCategoryNameByID } = require('../queries/categories');
 
 // **********************************
 // MIDDLEWARE IMPORTS
@@ -36,12 +36,13 @@ const Upload = Multer({ storage });
 // SCHEMA IMPORTS
 // **********************************
 const Items = require('../models/items');
+const Categories = require('../models/categories');
 
 // **********************************
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
-router.get('/', (req, res) => {
-	Items.find({}, (err, items) => {
+router.get('/', async (req, res) => {
+	await Items.find({}, (err, items) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -56,7 +57,7 @@ router.get('/', (req, res) => {
 // GET ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 router.get('/new', async (req, res) => {
-	const Categories = await getCategoryAll();
+	const Categories = await getCategories();
 	let Names = [];
 	Categories.forEach((category) => {
 		Names.push(category.name);

@@ -31,6 +31,15 @@ const printCategories = function() {
 };
 
 // ****************************************************
+// GET ALL CATEGORIES
+// ****************************************************
+const getCategories = function() {
+	return Categories.find({}, (categories, err) => {
+		if (err) console.log(err);
+	});
+};
+
+// ****************************************************
 // DELETE ALL CATEGORIES
 // ****************************************************
 const DeleteCategories = function() {
@@ -56,6 +65,18 @@ const DeleteCategoryByID = function(CategoryID) {
 const FindCategoryIDByName = function(CategoryName) {
 	return Categories.find({ name: CategoryName }, '_id', (err) => {
 		if (err) return console.log(err);
+	});
+};
+
+// ****************************************************
+// FIND CATEGORY NAME BY CATEGORY ID
+// ****************************************************
+const FindCategoryNameByID = function(category_id) {
+	return Categories.findById(category_id, 'name', (err, category_name) => {
+		if (err) return console.log(err);
+		else {
+			return category_name.name;
+		}
 	});
 };
 
@@ -105,5 +126,7 @@ module.exports = {
 	printCategories,
 	DeleteCategories,
 	DeleteCategoryByID,
-	FindCategoryIDByName
+	FindCategoryIDByName,
+	FindCategoryNameByID,
+	getCategories
 };
