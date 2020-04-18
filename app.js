@@ -9,11 +9,15 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
 const Items = require('./queries/items');
 const Categories = require('./queries/categories');
 const Users = require('./queries/users');
 const Teams = require('./queries/teams');
+
+const User = require('./models/users');
 
 // **********************************
 // ROUTE IMPORTS
@@ -51,15 +55,18 @@ const middlewares = [
 	cookieParser(),
 	session({
 		secret: 'super-secret-key',
-		key: 'super-secret-cookie',
 		resave: false,
-		saveUninitialized: false,
-		cookie: { maxAge: 60000 }
+		saveUninitialized: false
 	}),
-	flash()
+	flash(),
+	passport.initialize(),
+	passport.session()
 ];
 
 app.use(middlewares);
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // **********************************
 // DEFINE ROUTES

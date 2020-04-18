@@ -331,3 +331,6 @@ body {
     margin-top: 2rem; }
     .newitem__form-group button:hover {
       background-color: #e20909; }
+
+.register {
+  margin-top: 10rem; }
