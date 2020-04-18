@@ -7,7 +7,7 @@
     <% if (messages.error) { %>
         <div class="flash flash-success"><%= messages.error %></div>
     <% } %>
-    <form action="/register" method="POST">
+    <form class="register__form" action="/register" method="POST" autocomplete="off">
         <div class="register__form-group">
             <input type="text" class="register__form-input" name="username" placeholder="Username">
             <label for="register[username]" class="register__form-label">Username</label>
@@ -283,6 +283,10 @@
             </select>
         </div>        
         
-        <button>Sign up</button>
+        <div class="register__form-group">
+            <button>Sign up</button>
+        </div>
+        <div class="register__header">Register to this awesome application</div>
+        <div class="register__leftsubheader">Personal</div>
     </form>
 </div>
