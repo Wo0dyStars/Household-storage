@@ -11,7 +11,6 @@ const { validationResult } = require('express-validator');
 // **********************************
 // QUERY IMPORTS
 // **********************************
-const Create = require('../queries/create');
 const ItemQueries = require('../queries/items');
 const { getCategoryAll } = require('../queries/categories');
 
@@ -80,8 +79,8 @@ router.post('/new', Upload.single('image'), [ Validators ], async (req, res) => 
 		const { name, quantity, reorder_quantity, category } = req.body.items;
 		const newItems = { name, quantity, reorder_quantity, image: req.file.filename, category };
 
-		let CategoryID = await Create.FindCategoryIDByName(category);
-		Create.createItem(CategoryID, category, newItems);
+		let CategoryID = await ItemQueries.FindCategoryIDByName(category);
+		ItemQueries.createItem(CategoryID, newItems);
 		req.flash('success', 'You just successfully added a new item!');
 		res.redirect('/items/new');
 	}

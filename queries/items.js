@@ -7,8 +7,7 @@ const Categories = require('../models/categories');
 // ****************************************************
 // CREATE A NEW ITEM AND UPDATE CORRESPONDING CATEGORY
 // ****************************************************
-const createItem = function(category_id, category_name, item) {
-	item['category_name'] = category_name;
+const createItem = function(category_id, item) {
 	return Items.create(item).then((new_item) => {
 		console.log('\n>> Created item:\n', new_item);
 		console.log('\n>> Category ID:\n', category_id);
@@ -17,7 +16,23 @@ const createItem = function(category_id, category_name, item) {
 			category_id,
 			{ $push: { items: new_item._id } },
 			{ new: true, useFindAndModify: false }
-		);
+		).then((new_category, err) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('Added item ID ', new_item._id, ' to category ', new_category);
+
+				return Items.findByIdAndUpdate(new_item._id, {
+					category_id: new_category._id
+				}).then((updated_item, err) => {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log('Item ID ', new_item._id, ' has been updated to ', updated_item);
+					}
+				});
+			}
+		});
 	});
 };
 
@@ -119,9 +134,10 @@ const FindCategoryIDByName = function(CategoryName) {
 const run = async function() {
 	// SampleItems.forEach(async (SampleItem) => {
 	// 	let CategoryID = await FindCategoryIDByName(SampleItem.Category);
-	// 	await createItem(CategoryID, SampleItem.Category, SampleItem.Item);
+	// 	await createItem(CategoryID, SampleItem.Item);
 	// });
 	// await DeleteItems();
+	// await DeleteItemByID('5e9ad4b14f800933e40acbea');
 	await printItems();
 };
 

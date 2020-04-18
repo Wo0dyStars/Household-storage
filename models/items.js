@@ -11,7 +11,11 @@ const ItemsSchema = new mongoose.Schema({
 	image: String,
 	quantity: Number,
 	reorder_quantity: Number,
-	category_name: String,
+	category_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Categories',
+		default: null
+	},
 	created_at: { type: Date },
 	updated_at: { type: Date, default: Date.now }
 });
