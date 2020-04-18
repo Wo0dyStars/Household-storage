@@ -75,11 +75,11 @@ const SampleUsers = [
 // RUNNING CODE
 // ****************************************************
 const run = async function() {
-	SampleUsers.forEach(async (SampleUser) => {
-		await createUser(SampleUser);
-	});
+	// SampleUsers.forEach(async (SampleUser) => {
+	// 	await createUser(SampleUser);
+	// });
 	await printUsers();
-	await DeleteUsers();
+	// await DeleteUsers();
 };
 
 // ****************************************************

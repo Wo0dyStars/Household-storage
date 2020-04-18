@@ -4,26 +4,36 @@
 const Categories = require('../models/categories');
 
 // ****************************************************
-// RETRIEVE CATEGORY BY CATEGORY ID WITH POPULATE
+// CREATE A NEW CATEGORY
 // ****************************************************
-const getCategoryByID = function(category_id) {
+const createCategory = function(category) {
+	return Categories.create(category).then((new_category) => {
+		console.log('\n>> Created category:\n', new_category);
+		return new_category;
+	});
+};
+
+// ****************************************************
+// PRINT CATEGORY BY CATEGORY ID WITH POPULATE
+// ****************************************************
+const printCategoryByID = function(category_id) {
 	return Categories.findById(category_id).populate('items');
 };
 
 // ****************************************************
-// RETRIEVE ALL CATEGORIES
+// PRINT ALL CATEGORIES
 // ****************************************************
-const getCategoryAll = function() {
+const printCategories = function() {
 	return Categories.find({}, (err, categories) => {
 		if (err) console.log(err);
-		// console.log('\n>> Categories:\n', categories);
+		console.log('\n>> Categories:\n', categories);
 	});
 };
 
 // ****************************************************
 // DELETE ALL CATEGORIES
 // ****************************************************
-const DeleteCategoryAll = function() {
+const DeleteCategories = function() {
 	return Categories.deleteMany({}, (err) => {
 		if (err) console.log(err);
 		console.log('\n>> Categories deleted.\n');
@@ -40,9 +50,45 @@ const DeleteCategoryByID = function(CategoryID) {
 	});
 };
 
+// ****************************************************
+// FIND CATEGORY ID BY CATEGORY NAME
+// ****************************************************
+const FindCategoryIDByName = function(CategoryName) {
+	return Categories.find({ name: CategoryName }, '_id', (err) => {
+		if (err) return console.log(err);
+	});
+};
+
+// ****************************************************
+// GENERATE CATEGORIES FROM PREDEFINED LIST
+// ****************************************************
+const CategoryObject = [
+	'Frozen',
+	'Meat',
+	'Dairy',
+	'Vegetables and Fruits',
+	'Bakery',
+	'Drinks and Juices',
+	'Pasta, Rice and Noodles',
+	'Jams and Spreads',
+	'Coffee and Tea',
+	'Biscuits, Chocolates and Sweets',
+	'Crisps and Nuts'
+];
+
+const GenerateCategories = function() {
+	CategoryObject.forEach((Category) => {
+		createCategory({ name: Category });
+	});
+};
+
+// ****************************************************
+// RUNNING CODE
+// ****************************************************
 const run = async function() {
-	var DeletedCategories = await DeleteCategoryAll();
-	var categories = await getCategoryAll();
+	// GenerateCategories();
+	// await DeleteCategories();
+	await printCategories();
 };
 
 // ****************************************************
@@ -50,11 +96,14 @@ const run = async function() {
 // ****************************************************
 // run();
 
-const Category = {
-	getCategoryByID,
-	getCategoryAll,
-	DeleteCategoryAll,
-	DeleteCategoryByID
+// ****************************************************
+// EXPORTING CATEGORY QUERIES
+// ****************************************************
+module.exports = {
+	createCategory,
+	printCategoryByID,
+	printCategories,
+	DeleteCategories,
+	DeleteCategoryByID,
+	FindCategoryIDByName
 };
-
-module.exports = Category;

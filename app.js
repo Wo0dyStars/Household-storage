@@ -12,7 +12,8 @@ const flash = require('express-flash');
 
 const Items = require('./queries/items');
 const Categories = require('./queries/categories');
-const Create = require('./queries/create');
+const Users = require('./queries/users');
+const Teams = require('./queries/teams');
 
 // **********************************
 // ROUTE IMPORTS

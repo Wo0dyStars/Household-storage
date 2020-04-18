@@ -5,9 +5,26 @@ const Items = require('../models/items');
 const Categories = require('../models/categories');
 
 // ****************************************************
-// RETRIEVE ITEM BY ITEM ID
+// CREATE A NEW ITEM AND UPDATE CORRESPONDING CATEGORY
 // ****************************************************
-const getItemByID = function(item_id) {
+const createItem = function(category_id, category_name, item) {
+	item['category_name'] = category_name;
+	return Items.create(item).then((new_item) => {
+		console.log('\n>> Created item:\n', new_item);
+		console.log('\n>> Category ID:\n', category_id);
+
+		return Categories.findByIdAndUpdate(
+			category_id,
+			{ $push: { items: new_item._id } },
+			{ new: true, useFindAndModify: false }
+		);
+	});
+};
+
+// ****************************************************
+// PRINT ITEM BY ITEM ID
+// ****************************************************
+const printItemByID = function(item_id) {
 	return Items.findById(item_id, (err, item) => {
 		if (err) console.log(err);
 		if (item) {
@@ -19,9 +36,9 @@ const getItemByID = function(item_id) {
 };
 
 // ****************************************************
-// RETRIEVE ALL ITEMS
+// PRINT ALL ITEMS
 // ****************************************************
-const getItemAll = function() {
+const printItems = function() {
 	return Items.find({}, (err, items) => {
 		if (err) console.log(err);
 		console.log('\n>> Items:\n', items);
@@ -31,7 +48,7 @@ const getItemAll = function() {
 // ****************************************************
 // DELETE ALL ITEMS AND CORRESPONDING IDS FROM CATEGORY
 // ****************************************************
-const DeleteItemAll = async function() {
+const DeleteItems = async function() {
 	await Items.find({}, (err, items) => {
 		items.forEach((item) => {
 			DeleteItemByID(item._id);
@@ -54,11 +71,58 @@ const DeleteItemByID = function(ItemID) {
 	});
 };
 
+// ****************************************************
+// POPULATE WITH SAMPLE ITEMS
+// ****************************************************
+const SampleItems = [
+	{
+		Category: 'Vegetables and Fruits',
+		Item: {
+			name: 'Brown onion',
+			image: 'brown_onion.png',
+			quantity: 5,
+			reorder_quantity: 1,
+			created_at: Date.now()
+		}
+	},
+	{
+		Category: 'Meat',
+		Item: {
+			name: 'Chorizo',
+			image: 'chorizo.jfif',
+			quantity: 2,
+			reorder_quantity: 1,
+			created_at: Date.now()
+		}
+	},
+	{
+		Category: 'Dairy',
+		Item: {
+			name: 'Cheddar mature',
+			image: 'cheddar_mature.jfif',
+			quantity: 1,
+			reorder_quantity: 1,
+			created_at: Date.now()
+		}
+	}
+];
+
+// ****************************************************
+// FIND CATEGORY ID BY CATEGORY NAME
+// ****************************************************
+const FindCategoryIDByName = function(CategoryName) {
+	return Categories.find({ name: CategoryName }, '_id', (err) => {
+		if (err) return console.log(err);
+	});
+};
+
 const run = async function() {
-	var DeletedItemsAll = await DeleteItemAll();
-	//var DeletedItem = await DeleteItemByID('5e9476b65369324198bdbe68');
-	//var itemID = await getItemByID('5e9464116f7ba9202445e2e1');
-	var items = await getItemAll();
+	// SampleItems.forEach(async (SampleItem) => {
+	// 	let CategoryID = await FindCategoryIDByName(SampleItem.Category);
+	// 	await createItem(CategoryID, SampleItem.Category, SampleItem.Item);
+	// });
+	// await DeleteItems();
+	await printItems();
 };
 
 // ****************************************************
@@ -66,11 +130,14 @@ const run = async function() {
 // ****************************************************
 // run();
 
-const Item = {
-	getItemByID,
-	getItemAll,
-	DeleteItemAll,
-	DeleteItemByID
+// ****************************************************
+// EXPORTING ITEM QUERIES
+// ****************************************************
+module.exports = {
+	createItem,
+	printItemByID,
+	printItems,
+	DeleteItems,
+	DeleteItemByID,
+	FindCategoryIDByName
 };
-
-module.exports = Item;
