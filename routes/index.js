@@ -6,10 +6,18 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models/users');
 
+const isLoggedIn = function(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	req.flash('error', 'You must be logged in to do that.');
+	res.redirect('/login');
+};
+
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
 // **********************************
-router.get('/', (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
 	res.render('landing');
 });
 
@@ -30,6 +38,25 @@ router.post('/register', (req, res) => {
 			});
 		}
 	});
+});
+
+router.get('/login', (req, res) => {
+	res.render('login');
+});
+
+router.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/items',
+		failureRedirect: '/login'
+	}),
+	(req, res) => {}
+);
+
+router.get('/logout', (req, res) => {
+	req.logout();
+	req.flash('success', 'Logged you out!');
+	res.redirect('/login');
 });
 
 // **********************************

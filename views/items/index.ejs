@@ -2,6 +2,9 @@
 
 <h1>This is index page for items</h1>
 <div class="items_container">
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
     <% Items.forEach((Item, idx) => { %>
         <div class="items_container__item">
             <div class="items_container__item--top">
