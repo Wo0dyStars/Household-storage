@@ -89,6 +89,13 @@ const printTeams = function() {
 	});
 };
 
+const getTeamNames = function() {
+	return Teams.find({}, 'name', (err, teams) => {
+		if (err) console.log(err);
+		return teams;
+	});
+};
+
 const run = async function() {
 	// await DeleteTeams();
 	await printTeams();
@@ -108,5 +115,6 @@ module.exports = {
 	AddUserToTeam,
 	DeleteTeams,
 	DeleteTeamByID,
-	printTeams
+	printTeams,
+	getTeamNames
 };

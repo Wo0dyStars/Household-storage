@@ -7,7 +7,13 @@
             <div class="users__user">
                 <img class="users__user--avatar" src="<%= user.avatar %>" alt="">
                 <div class="users__user--username"><%= user.username %></div>
-                <div class="users__user--team_id"><%= user.team_id %></div>
+                <div class="users__user--team_id">
+                    <% teamnames.forEach((team, idx) => { %>
+                        <% if (team._id.equals(user.team_id)) {%>
+                            <%= team.name %>
+                        <% } %>
+                    <% }) %>
+                </div>
             </div>
         <% }) %>
     </div>
