@@ -50,6 +50,16 @@ const printUsers = function() {
 };
 
 // ****************************************************
+// GET ALL USERS
+// ****************************************************
+const getUsers = function() {
+	return Users.find({}, (err, users) => {
+		if (err) console.log(err);
+		return users;
+	});
+};
+
+// ****************************************************
 // NEW USERS WITH SAMPLE DATA
 // ****************************************************
 const SampleUsers = [
@@ -94,5 +104,6 @@ module.exports = {
 	createUser,
 	DeleteUsers,
 	DeleteUserByID,
-	printUsers
+	printUsers,
+	getUsers
 };

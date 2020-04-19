@@ -1,0 +1,14 @@
+<%- include("../partials/header"); %>
+
+<div class="users_container">
+    <h1>These are the registered users</h1>
+    <div class="users">
+        <% users.forEach((user, idx) => { %>
+            <div class="users__user">
+                <img class="users__user--avatar" src="<%= user.avatar %>" alt="">
+                <div class="users__user--username"><%= user.username %></div>
+                <div class="users__user--team_id"><%= user.team_id %></div>
+            </div>
+        <% }) %>
+    </div>
+</div>

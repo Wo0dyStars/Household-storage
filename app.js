@@ -23,6 +23,7 @@ const User = require('./models/users');
 // ROUTE IMPORTS
 // **********************************
 const ItemsRoutes = require('./routes/items');
+const UsersRoutes = require('./routes/users');
 const ShoppingRoutes = require('./routes/shoppings');
 const IndexRoutes = require('./routes/index');
 
@@ -73,6 +74,7 @@ passport.deserializeUser(User.deserializeUser());
 // **********************************
 app.use('/', IndexRoutes);
 app.use('/items', ItemsRoutes);
+app.use('/users', UsersRoutes);
 app.use('/shoppings', ShoppingRoutes);
 
 // **********************************
