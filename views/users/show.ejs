@@ -6,8 +6,32 @@
             <div class="user-profile__main-avatar"><img src="<%= user.avatar %>" alt=""></div>
             <div class="user-profile__main-username"><%= user.username %></div>
             <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
-            <div class="user-profile__main-team"><%= teamname %></div>
-            <div class="user-profile__main-upload"><button>Upload avatar</button></div>
+            <div class="user-profile__main-team">
+                <% if (!teamname) { %>
+                    <form action="/users/<%= user._id %>" method="POST">
+                        <label for="selectteam" class="user-profile__label">Select a team</label>
+                        <select class="user-profile__select" name="selectteam">
+                            <% names.forEach(name => { %>
+                                <option value="<%= name._id %>"><%= name.name %></option>
+                            <% }) %>
+                        </select> 
+                        <button class="user-profile__join">Join</button>
+                    </form>
+                    <form action="/users/<%= user._id %>"  method="POST">
+                        <label for="createteam" class="user-profile__label">Create a team</label>
+                        <input type="text" name="createteam" placeholder="Team name">
+                        <button class="user-profile__create">Create</button>
+                    </form>
+                <% } else { %>
+                    <%= teamname %>
+                <% } %>
+            </div>
+            <div class="user-profile__main-upload">
+                <form action="/users/<%= user._id %>" enctype="multipart/form-data" method="POST">
+                    <input type="file" name="avatar" accept="image/*">
+                    <button>Upload avatar</button>
+                </form>
+            </div>
         </div>
         <div class="user-profile__info">
             <section class="user-profile__info--about">
@@ -27,26 +51,6 @@
                     <% var y = date.getFullYear(); %>
                     <%= d %>-<%= m %>-<%= y %>
                 </div>
-            </section>
-
-            <section class="user-profile__info--team">
-                Join a team
-                <% if (!teamname) { %>
-                    <form action="/users/<%= user._id %>" method="POST">
-                        <label for="selectteam" class="user-profile__label">Select a team</label>
-                        <select class="user-profile__select" name="selectteam">
-                            <% names.forEach(name => { %>
-                                <option value="<%= name._id %>"><%= name.name %></option>
-                            <% }) %>
-                        </select> 
-                        <button class="user-profile__join">Join</button>
-                    </form>
-                    <form action="/users/<%= user._id %>"  method="POST">
-                        <label for="createteam" class="user-profile__label">Create a team</label>
-                        <input type="text" name="createteam" placeholder="Team name">
-                        <button class="user-profile__create">Create</button>
-                    </form>
-                <% } %>
             </section>
         </div>
     </div>

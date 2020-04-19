@@ -39,6 +39,18 @@ const DeleteUserByID = function(UserID) {
 	});
 };
 
+const updateUser = function(user_id, field, value) {
+	const updateField = {};
+	updateField[field] = value;
+	return Users.updateOne({ _id: user_id }, { $set: updateField }, (err, updateduser) => {
+		if (err) {
+			console.log(err);
+		} else {
+			return updateduser;
+		}
+	});
+};
+
 // ****************************************************
 // PRINT ALL USERS
 // ****************************************************
@@ -96,6 +108,7 @@ const run = async function() {
 	// 	await createUser(SampleUser);
 	// });
 	await printUsers();
+	// await updateUser('5e9c4c84a2e5293b4c2d3694', 'avatar', '/images/brown_onion.png');
 	// await DeleteUsers();
 };
 
@@ -113,5 +126,6 @@ module.exports = {
 	DeleteUserByID,
 	printUsers,
 	getUsers,
-	getUserByID
+	getUserByID,
+	updateUser
 };
