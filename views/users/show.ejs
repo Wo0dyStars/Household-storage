@@ -29,6 +29,7 @@
             <div class="user-profile__main-upload">
                 <form action="/users/<%= user._id %>" enctype="multipart/form-data" method="POST">
                     <input type="file" name="avatar" accept="image/*">
+                    <input type="hidden" name="oldavatar" value="<%= user.avatar %>">
                     <button>Upload avatar</button>
                 </form>
             </div>

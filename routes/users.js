@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const Multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // **********************************
 // SCHEMA IMPORTS
@@ -15,7 +16,7 @@ const UserQueries = require('../queries/users');
 const TeamQueries = require('../queries/teams');
 
 const storage = Multer.diskStorage({
-	destination: './public/images',
+	destination: './public/avatars',
 	filename: function(req, file, cb) {
 		const uniqueSuffix = Date.now() + Math.round(Math.random() * 1e9) + path.extname(file.originalname);
 		cb(null, uniqueSuffix);
@@ -51,8 +52,19 @@ router.post('/:id', Upload.single('avatar'), async (req, res) => {
 		res.redirect('back');
 	}
 	if (req.file) {
-		const filepath = '/images/' + req.file.filename;
+		const filepath = '/avatars/' + req.file.filename;
 		await UserQueries.updateUser(req.params.id, 'avatar', filepath);
+
+		// Remove old avatar from the local server
+		const absfilepath = './public' + req.body.oldavatar;
+		fs.unlink(absfilepath, (err) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('File ', req.body.oldavatar, ' removed.');
+			}
+		});
+
 		res.redirect('back');
 	}
 });

@@ -107,7 +107,7 @@ const run = async function() {
 	// SampleUsers.forEach(async (SampleUser) => {
 	// 	await createUser(SampleUser);
 	// });
-	await printUsers();
+	// await printUsers();
 	// await updateUser('5e9c4c84a2e5293b4c2d3694', 'avatar', '/images/brown_onion.png');
 	// await DeleteUsers();
 };
