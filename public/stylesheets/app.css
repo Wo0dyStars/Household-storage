@@ -553,7 +553,7 @@ body {
       color: #fff; }
 
 .user-container {
-  width: 60%;
+  width: 100%;
   margin: 10rem auto; }
   .user-container .user-profile {
     display: grid;

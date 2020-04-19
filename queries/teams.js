@@ -100,7 +100,9 @@ const run = async function() {
 	// await DeleteTeams();
 	await printTeams();
 	// await createTeam('Budos csapat', '5e9bde7b4541b910549d9cf8');
-	//await AddUserToTeam('5e9bde7b4541b910549d9cf8', '5e9bde7b4541b910549d9cf8');
+	// await AddUserToTeam('5e9c122257b35631b462e4cc', '5e9c3a7d04cbe3208855c2d4');
+	// await AddUserToTeam('5e9c122257b35631b462e4cc', '5e9c3788d4e5310d5885c770');
+	// await AddUserToTeam('5e9c122257b35631b462e4cc', '5e9c3bae711792363071af8e');
 };
 
 // ****************************************************

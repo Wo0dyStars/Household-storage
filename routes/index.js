@@ -42,13 +42,14 @@ router.post('/register', [ Validators['register'] ], (req, res) => {
 			email: email,
 			middlename: middlename,
 			lastname: lastname,
-			country: country
+			country: country,
+			joined_at: Date.now()
 		});
 
 		User.register(newUser, req.body.password, (err, user) => {
 			if (err) {
 				req.flash('error', err.message);
-				return res.render('register', { error: err.message });
+				res.redirect('/register');
 			} else {
 				passport.authenticate('local')(req, res, () => {
 					req.flash('success', 'You have successfully registered ', user.username);

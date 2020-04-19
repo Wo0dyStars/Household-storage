@@ -8,11 +8,16 @@
                 <img class="users__user--avatar" src="<%= user.avatar %>" alt="">
                 <div class="users__user--username"><a href="/users/<%= user._id %>"><%= user.username %></a></div>
                 <div class="users__user--team_id">
+                    <% let isTeam = false; %>
                     <% teamnames.forEach((team, idx) => { %>
                         <% if (team._id.equals(user.team_id)) {%>
                             <%= team.name %>
+                            <% isTeam = true; %>
                         <% } %>
                     <% }) %>
+                    <% if (!isTeam) { %> 
+                        <i>No team yet</i> 
+                    <% } %>
                 </div>
             </div>
         <% }) %>
