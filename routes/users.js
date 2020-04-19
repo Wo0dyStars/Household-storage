@@ -21,10 +21,22 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	const user = await UserQueries.getUserByID(req.params.id);
 	const teamname = await TeamQueries.getTeamNameByID(user.team_id);
+	const names = await TeamQueries.getTeamNames();
 	if (teamname) {
-		res.render('users/show', { user, teamname: teamname.name });
+		res.render('users/show', { user, teamname: teamname.name, names });
 	} else {
-		res.render('users/show', { user, teamname: 'No team yet' });
+		res.render('users/show', { user, teamname: null, names });
+	}
+});
+
+router.post('/:id', async (req, res) => {
+	if (req.body.selectteam) {
+		await TeamQueries.AddUserToTeam(req.body.selectteam, req.params.id);
+		res.redirect('back');
+	}
+	if (req.body.createteam) {
+		await TeamQueries.createTeam(req.body.createteam, req.params.id);
+		res.redirect('back');
 	}
 });
 
