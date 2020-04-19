@@ -99,7 +99,8 @@ const getTeamNames = function() {
 const run = async function() {
 	// await DeleteTeams();
 	await printTeams();
-	//await AddUserToTeam('5e99469f3ded2519c475652b', '5e9b182dd94263395ca0a91d');
+	// await createTeam('Budos csapat', '5e9bde7b4541b910549d9cf8');
+	//await AddUserToTeam('5e9bde7b4541b910549d9cf8', '5e9bde7b4541b910549d9cf8');
 };
 
 // ****************************************************

@@ -547,3 +547,69 @@ body {
       padding: .4rem;
       text-align: center;
       color: #fff; }
+    .users__user a:link,
+    .users__user a:visited {
+      text-decoration: none;
+      color: #fff; }
+
+.user-container {
+  width: 60%;
+  margin: 10rem auto; }
+  .user-container .user-profile {
+    display: grid;
+    grid-template-rows: repeat(2, minmax(min-content, 1fr)); }
+    .user-container .user-profile__main {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+      border: 1px solid rgba(3, 116, 50, 0.2);
+      border-bottom: 10px solid #037432;
+      background-color: rgba(3, 116, 50, 0.1);
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      grid-template-columns: repeat(2, 1fr); }
+      .user-container .user-profile__main-avatar {
+        grid-row: 1 / 5;
+        grid-column: 1 / 2;
+        justify-self: center;
+        align-self: center;
+        padding: 2rem; }
+        .user-container .user-profile__main-avatar img {
+          width: 200px;
+          height: 200px;
+          border: 2px dashed rgba(3, 116, 50, 0.5); }
+      .user-container .user-profile__main-upload {
+        grid-row: 5 / 6;
+        grid-column: 1 / 2;
+        justify-self: center;
+        align-self: center; }
+        .user-container .user-profile__main-upload button {
+          padding: 1rem;
+          background-color: #037432;
+          border: 1px solid #fff;
+          box-shadow: .1rem .1rem 1rem #fff;
+          cursor: pointer;
+          color: #fff;
+          transition: padding .3s; }
+          .user-container .user-profile__main-upload button:hover {
+            padding: 1rem 2rem; }
+      .user-container .user-profile__main-username {
+        font-size: 3rem;
+        color: #037432;
+        align-self: center; }
+      .user-container .user-profile__main-name {
+        font-size: 1rem;
+        color: #037432;
+        align-self: center; }
+      .user-container .user-profile__main-team {
+        font-size: 1rem;
+        color: #037432;
+        align-self: center; }
+    .user-container .user-profile__info {
+      grid-row: 2 / 3;
+      grid-column: 1 / 2;
+      background-color: rgba(182, 248, 208, 0.1); }
+      .user-container .user-profile__info--about {
+        padding: 3rem;
+        font-size: 1.3rem; }
+        .user-container .user-profile__info--about__title {
+          font-size: 2rem; }

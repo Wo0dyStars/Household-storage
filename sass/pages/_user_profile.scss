@@ -1,0 +1,89 @@
+.user-container {
+	width: 60%;
+	margin: 10rem auto;
+
+	.user-profile {
+		display: grid;
+		grid-template-rows: repeat(2, minmax(min-content, 1fr));
+
+		&__main {
+			grid-row: 1 / 2;
+			grid-column: 1 / 2;
+			border: 1px solid rgba(3, 116, 50, .2);
+			border-bottom: 10px solid rgba(3, 116, 50, 1);
+			background-color: rgba(3, 116, 50, 0.1);
+
+			display: grid;
+			grid-template-rows: repeat(5, 1fr);
+			grid-template-columns: repeat(2, 1fr);
+
+			&-avatar {
+				grid-row: 1 / 5;
+				grid-column: 1 / 2;
+				justify-self: center;
+				align-self: center;
+				padding: 2rem;
+
+				img {
+					width: 200px;
+					height: 200px;
+					border: 2px dashed rgba(3, 116, 50, 0.5);
+				}
+			}
+
+			&-upload {
+				grid-row: 5 / 6;
+				grid-column: 1 / 2;
+				justify-self: center;
+				align-self: center;
+
+				button {
+					padding: 1rem;
+					background-color: rgba(3, 116, 50, 1);
+					border: 1px solid #fff;
+					box-shadow: .1rem .1rem 1rem #fff;
+					cursor: pointer;
+					color: #fff;
+					transition: padding .3s;
+
+					&:hover {
+						padding: 1rem 2rem;
+					}
+				}
+			}
+
+			&-username {
+				font-size: 3rem;
+				color: rgba(3, 116, 50, 1);
+				align-self: center;
+			}
+
+			&-name {
+				font-size: 1rem;
+				color: rgba(3, 116, 50, 1);
+				align-self: center;
+			}
+
+			&-team {
+				font-size: 1rem;
+				color: rgba(3, 116, 50, 1);
+				align-self: center;
+			}
+		}
+
+		&__info {
+			grid-row: 2 / 3;
+			grid-column: 1 / 2;
+			background-color: rgba(182, 248, 208, 0.1);
+
+			&--about {
+				padding: 3rem;
+				font-size: 1.3rem;
+
+				&__title {
+					font-size: 2rem;
+				}
+			}
+		}
+	}
+}
