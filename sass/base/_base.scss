@@ -30,11 +30,15 @@ body {
 	text-transform: uppercase;
 	text-align: center;
 	text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, .2);
-	animation: FadeInFromTop 1.5s;
+	animation: OpacityIn 3s;
 	margin-bottom: 1.5rem;
 
 	&-success {
-		background-color: rgba(0, 255, 0, .4);
+		background-color: rgb(3, 116, 50);
+	}
+
+	&-error {
+		background-color: rgb(240, 8, 8);
 	}
 }
 

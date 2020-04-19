@@ -65,3 +65,34 @@
 		opacity: 1;
 	}
 }
+
+@keyframes OpacityIn {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 0.5;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes SlideDownAndBackUp {
+	0% {
+		transform: translateY(-10%);
+		opacity: 0;
+	}
+
+	50% {
+		transform: translateY(10%);
+		opacity: 0.5;
+	}
+
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

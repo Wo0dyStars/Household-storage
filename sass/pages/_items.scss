@@ -17,7 +17,7 @@
 		position: relative;
 		border-radius: .5rem;
 		animation: FadeInFromBottom 3s;
-		translate: all 1s ease;
+		translate: all .2s ease;
 
 		&:hover {
 			transform: translateY(-.5rem);

@@ -2,11 +2,11 @@
 	background-color: rgba(247, 244, 244, 0.4);
 	border-radius: 1rem;
 	width: 50%;
-	margin: 15rem auto auto auto;
+	margin: 10rem auto auto auto;
 	padding: 3rem;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	box-shadow: .1rem .4rem .1rem rgba(0, 0, 0, 0.3);
-	animation: FadeInFromBottom 1s ease-out;
+	animation: SlideDownAndBackUp 1s;
 
 	ul {
 		list-style: none;

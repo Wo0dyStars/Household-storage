@@ -42,6 +42,25 @@
     transform: translateX(0);
     opacity: 1; } }
 
+@keyframes OpacityIn {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 0.5; }
+  100% {
+    opacity: 1; } }
+
+@keyframes SlideDownAndBackUp {
+  0% {
+    transform: translateY(-10%);
+    opacity: 0; }
+  50% {
+    transform: translateY(10%);
+    opacity: 0.5; }
+  100% {
+    transform: translateY(0);
+    opacity: 1; } }
+
 *,
 *:before,
 *:after {
@@ -70,10 +89,12 @@ body {
   text-transform: uppercase;
   text-align: center;
   text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
-  animation: FadeInFromTop 1.5s;
+  animation: OpacityIn 3s;
   margin-bottom: 1.5rem; }
   .flash-success {
-    background-color: rgba(0, 255, 0, 0.4); }
+    background-color: #037432; }
+  .flash-error {
+    background-color: #f00808; }
 
 .navigation {
   background-color: black;
@@ -129,7 +150,7 @@ body {
     position: relative;
     border-radius: .5rem;
     animation: FadeInFromBottom 3s;
-    translate: all 1s ease; }
+    translate: all .2s ease; }
     .items_container__item:hover {
       transform: translateY(-0.5rem); }
     .items_container__item--top {
@@ -226,11 +247,11 @@ body {
   background-color: rgba(247, 244, 244, 0.4);
   border-radius: 1rem;
   width: 50%;
-  margin: 15rem auto auto auto;
+  margin: 10rem auto auto auto;
   padding: 3rem;
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0.1rem 0.4rem 0.1rem rgba(0, 0, 0, 0.3);
-  animation: FadeInFromBottom 1s ease-out; }
+  animation: SlideDownAndBackUp 1s; }
   .newitem ul {
     list-style: none;
     color: rgba(255, 0, 0, 0.8);
@@ -339,7 +360,9 @@ body {
   background-color: rgba(247, 244, 244, 0.4);
   border-radius: 1rem;
   width: 70%;
-  border: 1px solid rgba(0, 0, 0, 0.2); }
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0.2rem 0.4rem 0.4rem rgba(0, 0, 0, 0.2);
+  animation: SlideDownAndBackUp 1s; }
   .register__form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -370,13 +393,39 @@ body {
       grid-column: 2 / 3; }
     .register__form-group:nth-child(7) {
       grid-row: 5 / 6;
-      grid-column: 1 / 2; }
+      grid-column: 1 / 3; }
     .register__form-group:nth-child(8) {
       grid-row: 6 / 7;
       grid-column: 1 / 3; }
-    .register__form-group:nth-child(9) {
-      grid-row: 1 / 2;
-      grid-column: 1 / 3; }
+    .register__form-group span {
+      position: absolute;
+      top: 30%;
+      right: 3%;
+      transition: color .4s;
+      color: rgba(3, 116, 50, 0.5); }
+    .register__form-group span::after {
+      content: "Accepted"; }
+  .register .flash {
+    grid-row: 7 / 8;
+    grid-column: 1 / 3; }
+  .register__leftsubheader, .register__rightsubheader {
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .4rem;
+    color: rgba(0, 0, 0, 0.3); }
+  .register__button {
+    background-color: rgba(240, 8, 8, 0.5);
+    padding: 1rem 3rem;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0rem 0.1rem 0.1rem rgba(3, 116, 50, 0.3);
+    cursor: pointer;
+    text-transform: uppercase;
+    backface-visibility: hidden;
+    transition: all .3s; }
+    .register__button:hover {
+      padding: 1rem 4rem;
+      background-color: #f00808; }
   .register__header {
     background-color: #037432;
     height: 10%;
@@ -385,10 +434,10 @@ body {
     top: -5%;
     text-align: center;
     text-transform: uppercase;
-    color: #fff;
+    color: white;
     font-size: 1.6rem;
-    border-top-left-radius: .5rem;
-    border-top-right-radius: .5rem; }
+    border-radius: .5rem;
+    padding: 1rem; }
   .register__form-input, .register__password, .register__email, .register__select {
     font-size: 1.5rem;
     padding: 1.5rem 4rem;
@@ -402,11 +451,25 @@ body {
     color: rgba(0, 0, 0, 0.5);
     border-bottom: 3px solid rgba(95, 97, 96, 0.1); }
     .register__form-input:focus, .register__password:focus, .register__email:focus, .register__select:focus {
-      outline: none; }
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+      border-bottom: 3px solid rgba(3, 116, 50, 0.5); }
+    .register__form-input:invalid, .register__password:invalid, .register__email:invalid, .register__select:invalid {
+      border-bottom: 3px solid rgba(240, 8, 8, 0.1); }
+    .register__form-input:invalid ~ span, .register__password:invalid ~ span, .register__email:invalid ~ span, .register__select:invalid ~ span {
+      color: rgba(240, 8, 8, 0.3); }
+    .register__form-input:focus:invalid ~ span, .register__password:focus:invalid ~ span, .register__email:focus:invalid ~ span, .register__select:focus:invalid ~ span {
+      color: rgba(240, 8, 8, 0.6); }
+    .register__form-input:invalid ~ span::after, .register__password:invalid ~ span::after, .register__email:invalid ~ span::after, .register__select:invalid ~ span::after {
+      content: "Required"; }
+    .register__form-input:focus:invalid, .register__password:focus:invalid, .register__email:focus:invalid, .register__select:focus:invalid {
+      border-bottom: 3px solid rgba(240, 8, 8, 0.3); }
     .register__form-input::-webkit-input-placeholder, .register__password::-webkit-input-placeholder, .register__email::-webkit-input-placeholder, .register__select::-webkit-input-placeholder {
       color: rgba(122, 121, 121, 0.6); }
   .register__select {
-    width: 70%; }
+    margin: 0 auto; }
+    .register__select:focus {
+      border-bottom: 3px solid rgba(95, 97, 96, 0.1); }
   .register__form-input:placeholder-shown + .register__form-label,
   .register__email:placeholder-shown + .register__form-label,
   .register__password:placeholder-shown + .register__form-label {
