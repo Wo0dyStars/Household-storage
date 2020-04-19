@@ -354,7 +354,7 @@ body {
       background-color: #e20909; }
 
 .register {
-  margin-top: 10rem;
+  margin-top: 14rem;
   margin-right: auto;
   margin-left: auto;
   background-color: rgba(247, 244, 244, 0.4);
@@ -504,7 +504,104 @@ body {
     font-size: 1.2rem; }
 
 .login {
-  margin-top: 10rem; }
+  margin-top: 14rem;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgba(247, 244, 244, 0.4);
+  border-radius: 1rem;
+  width: 70%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0.2rem 0.4rem 0.4rem rgba(0, 0, 0, 0.2);
+  animation: SlideDownAndBackUp 1s; }
+  .login__form {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    position: relative; }
+  .login__form-group {
+    position: relative;
+    margin-bottom: 2rem; }
+    .login__form-group:nth-child(2) {
+      grid-row: 2 / 3;
+      grid-column: 1 / 2; }
+    .login__form-group:nth-child(3) {
+      grid-row: 3 / 4;
+      grid-column: 1 / 2; }
+    .login__form-group span {
+      position: absolute;
+      top: 30%;
+      right: 3%;
+      transition: color .4s;
+      color: rgba(3, 116, 50, 0.5); }
+    .login__form-group span::after {
+      content: "Accepted"; }
+  .login__button {
+    grid-row: 4 / 5;
+    grid-column: 1 / 2;
+    background-color: rgba(240, 8, 8, 0.5);
+    padding: 1rem 3rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0rem 0.1rem 0.1rem rgba(3, 116, 50, 0.3);
+    cursor: pointer;
+    text-transform: uppercase;
+    backface-visibility: hidden;
+    transition: all .3s; }
+    .login__button:hover {
+      padding: 1rem 4rem;
+      background-color: #f00808; }
+  .login__header {
+    background-color: #037432;
+    width: 50%;
+    position: absolute;
+    top: -10%;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.6rem;
+    border-radius: .5rem;
+    padding: 1rem; }
+  .login__form-input, .login__password {
+    font-size: 1.5rem;
+    padding: 1.5rem 4rem;
+    padding-top: 1.1rem;
+    border-radius: .5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(31, 29, 29, 0.1);
+    border-bottom: 3px solid transparent;
+    width: 100%;
+    display: block;
+    color: rgba(0, 0, 0, 0.5);
+    border-bottom: 3px solid rgba(95, 97, 96, 0.1); }
+    .login__form-input:focus, .login__password:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+      border-bottom: 3px solid rgba(3, 116, 50, 0.5); }
+    .login__form-input:invalid, .login__password:invalid {
+      border-bottom: 3px solid rgba(240, 8, 8, 0.1); }
+    .login__form-input:invalid ~ span, .login__password:invalid ~ span {
+      color: rgba(240, 8, 8, 0.3); }
+    .login__form-input:focus:invalid ~ span, .login__password:focus:invalid ~ span {
+      color: rgba(240, 8, 8, 0.6); }
+    .login__form-input:invalid ~ span::after, .login__password:invalid ~ span::after {
+      content: "Required"; }
+    .login__form-input:focus:invalid, .login__password:focus:invalid {
+      border-bottom: 3px solid rgba(240, 8, 8, 0.3); }
+    .login__form-input::-webkit-input-placeholder, .login__password::-webkit-input-placeholder {
+      color: rgba(122, 121, 121, 0.6); }
+  .login__form-label {
+    position: absolute;
+    top: -34%;
+    left: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 2rem;
+    margin-top: .7rem;
+    color: rgba(3, 116, 50, 0.5);
+    background-color: rgba(247, 244, 244, 0.4);
+    transition: opacity .9s; }
 
 .users_container {
   margin-top: 10rem; }
@@ -583,16 +680,35 @@ body {
         grid-column: 1 / 2;
         justify-self: center;
         align-self: center; }
+        .user-container .user-profile__main-upload [type="file"] {
+          height: 0;
+          overflow: hidden;
+          width: 0; }
+        .user-container .user-profile__main-upload [type="file"] + label {
+          border: none;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          outline: none;
+          padding: 1.2rem 1rem;
+          transition: padding 0.3s; }
+          .user-container .user-profile__main-upload [type="file"] + label.upload-avatar {
+            background-color: #037432;
+            box-shadow: .1rem .1rem 1rem #fff; }
+            .user-container .user-profile__main-upload [type="file"] + label.upload-avatar:hover {
+              padding: 1.2rem 2rem; }
         .user-container .user-profile__main-upload button {
-          padding: 1rem;
-          background-color: #037432;
+          padding: 1.2rem 1rem;
+          background-color: #f00808;
           border: 1px solid #fff;
           box-shadow: .1rem .1rem 1rem #fff;
+          font-size: inherit;
           cursor: pointer;
           color: #fff;
-          transition: padding .3s; }
+          transition: padding .3s;
+          border-radius: 5px; }
           .user-container .user-profile__main-upload button:hover {
-            padding: 1rem 2rem; }
+            padding: 1.2rem 2rem; }
       .user-container .user-profile__main-username {
         font-size: 3rem;
         color: #037432;

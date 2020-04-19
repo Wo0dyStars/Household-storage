@@ -18,6 +18,7 @@ const { getCategories, FindCategoryNameByID } = require('../queries/categories')
 // MIDDLEWARE IMPORTS
 // **********************************
 const Validators = require('../middleware/validators');
+const middleware = require('../middleware');
 
 // **********************************
 // SET UP MULTER TO RECEIVE IMAGE FILES
@@ -56,7 +57,7 @@ router.get('/', async (req, res) => {
 // **********************************
 // GET ROUTE FOR HANDLING NEW ITEMS
 // **********************************
-router.get('/new', async (req, res) => {
+router.get('/new', middleware.isLoggedIn, async (req, res) => {
 	const Categories = await getCategories();
 	let Names = [];
 	Categories.forEach((category) => {

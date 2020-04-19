@@ -37,17 +37,44 @@
 				justify-self: center;
 				align-self: center;
 
+				[type="file"] {
+					height: 0;
+					overflow: hidden;
+					width: 0;
+				}
+
+				[type="file"] + label {
+					border: none;
+					border-radius: 5px;
+					color: #fff;
+					cursor: pointer;
+					outline: none;
+					padding: 1.2rem 1rem;
+					transition: padding 0.3s;
+
+					&.upload-avatar {
+						background-color: rgba(3, 116, 50, 1);
+						box-shadow: .1rem .1rem 1rem #fff;
+
+						&:hover {
+							padding: 1.2rem 2rem;
+						}
+					}
+				}
+
 				button {
-					padding: 1rem;
-					background-color: rgba(3, 116, 50, 1);
+					padding: 1.2rem 1rem;
+					background-color: rgba(240, 8, 8, 1);
 					border: 1px solid #fff;
 					box-shadow: .1rem .1rem 1rem #fff;
+					font-size: inherit;
 					cursor: pointer;
 					color: #fff;
 					transition: padding .3s;
+					border-radius: 5px;
 
 					&:hover {
-						padding: 1rem 2rem;
+						padding: 1.2rem 2rem;
 					}
 				}
 			}

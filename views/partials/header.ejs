@@ -11,12 +11,18 @@
         <div class="navigation">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/shoppings">Shopping</a></li>
-                <li><a href="/items/new">Add items</a></li>
                 <li><a href="/items">Items</a></li>
-                <li><a href="/login">Sign in</a></li>
-                <li><a href="/register">Sign up</a></li>
+                <li><a href="/shoppings">Shopping</a></li>
                 <li><a href="/users">Users</a></li>
+                
+                <% if(!currentUser) { %>
+                    <li><a href="/login">Sign in</a></li>
+                    <li><a href="/register">Sign up</a></li>
+                <% } else { %>
+                    <li><a href="/items/new">Add items</a></li>
+                    <li><a href="#">Signed in as <%= currentUser.username %></a></li>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>  
             </ul>
         </div>
     </body>
