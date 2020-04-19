@@ -69,7 +69,7 @@ router.get('/new', async (req, res) => {
 // POST ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 
-router.post('/new', Upload.single('image'), [ Validators ], async (req, res) => {
+router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		res.render('items/new', {

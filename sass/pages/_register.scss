@@ -9,6 +9,18 @@
 	box-shadow: 0.2rem 0.4rem 0.4rem rgba(0, 0, 0, 0.2);
 	animation: SlideDownAndBackUp 1s;
 
+	ul {
+		list-style: none;
+
+		li {
+			padding: 1rem;
+		}
+
+		li:not(:last-child) {
+			border-bottom: 1px solid rgba(255, 255, 255, .5);
+		}
+	}
+
 	&__form {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);

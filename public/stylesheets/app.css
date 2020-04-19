@@ -363,6 +363,12 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0.2rem 0.4rem 0.4rem rgba(0, 0, 0, 0.2);
   animation: SlideDownAndBackUp 1s; }
+  .register ul {
+    list-style: none; }
+    .register ul li {
+      padding: 1rem; }
+    .register ul li:not(:last-child) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
   .register__form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
