@@ -96,6 +96,13 @@ const getTeamNames = function() {
 	});
 };
 
+const getTeamNameByID = function(team_id) {
+	return Teams.findById(team_id, 'name', (err, teamname) => {
+		if (err) console.log(err);
+		return teamname;
+	});
+};
+
 const run = async function() {
 	// await DeleteTeams();
 	await printTeams();
@@ -119,5 +126,6 @@ module.exports = {
 	DeleteTeams,
 	DeleteTeamByID,
 	printTeams,
-	getTeamNames
+	getTeamNames,
+	getTeamNameByID
 };

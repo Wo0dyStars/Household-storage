@@ -20,7 +20,12 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	const user = await UserQueries.getUserByID(req.params.id);
-	res.render('users/show', { user });
+	const teamname = await TeamQueries.getTeamNameByID(user.team_id);
+	if (teamname) {
+		res.render('users/show', { user, teamname: teamname.name });
+	} else {
+		res.render('users/show', { user, teamname: 'No team yet' });
+	}
 });
 
 // **********************************

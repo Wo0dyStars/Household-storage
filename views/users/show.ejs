@@ -4,17 +4,29 @@
     <div class="user-profile">
         <div class="user-profile__main">
             <div class="user-profile__main-avatar"><img src="<%= user.avatar %>" alt=""></div>
-            <div class="user-profile__main-username">Username <%= user.username %></div>
+            <div class="user-profile__main-username"><%= user.username %></div>
             <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
-            <div class="user-profile__main-team">Team: <%= user.team_id %></div>
+            <div class="user-profile__main-team"><%= teamname %></div>
             <div class="user-profile__main-upload"><button>Upload avatar</button></div>
         </div>
         <div class="user-profile__info">
             <section class="user-profile__info--about">
                 <div class="user-profile__info--about__title">About</div>
                 <div class="user-profile__info--about__email">Email address: <%= user.email %></div>
-                <div class="user-profile__info--about__joined">Joined: <%= user.joined_at %></div>
-                <div class="user-profile__info--about__updated">Last updated: <%= user.updated_at %></div>
+                <div class="user-profile__info--about__joined">Joined: 
+                    <% var date = new Date(user.joined_at); %>
+                    <% var d = date.getDate(); %>
+                    <% var m = date.getMonth()+1; %>
+                    <% var y = date.getFullYear(); %>
+                    <%= d %>-<%= m %>-<%= y %>
+                </div>
+                <div class="user-profile__info--about__updated">Last updated: 
+                    <% var date = new Date(user.updated_at); %>
+                    <% var d = date.getDate(); %>
+                    <% var m = date.getMonth()+1; %>
+                    <% var y = date.getFullYear(); %>
+                    <%= d %>-<%= m %>-<%= y %>
+                </div>
             </section>
         </div>
     </div>
