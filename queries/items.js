@@ -60,6 +60,16 @@ const printItems = function() {
 	});
 };
 
+const getItemsWithPopulate = function() {
+	return Items.find({}).populate('category_id').exec((err, items) => {
+		if (err) {
+			return console.log(err);
+		} else {
+			return items;
+		}
+	});
+};
+
 // ****************************************************
 // DELETE ALL ITEMS AND CORRESPONDING IDS FROM CATEGORY
 // ****************************************************
@@ -155,5 +165,6 @@ module.exports = {
 	printItems,
 	DeleteItems,
 	DeleteItemByID,
-	FindCategoryIDByName
+	FindCategoryIDByName,
+	getItemsWithPopulate
 };

@@ -73,8 +73,12 @@ const getUsers = function() {
 
 const getUserByID = function(user_id) {
 	return Users.findById(user_id, (err, user) => {
-		if (err) console.log(err);
-		return user;
+		if (err) {
+			console.log(err);
+			return null;
+		} else {
+			return user;
+		}
 	});
 };
 

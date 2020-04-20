@@ -19,7 +19,9 @@
             <span class="items_container__item--reorder items_container__item--reorder-text">Reorder quantity</span>
             <span class="items_container__item--reorder items_container__item--reorder-value"><%= Item.reorder_quantity %></span>
             <span class="items_container__item--category items_container__item--category-text">Category</span>
-            <span class="items_container__item--category items_container__item--category-value"><%= Item.category_id %></span>
+            <span class="items_container__item--category items_container__item--category-value">
+                <%=  Item.category_id.name %>
+            </span>
         </div>
     <% }) %>
 </div>

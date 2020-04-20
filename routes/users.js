@@ -7,6 +7,7 @@ const router = express.Router();
 const Multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const middleware = require('../middleware');
 
 // **********************************
 // SCHEMA IMPORTS
@@ -32,17 +33,28 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-	const user = await UserQueries.getUserByID(req.params.id);
-	const teamname = await TeamQueries.getTeamNameByID(user.team_id);
-	const names = await TeamQueries.getTeamNames();
-	if (teamname) {
-		res.render('users/show', { user, teamname: teamname.name, names });
+	if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+		const user = await UserQueries.getUserByID(req.params.id);
+
+		if (user) {
+			const teamname = await TeamQueries.getTeamNameByID(user.team_id);
+			const names = await TeamQueries.getTeamNames();
+			if (teamname) {
+				res.render('users/show', { user, teamname: teamname.name, names });
+			} else {
+				res.render('users/show', { user, teamname: null, names });
+			}
+		} else {
+			req.flash('error', 'User is not in the database');
+			res.redirect('/login');
+		}
 	} else {
-		res.render('users/show', { user, teamname: null, names });
+		req.flash('error', 'User is not in the database');
+		res.redirect('/users');
 	}
 });
 
-router.post('/:id', Upload.single('avatar'), async (req, res) => {
+router.post('/:id', middleware.isLoggedIn, Upload.single('avatar'), async (req, res) => {
 	if (req.body.selectteam) {
 		await TeamQueries.AddUserToTeam(req.body.selectteam, req.params.id);
 		res.redirect('back');

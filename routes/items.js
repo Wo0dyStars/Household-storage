@@ -43,7 +43,7 @@ const Categories = require('../models/categories');
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
 router.get('/', async (req, res) => {
-	await Items.find({}, (err, items) => {
+	await Items.find({}).populate('category_id').exec((err, items) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -73,9 +73,15 @@ router.get('/new', middleware.isLoggedIn, async (req, res) => {
 router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
+		const Categories = await getCategories();
+		let Names = [];
+		Categories.forEach((category) => {
+			Names.push(category.name);
+		});
 		res.render('items/new', {
 			data: req.body,
-			errors: errors.mapped()
+			errors: errors.mapped(),
+			categories: Names
 		});
 	} else {
 		const { name, quantity, reorder_quantity, category } = req.body.items;
