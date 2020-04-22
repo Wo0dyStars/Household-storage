@@ -84,8 +84,16 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 			categories: Names
 		});
 	} else {
-		const { name, quantity, reorder_quantity, category } = req.body.items;
-		const newItems = { name, quantity, reorder_quantity, image: req.file.filename, category };
+		const { name, quantity, reorder_quantity, category, store } = req.body.items;
+		const newItems = {
+			name,
+			quantity,
+			reorder_quantity,
+			image: req.file.filename,
+			category,
+			store,
+			created_at: Date.now()
+		};
 
 		let CategoryID = await ItemQueries.FindCategoryIDByName(category);
 		ItemQueries.createItem(CategoryID, newItems);

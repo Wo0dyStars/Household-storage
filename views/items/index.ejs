@@ -14,14 +14,10 @@
             </div>
             <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
             <h4 class="items_container__item--name"><%= Item.name %></h4>
-            <div class="items_container__item--quantity items_container__item--quantity-text">Stock quantity</div>
-            <div class="items_container__item--quantity items_container__item--quantity-value"><%= Item.quantity %></div>
-            <span class="items_container__item--reorder items_container__item--reorder-text">Reorder quantity</span>
-            <span class="items_container__item--reorder items_container__item--reorder-value"><%= Item.reorder_quantity %></span>
             <span class="items_container__item--category items_container__item--category-text">Category</span>
-            <span class="items_container__item--category items_container__item--category-value">
-                <%=  Item.category_id.name %>
-            </span>
+            <span class="items_container__item--category items_container__item--category-value"><%=  Item.category_id.name %></span>
+            <span class="items_container__item--store items_container__item--store-text">Store</span>
+            <span class="items_container__item--store items_container__item--store-value"><%=  Item.store %></span>
         </div>
     <% }) %>
 </div>

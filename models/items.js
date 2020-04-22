@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const ItemsSchema = new mongoose.Schema({
 	name: String,
 	image: String,
+	store: String,
 	quantity: Number,
 	reorder_quantity: Number,
 	category_id: {

@@ -31,6 +31,11 @@
         </div>
 
         <div class="newitem__form-group">
+            <input type="text" class="newitem__form-input" name="items[store]" placeholder="Store" required>
+            <label for="items[store]" class="newitem__form-label">Store</label>
+        </div>
+
+        <div class="newitem__form-group">
             <label for="items[category]" class="newitem__selectlabel">Please select a category from the list</label>
             <select class="newitem__select" name="items[category]">
                 <% categories.forEach(category => { %>
