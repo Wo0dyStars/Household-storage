@@ -26,6 +26,7 @@ const ItemsRoutes = require('./routes/items');
 const UsersRoutes = require('./routes/users');
 const ShoppingRoutes = require('./routes/shoppings');
 const IndexRoutes = require('./routes/index');
+const BasketRoutes = require('./routes/basket');
 
 // **********************************
 // HANDLE MONGOOSE DEPRECATION
@@ -69,8 +70,11 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+const BasketContent = Math.random();
+
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
+	res.locals.basket = BasketContent;
 	// res.locals.error = req.flash('error');
 	// res.locals.success = req.flash('success');
 	next();
@@ -83,6 +87,7 @@ app.use('/', IndexRoutes);
 app.use('/items', ItemsRoutes);
 app.use('/users', UsersRoutes);
 app.use('/shoppings', ShoppingRoutes);
+app.use('/basket', BasketRoutes);
 
 // **********************************
 // CONNECTING TO THE SERVER AT PORT 3000

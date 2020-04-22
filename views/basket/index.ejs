@@ -1,0 +1,32 @@
+<%- include("../partials/header"); %>
+
+<h1 class="BasketTitle">This is the basket</h1>
+
+<div class="basket-container">
+    <% let totalAmount = 0; %>
+    <% if (Basket) { %>
+        <% Basket.items.forEach((item, idx) => { %>
+            <div class="item__group">
+                <span class="item__group__number"><%= idx + 1 %></span>
+                <span class="item__group__name"><%= item.name %></span>
+                <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
+                <div class="item__group__form">
+                    <input type="number" class="item__group-input" name="quantity" placeholder="Quantity" required>
+                    <label for="quantity" class="item__group-label">Quantity</label>
+                </div>
+                <div class="item__group__form">
+                    <input type="number" class="item__group-input" name="price" placeholder="Price" required>
+                    <label for="price" class="item__group-label">Price</label>
+                </div>
+                <button class="item__group__button">Remove</button>
+            </div>
+            <% totalAmount++ %>
+        <% }); %>
+        <div class="totalAmount">Total: <%= totalAmount %></div>
+        <button>Complete</button>
+    <% } else { %>
+        <div class="empty">Your basket is empty</div>
+    <% } %>
+    
+</div>
+

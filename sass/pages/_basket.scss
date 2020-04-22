@@ -1,0 +1,19 @@
+.BasketTitle {
+	margin-top: 10rem;
+}
+
+.basket-container {
+	width: 70%;
+	margin: 0 auto;
+	.item__group {
+		display: grid;
+		grid-template-columns: repeat(6, minmax(min-content, 1fr));
+
+		&__image {
+			img {
+				width: 6rem;
+				height: 6rem;
+			}
+		}
+	}
+}

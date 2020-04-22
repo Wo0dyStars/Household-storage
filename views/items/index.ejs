@@ -1,10 +1,13 @@
 <%- include("../partials/header"); %>
 
-<h1>This is index page for items</h1>
+<h1 class="ItemHeader">This is index page for items</h1>
+<% if (messages.success) { %>
+    <div class="flash flash-success"><%= messages.success %></div>
+<% } %>
+<% if (messages.error) { %>
+    <div class="flash flash-error"><%= messages.error %></div>
+<% } %>
 <div class="items_container">
-    <% if (messages.success) { %>
-        <div class="flash flash-success"><%= messages.success %></div>
-    <% } %>
     <% Items.forEach((Item, idx) => { %>
         <div class="items_container__item">
             <div class="items_container__item--top">
@@ -18,6 +21,12 @@
             <span class="items_container__item--category items_container__item--category-value"><%=  Item.category_id.name %></span>
             <span class="items_container__item--store items_container__item--store-text">Store</span>
             <span class="items_container__item--store items_container__item--store-value"><%=  Item.store %></span>
+            <span class="items_container__item--basket">
+                <form action="/basket/new" method="POST">
+                    <input type="hidden" name="BasketID" value="<%= Item._id %>">
+                    <button>Basket</button>
+                </form>
+            </span>
         </div>
     <% }) %>
 </div>
