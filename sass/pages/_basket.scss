@@ -7,7 +7,7 @@
 	margin: 0 auto;
 	.item__group {
 		display: grid;
-		grid-template-columns: repeat(6, minmax(min-content, 1fr));
+		grid-template-columns: repeat(7, minmax(min-content, 1fr));
 
 		&__image {
 			img {

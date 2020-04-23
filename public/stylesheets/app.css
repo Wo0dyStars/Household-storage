@@ -736,7 +736,7 @@ body {
   margin: 0 auto; }
   .basket-container .item__group {
     display: grid;
-    grid-template-columns: repeat(6, minmax(min-content, 1fr)); }
+    grid-template-columns: repeat(7, minmax(min-content, 1fr)); }
     .basket-container .item__group__image img {
       width: 6rem;
       height: 6rem; }
