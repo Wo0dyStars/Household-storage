@@ -60,6 +60,17 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 	});
 });
 
+router.delete('/:id', async (req, res) => {
+	await Basket.updateOne({ user_id: req.user._id }, { $pull: { items: req.params.id } }, (err, RemovedItem) => {
+		if (err) {
+			console.log('Error occurred removing item ', err);
+		} else {
+			console.log('Item has been removed from basket.', RemovedItem);
+		}
+	});
+	res.redirect('/basket');
+});
+
 // **********************************
 // EXPORTING ROUTER
 // **********************************

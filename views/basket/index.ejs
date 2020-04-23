@@ -18,7 +18,9 @@
                     <label for="price" class="item__group-label">Price</label>
                 </div>
                 <div class="item__subtotal_<%= idx %>"></div>
-                <button class="item__group__button">Remove</button>
+                <form action="/basket/<%= item._id %>?_method=DELETE" method="POST">
+                    <button class="item__group__button">Remove</button>
+                </form>
             </div>
         <% }); %>
         <div class="totalClass">
