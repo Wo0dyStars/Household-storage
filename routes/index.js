@@ -8,6 +8,8 @@ const User = require('../models/users');
 const { validationResult } = require('express-validator');
 const Validators = require('../middleware/validators');
 
+const Basket = require('../models/basket');
+
 const isLoggedIn = function(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
@@ -19,8 +21,14 @@ const isLoggedIn = function(req, res, next) {
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
 // **********************************
-router.get('/', isLoggedIn, (req, res) => {
-	res.render('landing');
+router.get('/', isLoggedIn, async (req, res) => {
+	await Basket.findOne({ user_id: req.user._id }, (err, basket) => {
+		if (err) {
+			res.render('landing', { BasketQuantity: 0 });
+		} else {
+			res.render('landing', { BasketQuantity: basket.items.length });
+		}
+	});
 });
 
 router.get('/register', (req, res) => {

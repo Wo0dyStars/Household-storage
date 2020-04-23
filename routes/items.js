@@ -38,17 +38,22 @@ const Upload = Multer({ storage });
 // **********************************
 const Items = require('../models/items');
 const Categories = require('../models/categories');
+const Basket = require('../models/basket');
 
 // **********************************
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
 router.get('/', async (req, res) => {
-	await Items.find({}).populate('category_id').exec((err, items) => {
+	await Items.find({}).populate('category_id').exec(async (err, items) => {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('items/index', {
-				Items: items
+			await Basket.findOne({ user_id: req.user._id }, (err, basket) => {
+				if (err) {
+					res.render('items/index', { Items: items, BasketQuantity: 0 });
+				} else {
+					res.render('items/index', { Items: items, BasketQuantity: basket.items.length });
+				}
 			});
 		}
 	});
