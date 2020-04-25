@@ -21,14 +21,8 @@ const isLoggedIn = function(req, res, next) {
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
 // **********************************
-router.get('/', isLoggedIn, async (req, res) => {
-	await Basket.findOne({ user_id: req.user._id }, (err, basket) => {
-		if (err) {
-			res.render('landing', { BasketQuantity: 0 });
-		} else {
-			res.render('landing', { BasketQuantity: basket.items.length });
-		}
-	});
+router.get('/', isLoggedIn, (req, res) => {
+	res.render('landing');
 });
 
 router.get('/register', (req, res) => {

@@ -27,6 +27,7 @@ const UsersRoutes = require('./routes/users');
 const ShoppingRoutes = require('./routes/shoppings');
 const IndexRoutes = require('./routes/index');
 const BasketRoutes = require('./routes/basket');
+const PurchasesRoutes = require('./routes/purchases');
 
 // **********************************
 // HANDLE MONGOOSE DEPRECATION
@@ -86,6 +87,7 @@ app.use('/items', ItemsRoutes);
 app.use('/users', UsersRoutes);
 app.use('/shoppings', ShoppingRoutes);
 app.use('/basket', BasketRoutes);
+app.use('/purchases', PurchasesRoutes);
 
 // **********************************
 // CONNECTING TO THE SERVER AT PORT 3000

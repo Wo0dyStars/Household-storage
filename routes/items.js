@@ -48,13 +48,14 @@ router.get('/', async (req, res) => {
 		if (err) {
 			console.log(err);
 		} else {
-			await Basket.findOne({ user_id: req.user._id }, (err, basket) => {
-				if (err) {
-					res.render('items/index', { Items: items, BasketQuantity: 0 });
-				} else {
-					res.render('items/index', { Items: items, BasketQuantity: basket.items.length });
-				}
-			});
+			// await Basket.findOne({ user_id: req.user._id }, (err, basket) => {
+			// 	if (err) {
+			// 		res.render('items/index', { Items: items, BasketQuantity: 0 });
+			// 	} else {
+			// 		res.render('items/index', { Items: items, BasketQuantity: basket.items.length });
+			// 	}
+			// });
+			res.render('items/index', { Items: items });
 		}
 	});
 });
