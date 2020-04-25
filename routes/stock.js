@@ -30,4 +30,35 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.post('/edit', (req, res) => {
+	Items = req.body.item;
+	let Modified = 0;
+	Items.forEach((item, idx) => {
+		Stock.updateOne(
+			{ 'items.id': item[0] },
+			{ $set: { 'items.$.quantity': item[1], 'items.$.reorder_quantity': item[2] } }
+		).then((updated_stock, err) => {
+			if (err) {
+				console.log('Error occured updating values in stock: ', err);
+			} else {
+				console.log('Details have been updated in stock. ', updated_stock);
+				if (updated_stock.nModified === 1) {
+					Modified++;
+				}
+			}
+
+			if (idx === Items.length - 1) {
+				console.log('modified: ', Modified);
+				if (Modified > 0) {
+					req.flash('success', 'You have successfully updated details of items.');
+					res.redirect('back');
+				} else {
+					req.flash('error', 'You have not changed any values.');
+					res.redirect('back');
+				}
+			}
+		});
+	});
+});
+
 module.exports = router;

@@ -1,9 +1,12 @@
 .stock-container {
 	margin-top: 10rem;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(12rem, min-content));
-	grid-auto-rows: 1fr;
-	grid-gap: 3rem;
+
+	&__items {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(12rem, min-content));
+		grid-auto-rows: 1fr;
+		grid-gap: 3rem;
+	}
 
 	.stock-item {
 		display: grid;

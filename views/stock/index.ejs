@@ -3,19 +3,32 @@
 
 
 <div class="stock-container">
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+
     <% if (stock) { %>
-        <% stock.forEach(stock_ => { %>
-            <% stock_.items.forEach(item => { %>
-                <div class="stock-item">
-                    <span class="stock-item__name"><%= item.id.name %></span>
-                    <span class="stock-item__image"><img src="/images/<%= item.id.image %>" alt=""></span>
-                    <span class="stock-item__label--qty">Qty</span>
-                    <span class="stock-item__quantity"><%= item.quantity %></span>
-                    <span class="stock-item__label--price">Reorder at</span>
-                    <span class="stock-item__reorder_quantity"><%= item.reorder_quantity %></span>
-                </div>
-            <% }) %>
-        <% }) %>
+        <form action="/stock/edit" method="POST">
+            <button class="stock-container__save">Save changes</button>
+            <div class="stock-container__items">
+                <% stock.forEach(stock_ => { %>
+                    <% stock_.items.forEach((item, idx) => { %>
+                        <div class="stock-item">
+                            <span class="stock-item__name"><%= item.id.name %></span>
+                            <span class="stock-item__image"><img src="/images/<%= item.id.image %>" alt=""></span>
+                            <input type="hidden" name="item[<%= idx %>]" value="<%= item.id._id %>">
+                            <span class="stock-item__label--qty">Qty</span>
+                            <input type="Number" name="item[<%= idx %>]" class="stock-item__quantity" value="<%= item.quantity %>">
+                            <span class="stock-item__label--price">Reorder at</span>
+                            <input type="Number" name="item[<%= idx %>]" class="stock-item__reorder_quantity" value="<%= item.reorder_quantity %>">
+                        </div>
+                    <% }) %>
+                <% }) %>
+            </div>
+        </form>
     <% } else { %>
         <div class="stock-missing">
             There is no stock in your household.

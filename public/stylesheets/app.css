@@ -819,11 +819,12 @@ body {
       align-items: center; }
 
 .stock-container {
-  margin-top: 10rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, min-content));
-  grid-auto-rows: 1fr;
-  grid-gap: 3rem; }
+  margin-top: 10rem; }
+  .stock-container__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, min-content));
+    grid-auto-rows: 1fr;
+    grid-gap: 3rem; }
   .stock-container .stock-item {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
