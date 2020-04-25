@@ -10,7 +10,7 @@
         <div class="flash flash-error"><%= messages.error %></div>
     <% } %>
 
-    <% if (stock) { %>
+    <% if (stock && stock[0].items.length !== 0) { %>
         <form action="/stock/edit" method="POST">
             <button class="stock-container__save">Save changes</button>
             <div class="stock-container__items">

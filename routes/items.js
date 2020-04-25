@@ -155,8 +155,21 @@ router.get('/:id', (req, res) => {
 // **********************************
 // DELETE ROUTE FOR DELETING ITEMS
 // **********************************
+// Stock.find({}).then((err, ok) => {
+// 	console.log(err);
+// });
 router.delete('/:id', async (req, res) => {
 	await ItemQueries.DeleteItemByID(req.params.id);
+	await Stock.updateMany(
+		{ 'items.id': req.params.id },
+		{ $pull: { items: { id: req.params.id } } }
+	).then((deleted_stock, err) => {
+		if (err) {
+			console.log('Error occured deleting item from stock: ', err);
+		} else {
+			console.log('Successful deletion: ', deleted_stock);
+		}
+	});
 	res.redirect('/items');
 });
 
