@@ -30,6 +30,60 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.post('/new', middleware.isLoggedIn, async (req, res) => {
+	const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
+		return user.team_id;
+	});
+
+	const StockItem = {
+		id: req.body.StockID,
+		quantity: 1,
+		reorder_quantity: 0
+	};
+
+	await Stock.find({ team_id: TeamID }).then(async (found_team) => {
+		if (found_team.length) {
+			// UPDATE
+			await Stock.find({ 'items.id': req.body.StockID, team_id: TeamID }).then(async (found_item) => {
+				if (!found_item.length) {
+					// ITEM DOES NOT EXIST IN STOCK
+					await Stock.updateOne(
+						{ team_id: TeamID },
+						{ $push: { items: StockItem } },
+						{ new: true, useFindAndModify: false }
+					).then((updated_stock, err) => {
+						if (err) {
+							console.log('Error occured updating stock: ', err);
+						} else {
+							console.log('An existing stock has been updated: ', updated_stock);
+							req.flash('success', 'You have successfully added this item to your stock.');
+							res.redirect('back');
+						}
+					});
+				} else {
+					// ITEM EXISTS IN STOCK
+					req.flash('error', 'This item has already been in your stock.');
+					res.redirect('back');
+				}
+			});
+		} else {
+			// CREATE
+			await Stock.create({
+				team_id: TeamID,
+				items: [ StockItem ]
+			}).then((stock, err) => {
+				if (err) {
+					console.log('Error occured creating stock: ', err);
+				} else {
+					console.log('A new stock has been added: ', stock);
+					req.flash('success', 'You have successfully added this item to your stock.');
+					res.redirect('back');
+				}
+			});
+		}
+	});
+});
+
 router.post('/edit', (req, res) => {
 	Items = req.body.item;
 	let Modified = 0;

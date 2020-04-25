@@ -152,7 +152,6 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.2);
     position: relative;
     border-radius: .5rem;
-    animation: FadeInFromBottom 3s;
     translate: all .2s ease; }
     .items_container__item:hover {
       transform: translateY(-0.5rem); }
@@ -822,7 +821,7 @@ body {
   margin-top: 10rem; }
   .stock-container__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, min-content));
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
     grid-auto-rows: 1fr;
     grid-gap: 3rem; }
   .stock-container .stock-item {

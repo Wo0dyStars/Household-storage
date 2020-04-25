@@ -74,7 +74,7 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 		res.render('items/new', {
 			data: req.body,
 			errors: errors.mapped(),
-			categories: Names
+			categories
 		});
 	} else {
 		const { name, quantity, reorder_quantity, category, store } = req.body.items;
@@ -90,43 +90,6 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 			if (err) {
 				console.log('Error occured creating a new item: ', err);
 			} else {
-				const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
-					return user.team_id;
-				});
-
-				const StockItem = {
-					id: item._id,
-					quantity,
-					reorder_quantity
-				};
-
-				await Stock.find({ team_id: TeamID }).then(async (found_team) => {
-					if (found_team.length) {
-						await Stock.updateOne(
-							{ team_id: TeamID },
-							{ $push: { items: StockItem } },
-							{ new: true, useFindAndModify: false }
-						).then((updated_stock, err) => {
-							if (err) {
-								console.log('Error occured updating stock: ', err);
-							} else {
-								console.log('An existing stock has been updated: ', updated_stock);
-							}
-						});
-					} else {
-						await Stock.create({
-							team_id: TeamID,
-							items: [ StockItem ]
-						}).then((stock, err) => {
-							if (err) {
-								console.log('Error occured creating stock: ', err);
-							} else {
-								console.log('A new stock has been added: ', stock);
-							}
-						});
-					}
-				});
-
 				await Categories.findByIdAndUpdate(
 					category,
 					{ $push: { items: item._id } },

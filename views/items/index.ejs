@@ -27,6 +27,12 @@
                     <button>Basket</button>
                 </form>
             </span>
+            <span class="items_container__item--stock">
+                <form action="/stock/new" method="POST">
+                    <input type="hidden" name="StockID" value="<%= Item._id %>">
+                    <button>Add to Stock</button>
+                </form>
+            </span>
         </div>
     <% }) %>
 </div>
