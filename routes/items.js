@@ -66,9 +66,6 @@ router.get('/new', middleware.isLoggedIn, async (req, res) => {
 // **********************************
 // POST ROUTE FOR HANDLING NEW ITEMS
 // **********************************
-Stock.find({}, (ok, okl) => {
-	console.log(okl);
-});
 
 router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
@@ -81,7 +78,6 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 		});
 	} else {
 		const { name, quantity, reorder_quantity, category, store } = req.body.items;
-		// let category_id = await ItemQueries.FindCategoryIDByName(category);
 		const Item = {
 			name,
 			image: req.file.filename,

@@ -817,3 +817,28 @@ body {
       background-color: rgba(3, 65, 13, 0.3);
       display: flex;
       align-items: center; }
+
+.stock-container {
+  margin-top: 10rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, min-content));
+  grid-auto-rows: 1fr;
+  grid-gap: 3rem; }
+  .stock-container .stock-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 1px solid rgba(130, 243, 187, 0.6); }
+    .stock-container .stock-item > * {
+      text-align: center;
+      background-color: rgba(49, 134, 92, 0.4); }
+    .stock-container .stock-item__name {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2; }
+    .stock-container .stock-item__image {
+      grid-column: 1 / 3;
+      grid-row: 2 / 3;
+      justify-self: center;
+      background-color: #fff; }
+      .stock-container .stock-item__image img {
+        width: 100px;
+        height: 100px; }

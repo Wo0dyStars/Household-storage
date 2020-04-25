@@ -1,0 +1,25 @@
+<%- include("../partials/header"); %>
+
+
+
+<div class="stock-container">
+    <% if (stock) { %>
+        <% stock.forEach(stock_ => { %>
+            <% stock_.items.forEach(item => { %>
+                <div class="stock-item">
+                    <span class="stock-item__name"><%= item.id.name %></span>
+                    <span class="stock-item__image"><img src="/images/<%= item.id.image %>" alt=""></span>
+                    <span class="stock-item__label--qty">Qty</span>
+                    <span class="stock-item__quantity"><%= item.quantity %></span>
+                    <span class="stock-item__label--price">Reorder at</span>
+                    <span class="stock-item__reorder_quantity"><%= item.reorder_quantity %></span>
+                </div>
+            <% }) %>
+        <% }) %>
+    <% } else { %>
+        <div class="stock-missing">
+            There is no stock in your household.
+        </div>
+    <% } %>
+    
+</div>
