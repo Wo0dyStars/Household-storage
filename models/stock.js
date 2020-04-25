@@ -6,20 +6,24 @@ const mongoose = require('mongoose');
 // **********************************
 // DECLARATION OF SCHEMA
 // **********************************
-const ItemsSchema = new mongoose.Schema({
-	name: String,
-	image: String,
-	store: String,
-	category_id: {
+const StockSchema = new mongoose.Schema({
+	team_id: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Categories',
-		default: null
+		ref: 'Teams'
 	},
-	created_at: { type: Date },
-	updated_at: { type: Date, default: Date.now }
+	items: [
+		{
+			id: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Items'
+			},
+			quantity: Number,
+			reorder_quantity: Number
+		}
+	]
 });
 
 // **********************************
 // EXPORTING SCHEMA
 // **********************************
-module.exports = mongoose.model('Items', ItemsSchema);
+module.exports = mongoose.model('Stock', StockSchema);

@@ -39,22 +39,17 @@ const Upload = Multer({ storage });
 const Items = require('../models/items');
 const Categories = require('../models/categories');
 const Basket = require('../models/basket');
+const Stock = require('../models/stock');
+const Users = require('../models/users');
 
 // **********************************
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
 router.get('/', async (req, res) => {
-	await Items.find({}).populate('category_id').exec(async (err, items) => {
+	await Items.find({}).populate('category_id').exec((err, items) => {
 		if (err) {
 			console.log(err);
 		} else {
-			// await Basket.findOne({ user_id: req.user._id }, (err, basket) => {
-			// 	if (err) {
-			// 		res.render('items/index', { Items: items, BasketQuantity: 0 });
-			// 	} else {
-			// 		res.render('items/index', { Items: items, BasketQuantity: basket.items.length });
-			// 	}
-			// });
 			res.render('items/index', { Items: items });
 		}
 	});
@@ -64,26 +59,21 @@ router.get('/', async (req, res) => {
 // GET ROUTE FOR HANDLING NEW ITEMS
 // **********************************
 router.get('/new', middleware.isLoggedIn, async (req, res) => {
-	const Categories = await getCategories();
-	let Names = [];
-	Categories.forEach((category) => {
-		Names.push(category.name);
-	});
-	res.render('items/new', { data: {}, errors: {}, categories: Names });
+	const categories = await getCategories();
+	res.render('items/new', { data: {}, errors: {}, categories });
 });
 
 // **********************************
 // POST ROUTE FOR HANDLING NEW ITEMS
 // **********************************
+Stock.find({}, (ok, okl) => {
+	console.log(okl);
+});
 
 router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		const Categories = await getCategories();
-		let Names = [];
-		Categories.forEach((category) => {
-			Names.push(category.name);
-		});
+		const categories = await getCategories();
 		res.render('items/new', {
 			data: req.body,
 			errors: errors.mapped(),
@@ -91,20 +81,71 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 		});
 	} else {
 		const { name, quantity, reorder_quantity, category, store } = req.body.items;
-		const newItems = {
+		// let category_id = await ItemQueries.FindCategoryIDByName(category);
+		const Item = {
 			name,
-			quantity,
-			reorder_quantity,
 			image: req.file.filename,
-			category,
+			category_id: category,
 			store,
 			created_at: Date.now()
 		};
 
-		let CategoryID = await ItemQueries.FindCategoryIDByName(category);
-		ItemQueries.createItem(CategoryID, newItems);
-		req.flash('success', 'You just successfully added a new item!');
-		res.redirect('/items/new');
+		await Items.create(Item).then(async (item, err) => {
+			if (err) {
+				console.log('Error occured creating a new item: ', err);
+			} else {
+				const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
+					return user.team_id;
+				});
+
+				const StockItem = {
+					id: item._id,
+					quantity,
+					reorder_quantity
+				};
+
+				await Stock.find({ team_id: TeamID }).then(async (found_team) => {
+					if (found_team.length) {
+						await Stock.updateOne(
+							{ team_id: TeamID },
+							{ $push: { items: StockItem } },
+							{ new: true, useFindAndModify: false }
+						).then((updated_stock, err) => {
+							if (err) {
+								console.log('Error occured updating stock: ', err);
+							} else {
+								console.log('An existing stock has been updated: ', updated_stock);
+							}
+						});
+					} else {
+						await Stock.create({
+							team_id: TeamID,
+							items: [ StockItem ]
+						}).then((stock, err) => {
+							if (err) {
+								console.log('Error occured creating stock: ', err);
+							} else {
+								console.log('A new stock has been added: ', stock);
+							}
+						});
+					}
+				});
+
+				await Categories.findByIdAndUpdate(
+					category,
+					{ $push: { items: item._id } },
+					{ new: true, useFindAndModify: false }
+				).then((category_, err) => {
+					if (err) {
+						console.log('Error occured updating category id: ', err);
+					} else {
+						console.log('A new category has been added: ', category_);
+						req.flash('success', 'You just successfully added a new item!');
+						res.redirect('/items/new');
+					}
+				});
+			}
+		});
 	}
 });
 
