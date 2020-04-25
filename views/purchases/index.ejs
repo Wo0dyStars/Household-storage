@@ -1,0 +1,37 @@
+<%- include("../partials/header"); %>
+
+
+<div class="purchases-container">
+    <%purchases.forEach((purchase, idx) => {%>
+        <div class="purchase">
+            <div class="purchase__user">
+                <span class="purchase__user--image"><img src="<%= purchase.user_id.avatar %>" alt=""></span>
+                <span class="purchase__user--username">Username: <%= purchase.user_id.username %></span>
+                <span class="purchase__user--teamname">Team name: 
+                    <%teams.forEach(team => {%>
+                        <% if (team._id.equals(purchase.user_id.team_id)) { %>
+                            <%= team.name %>
+                        <% } %>
+                    <% }) %>
+                </span>
+            </div>
+            <div class="purchase__header">
+                <span class="purchase__header--item">Item</span>
+                <span class="purchase__header--qty">Quantity</span>
+                <span class="purchase__header--price">Price</span>
+            </div>
+
+            <!-- <div class="purchase__title"><%= idx %>. purchase</div> -->
+            <div class="purchase__items">
+                <% purchase.items.forEach((item, idx_) => { %>
+                    <div class="purchase__items--group">
+                        <span class="purchase__items--name"><%= item.id.name %></span>
+                        <span class="purchase__items--quantity"><%= item.quantity %></span>
+                        <span class="purchase__items--price"><%= item.price %></span>
+                    </div>
+                <% }) %>
+            </div>
+            <div class="purchase__date">Purchased at: <%= purchase.purchased_at %></div>
+        </div>
+        <%})%>
+</div>

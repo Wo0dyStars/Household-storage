@@ -10,9 +10,23 @@ const middleware = require('../middleware');
 // **********************************
 const Purchase = require('../models/purchases');
 const Basket = require('../models/basket');
+const Team = require('../models/teams');
 
-router.get('/', (req, res) => {
-	res.send('found.');
+router.get('/', async (req, res) => {
+	await Purchase.find({}).populate('user_id').populate('items.id').then(async (purchases, err) => {
+		if (err) {
+			console.log('Error occurred loading Purchase data: ', err);
+			res.render('purchases/index', { purchases: null });
+		} else {
+			await Team.find({}, 'name').then((teams, err) => {
+				if (err) {
+					console.log('Error occured loading teams: ', err);
+				} else {
+					res.render('purchases/index', { purchases, teams });
+				}
+			});
+		}
+	});
 });
 
 router.post('/new', async (req, res) => {
