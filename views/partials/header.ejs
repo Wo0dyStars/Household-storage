@@ -11,18 +11,110 @@
     <body class="container">
         <div class="navigation">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/items">Items</a></li>
-                <li><a href="/shoppings">Shopping</a></li>
-                <li><a href="/users">Users</a></li>
+                <li>
+                    <div class="navigation__element">
+                        <a href="/">
+                            <svg class="navigation__icon">
+                                <use xlink:href="/icons/sprite.svg#icon-home3"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <span class="navigation__span">Home</span>
+                </li>
+                <li>
+                    <div class="navigation__element">
+                        <a href="/items">
+                            <svg class="navigation__icon">
+                                <use xlink:href="/icons/sprite.svg#icon-file-text2"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <span class="navigation__span">Items</span>
+                </li>
+                <li>
+                    <div class="navigation__element">
+                        <a href="/users">
+                            <svg class="navigation__icon">
+                                <use xlink:href="/icons/sprite.svg#icon-users"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <span class="navigation__span">Users</span>
+                </li>
+                <li>
+                    <div class="navigation__element">
+                        <a href="/purchases">
+                            <svg class="navigation__icon">
+                                <use xlink:href="/icons/sprite.svg#icon-credit-card"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <span class="navigation__span">Purchases</span>
+                </li>
                 
                 <% if(!currentUser) { %>
-                    <li><a href="/login">Sign in</a></li>
-                    <li><a href="/register">Sign up</a></li>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/login">
+                                <svg class="navigation__icon">
+                                    <use xlink:href="/icons/sprite.svg#icon-enter"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span">Sign In</span>
+                    </li>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/register">
+                                <svg class="navigation__icon">
+                                    <use xlink:href="/icons/sprite.svg#icon-add-to-list"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span">Sign Up</span>
+                    </li>
                 <% } else { %>
-                    <li><a href="/items/new">Add items</a></li>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/items/new">
+                                <svg class="navigation__icon">
+                                    <use xlink:href="/icons/sprite.svg#icon-add-to-list"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span">New Item</span>
+                    </li>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/stock"">
+                                <svg class="navigation__icon">
+                                    <use xlink:href="/icons/sprite.svg#icon-clipboard"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span">My Stock</span>
+                    </li>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/basket">
+                                <svg class="navigation__icon">
+                                    <use xlink:href="/icons/sprite.svg#icon-cart"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span">Basket</span>
+                    </li>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/logout">
+                                <svg class="navigation__icon">
+                                    <use xlink:href="/icons/sprite.svg#icon-exit"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span">Logout</span>
+                    </li>
                     <li><a href="#">Signed in as <%= currentUser.username %></a></li>
-                    <li><a href="/logout">Logout</a></li>
                 <% } %>  
             </ul>
         </div>
