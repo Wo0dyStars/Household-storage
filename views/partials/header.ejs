@@ -17,11 +17,6 @@
             </video>
         </div>
 
-        <div class="squares">
-            <div class="square square--1"></div>
-            <div class="square square--2"></div>
-            <div class="square square--3"></div>
-        </div>
         <div class="navigation">
             <ul>
                 <li>
@@ -70,6 +65,7 @@
                         <div class="navigation__credentials">
                             <div class="navigation__credentials--element">
                                 <form action="/login" method="POST" autocomplete="off">
+                                    <span class="login__text">Sign In</span>
                                     <input type="text" class="login__form-input" name="username" placeholder="Username" required>
                                     <input type="password" class="login__password" name="password" placeholder="Password" required>
                                     <button class="login__button">
@@ -77,12 +73,10 @@
                                             <use xlink:href="/icons/sprite.svg#icon-enter"></use>
                                         </svg>
                                     </button>
+                                    <a href="/register" class="login__signup">
+                                        <span>Sign up</span>
+                                    </a>
                                 </form>
-                            </div>
-                            <div class="navigation__credentials--element">
-                                <a href="/register">
-                                    <span class="navigation__credentials--span">Sign up</span>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -119,12 +113,12 @@
                     </li>
                     <div class="credentials-background">
                         <div class="navigation__credentials">
-                            <div class="navigation__credentials--avatar">
-                                <img src="<%= currentUser.avatar%>" alt="">
-                            </div>
                             <span class="navigation__credentials--signed-in">
                                 Signed in as <span class="navigation__credentials--signed-in__username"><%= currentUser.username %></span>
                             </span>
+                            <div class="navigation__credentials--avatar">
+                                <img src="<%= currentUser.avatar%>" alt="">
+                            </div>
                             <div class="navigation__credentials--element">
                                 <a href="/logout">
                                     <svg class="navigation__credentials--icon navigation__icon--exit">
