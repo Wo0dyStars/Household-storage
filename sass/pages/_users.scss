@@ -6,6 +6,8 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 	grid-auto-rows: 1fr;
+	background: rgba(255, 255, 255, .3);
+	border: 1px solid black;
 
 	&__user {
 		margin: 1.5rem;
