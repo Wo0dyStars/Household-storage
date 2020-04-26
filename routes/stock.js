@@ -84,12 +84,16 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 	});
 });
 
-router.post('/edit', (req, res) => {
+router.post('/edit', async (req, res) => {
+	const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
+		return user.team_id;
+	});
+
 	Items = req.body.item;
 	let Modified = 0;
-	Items.forEach((item, idx) => {
+	await Items.forEach((item, idx) => {
 		Stock.updateOne(
-			{ 'items.id': item[0] },
+			{ team_id: TeamID, 'items.id': item[0] },
 			{ $set: { 'items.$.quantity': item[1], 'items.$.reorder_quantity': item[2] } }
 		).then((updated_stock, err) => {
 			if (err) {

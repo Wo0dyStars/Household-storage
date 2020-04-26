@@ -1,40 +1,42 @@
 <%- include("../partials/header"); %>
 
-<h1 class="ItemHeader">This is index page for items</h1>
-<% if (messages.success) { %>
-    <div class="flash flash-success"><%= messages.success %></div>
-<% } %>
-<% if (messages.error) { %>
-    <div class="flash flash-error"><%= messages.error %></div>
-<% } %>
-<div class="items_container">
-    <% Items.forEach((Item, idx) => { %>
-        <div class="items_container__item">
-            <div class="items_container__item--top">
-                <form action="/items/<%= Item._id %>?_method=DELETE" method="POST">
-                    <button class="delete-btn">X</button>
-                </form>
+<div class="items">
+    <div class="pagename">Items</div>
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+    <div class="items_container">
+        <% Items.forEach((Item, idx) => { %>
+            <div class="items_container__item">
+                <div class="items_container__item--top">
+                    <form action="/items/<%= Item._id %>?_method=DELETE" method="POST">
+                        <button class="delete-btn">X</button>
+                    </form>
+                </div>
+                <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
+                <h4 class="items_container__item--name"><%= Item.name %></h4>
+                <span class="items_container__item--category items_container__item--category-text">Category</span>
+                <span class="items_container__item--category items_container__item--category-value"><%=  Item.category_id.name %></span>
+                <span class="items_container__item--store items_container__item--store-text">Store</span>
+                <span class="items_container__item--store items_container__item--store-value"><%=  Item.store %></span>
+                <span class="items_container__item--basket">
+                    <form action="/basket/new" method="POST">
+                        <input type="hidden" name="BasketID" value="<%= Item._id %>">
+                        <button>Basket</button>
+                    </form>
+                </span>
+                <span class="items_container__item--stock">
+                    <form action="/stock/new" method="POST">
+                        <input type="hidden" name="StockID" value="<%= Item._id %>">
+                        <button>Stock</button>
+                    </form>
+                </span>
             </div>
-            <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
-            <h4 class="items_container__item--name"><%= Item.name %></h4>
-            <span class="items_container__item--category items_container__item--category-text">Category</span>
-            <span class="items_container__item--category items_container__item--category-value"><%=  Item.category_id.name %></span>
-            <span class="items_container__item--store items_container__item--store-text">Store</span>
-            <span class="items_container__item--store items_container__item--store-value"><%=  Item.store %></span>
-            <span class="items_container__item--basket">
-                <form action="/basket/new" method="POST">
-                    <input type="hidden" name="BasketID" value="<%= Item._id %>">
-                    <button>Basket</button>
-                </form>
-            </span>
-            <span class="items_container__item--stock">
-                <form action="/stock/new" method="POST">
-                    <input type="hidden" name="StockID" value="<%= Item._id %>">
-                    <button>Add to Stock</button>
-                </form>
-            </span>
-        </div>
-    <% }) %>
+        <% }) %>
+    </div>
 </div>
 
 <%- include("../partials/footer"); %>

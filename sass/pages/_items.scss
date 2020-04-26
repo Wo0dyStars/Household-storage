@@ -1,14 +1,26 @@
-.ItemHeader {
+.items {
 	margin-top: 10rem;
+
+	.pagename {
+		background-color: $Main-color-green;
+		padding: 1rem;
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		animation: ConnectFromTop 1s ease;
+	}
 }
 
 .items_container {
-	margin-top: 2rem;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
 	grid-auto-rows: 1fr;
 	align-items: center;
-	transition: all 1s ease-out;
+	background: rgba($Main-color-green, .1);
+	border: 1px solid rgba($Main-color-green, .3);
+	border-top: none;
+	border-bottom: none;
+	animation: ConnectFromBottom 1s ease;
 
 	&__item {
 		height: 90%;
@@ -20,7 +32,8 @@
 		border: 1px solid rgba(0, 0, 0, .2);
 		position: relative;
 		border-radius: .5rem;
-		translate: all .2s ease;
+		transition: all .2s ease;
+		overflow: hidden;
 
 		&:hover {
 			transform: translateY(-.5rem);
@@ -31,7 +44,7 @@
 			grid-column: 3 / 4;
 			text-align: right;
 			padding: .7rem .7rem .7rem 0;
-			background-color: rgba(51, 46, 46, 0.1);
+			background-color: rgba($Main-color-green, .8);
 		}
 
 		&--name {
@@ -43,10 +56,10 @@
 			width: 100%;
 			height: 100%;
 			font-size: 1.1rem;
-			color: #366fc0;
+			color: #fff;
 			text-transform: uppercase;
 			font-weight: 300;
-			background-color: rgba(51, 46, 46, 0.1);
+			background-color: rgba($Main-color-green, .8);
 		}
 
 		&--image {
@@ -73,13 +86,13 @@
 			&-text {
 				grid-row: 6 / 7;
 				grid-column: 1 / 3;
-				background-color: rgba(51, 46, 46, 0.8);
+				background-color: $Main-color-green;
 			}
 
 			&-value {
 				grid-row: 6 / 7;
 				grid-column: 3 / 4;
-				background-color: rgba(51, 46, 46, 0.9);
+				background-color: rgba($Main-color-green, .8);
 			}
 		}
 
@@ -89,17 +102,18 @@
 			align-items: center;
 			text-transform: uppercase;
 			color: #fff;
+			border-bottom: 1px solid rgba(255, 255, 255, .3);
 
 			&-text {
 				grid-row: 5 / 6;
 				grid-column: 1 / 3;
-				background-color: rgba(51, 46, 46, 0.9);
+				background-color: $Main-color-green;
 			}
 
 			&-value {
 				grid-row: 5 / 6;
 				grid-column: 3 / 4;
-				background-color: rgba(51, 46, 46, 0.8);
+				background-color: rgba($Main-color-green, .8);
 				font-size: .8rem;
 				text-align: center;
 			}
@@ -107,13 +121,49 @@
 
 		&--basket {
 			grid-row: 7 / 8;
-			grid-column: 1 / 3;
+			grid-column: 1 / 2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			button {
+				text-transform: uppercase;
+				color: #fff;
+				background-color: $Main-color-orange;
+				border: none;
+				cursor: pointer;
+				padding: .5em;
+				border-radius: .4rem;
+				transition: all .3s ease;
+
+				&:hover {
+					transform: translateY(-.3rem);
+				}
+			}
+		}
+
+		&--stock {
+			grid-row: 7 / 8;
+			grid-column: 3 / 4;
 
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			text-transform: uppercase;
-			color: #fff;
+
+			button {
+				text-transform: uppercase;
+				color: #fff;
+				background-color: $Main-color-blue;
+				border: none;
+				cursor: pointer;
+				padding: .5em;
+				border-radius: .4rem;
+				transition: all .3s ease;
+
+				&:hover {
+					transform: translateY(-.3rem);
+				}
+			}
 		}
 	}
 }
