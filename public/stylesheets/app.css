@@ -61,6 +61,17 @@
     transform: translateY(0);
     opacity: 1; } }
 
+@keyframes MoveInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0; }
+  50% {
+    transform: translateY(10%);
+    opacity: 0.5; }
+  100% {
+    transform: translateY(0);
+    opacity: 1; } }
+
 *,
 *:before,
 *:after {
@@ -80,7 +91,7 @@ body {
 
 .container {
   width: 65%;
-  margin: 0 10%; }
+  margin: 0 10% auto 10%; }
 
 .flash {
   padding: 1rem;
@@ -101,7 +112,7 @@ body {
   height: 100%;
   width: 100%;
   z-index: -2;
-  opacity: .66;
+  opacity: .15;
   overflow: hidden; }
   .bg-video__content {
     height: 100%;
@@ -197,10 +208,10 @@ body {
         font-size: 1.4rem; }
     .navigation__credentials--avatar {
       position: absolute;
-      top: 5%;
+      top: 11%;
       right: 5%;
-      width: 15rem;
-      height: 15rem;
+      width: 12rem;
+      height: 12rem;
       border-radius: 50%;
       background-color: rgba(255, 255, 255, 0.6);
       overflow: hidden;
@@ -968,3 +979,51 @@ body {
       .stock-container .stock-item__image img {
         width: 100px;
         height: 100px; }
+
+.landing-container {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  justify-items: center; }
+  .landing-container .landing__welcome {
+    font-size: 6rem;
+    text-shadow: 0.5rem 0.5rem 1rem rgba(91, 92, 90, 0.3);
+    animation: MoveInFromTop 2s ease; }
+    .landing-container .landing__welcome--main {
+      color: white;
+      background-color: #03441e;
+      padding: 3rem;
+      border: 3px solid rgba(3, 68, 30, 0.6);
+      border-right: none; }
+    .landing-container .landing__welcome--title {
+      color: #03441e;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 3rem;
+      border: 3px solid rgba(3, 68, 30, 0.6);
+      border-left: none; }
+  .landing-container .landing__subwelcome {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #03441e;
+    animation: MoveInFromTop 2s ease; }
+  .landing-container .landing__buttons {
+    text-align: center;
+    margin-top: 6rem; }
+    .landing-container .landing__buttons > * {
+      padding: 2rem;
+      text-transform: uppercase;
+      border-radius: .4rem;
+      box-shadow: 0.1rem 0.4rem 1rem rgba(0, 0, 0, 0.4);
+      transition: all .3s ease;
+      animation: MoveInFromTop 2s ease; }
+      .landing-container .landing__buttons > *:hover {
+        padding: 2.25rem; }
+      .landing-container .landing__buttons > * a {
+        text-decoration: none;
+        color: #fff; }
+    .landing-container .landing__buttons--join {
+      background-color: #e28205; }
+    .landing-container .landing__buttons--seeitems {
+      background-color: #03441e; }

@@ -20,7 +20,7 @@ body {
 
 .container {
 	width: 65%;
-	margin: 0 10%;
+	margin: 0 10% auto 10%;
 }
 
 .flash {
@@ -47,7 +47,7 @@ body {
 	height: 100%;
 	width: 100%;
 	z-index: -2;
-	opacity: .66;
+	opacity: .15;
 	overflow: hidden;
 
 	&__content {
@@ -177,10 +177,10 @@ body {
 
 		&--avatar {
 			position: absolute;
-			top: 5%;
+			top: 11%;
 			right: 5%;
-			width: 15rem;
-			height: 15rem;
+			width: 12rem;
+			height: 12rem;
 			border-radius: 50%;
 			background-color: rgba(255, 255, 255, .6);
 			overflow: hidden;

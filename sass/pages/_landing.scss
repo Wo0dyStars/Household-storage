@@ -1,0 +1,71 @@
+.landing-container {
+	width: 100%;
+	height: 100vh;
+
+	display: grid;
+	align-items: center;
+	justify-items: center;
+
+	.landing {
+		&__welcome {
+			font-size: 6rem;
+			text-shadow: .5rem .5rem 1rem rgba(91, 92, 90, 0.3);
+			animation: MoveInFromTop 2s ease;
+
+			&--main {
+				color: rgba(255, 255, 255, 1);
+				background-color: rgb(3, 68, 30);
+				padding: 3rem;
+				border: 3px solid rgba(3, 68, 30, .6);
+				border-right: none;
+			}
+
+			&--title {
+				color: rgb(3, 68, 30);
+				background-color: rgba(255, 255, 255, .8);
+				padding: 3rem;
+				border: 3px solid rgba(3, 68, 30, .6);
+				border-left: none;
+			}
+		}
+
+		&__subwelcome {
+			margin-top: 3rem;
+			text-align: center;
+			font-size: 2rem;
+			color: rgb(3, 68, 30);
+			animation: MoveInFromTop 2s ease;
+		}
+
+		&__buttons {
+			text-align: center;
+			margin-top: 6rem;
+
+			& > * {
+				padding: 2rem;
+				text-transform: uppercase;
+				border-radius: .4rem;
+				box-shadow: 0.1rem 0.4rem 1rem rgba(0, 0, 0, .4);
+				transition: all .3s ease;
+				animation: MoveInFromTop 2s ease;
+
+				&:hover {
+					padding: 2.25rem;
+				}
+
+				a {
+					text-decoration: none;
+					color: #fff;
+				}
+			}
+
+			&--join {
+				background-color: rgb(226, 130, 5);
+			}
+
+			&--seeitems {
+				background-color: rgb(3, 68, 30);
+			}
+		}
+	}
+}
