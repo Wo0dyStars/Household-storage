@@ -9,6 +9,12 @@
         <script src="/scripts/Basket.js"></script>
     </head>
     <body class="container">
+        <div class="background"></div>
+        <div class="squares">
+            <div class="square square--1"></div>
+            <div class="square square--2"></div>
+            <div class="square square--3"></div>
+        </div>
         <div class="navigation">
             <ul>
                 <li>
@@ -53,26 +59,26 @@
                 </li>
                 
                 <% if(!currentUser) { %>
-                    <li>
-                        <div class="navigation__element">
-                            <a href="/login">
-                                <svg class="navigation__icon">
-                                    <use xlink:href="/icons/sprite.svg#icon-enter"></use>
-                                </svg>
-                            </a>
+                    <div class="credentials-background">
+                        <div class="navigation__credentials">
+                            <div class="navigation__credentials--element">
+                                <form action="/login" method="POST" autocomplete="off">
+                                    <input type="text" class="login__form-input" name="username" placeholder="Username" required>
+                                    <input type="password" class="login__password" name="password" placeholder="Password" required>
+                                    <button class="login__button">
+                                        <svg class="navigation__credentials--icon">
+                                            <use xlink:href="/icons/sprite.svg#icon-enter"></use>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="navigation__credentials--element">
+                                <a href="/register">
+                                    <span class="navigation__credentials--span">Sign up</span>
+                                </a>
+                            </div>
                         </div>
-                        <span class="navigation__span">Sign In</span>
-                    </li>
-                    <li>
-                        <div class="navigation__element">
-                            <a href="/register">
-                                <svg class="navigation__icon">
-                                    <use xlink:href="/icons/sprite.svg#icon-add-to-list"></use>
-                                </svg>
-                            </a>
-                        </div>
-                        <span class="navigation__span">Sign Up</span>
-                    </li>
+                    </div>
                 <% } else { %>
                     <li>
                         <div class="navigation__element">
@@ -104,17 +110,23 @@
                         </div>
                         <span class="navigation__span">Basket</span>
                     </li>
-                    <li>
-                        <div class="navigation__element">
-                            <a href="/logout">
-                                <svg class="navigation__icon">
-                                    <use xlink:href="/icons/sprite.svg#icon-exit"></use>
-                                </svg>
-                            </a>
+                    <div class="credentials-background">
+                        <div class="navigation__credentials">
+                            <div class="navigation__credentials--avatar">
+                                <img src="<%= currentUser.avatar%>" alt="">
+                            </div>
+                            <span class="navigation__credentials--signed-in">
+                                Signed in as <span class="navigation__credentials--signed-in__username"><%= currentUser.username %></span>
+                            </span>
+                            <div class="navigation__credentials--element">
+                                <a href="/logout">
+                                    <svg class="navigation__credentials--icon">
+                                        <use xlink:href="/icons/sprite.svg#icon-exit"></use>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
-                        <span class="navigation__span">Logout</span>
-                    </li>
-                    <li><a href="#">Signed in as <%= currentUser.username %></a></li>
+                    </div>
                 <% } %>  
             </ul>
         </div>

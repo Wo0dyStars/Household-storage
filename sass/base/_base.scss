@@ -24,22 +24,72 @@ body {
 }
 
 .flash {
-	width: 100%;
 	padding: 1rem;
 	color: white;
 	text-transform: uppercase;
 	text-align: center;
-	text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, .2);
-	animation: OpacityIn 3s;
-	margin-bottom: 1.5rem;
+	text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+	animation: OpacityIn 1s;
 
 	&-success {
-		background-color: rgb(3, 116, 50);
+		background-color: rgb(3, 68, 30);
 	}
 
 	&-error {
 		background-color: rgb(240, 8, 8);
 	}
+}
+
+.background {
+	background: linear-gradient(to right, rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)),
+		url("/images/Background/bg-xlarge.jpg");
+	background-size: cover;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+.squares {
+	position: fixed;
+
+	.square {
+		width: 3%;
+		height: 6%;
+		position: fixed;
+
+		&--1 {
+			right: 1%;
+			bottom: 1%;
+			background-color: rgba(10, 80, 39, 0.8);
+			width: 10%;
+			height: 15%;
+		}
+
+		&--2 {
+			right: 10%;
+			bottom: 5%;
+			background-color: rgba(165, 141, 7, 0.7);
+		}
+
+		&--3 {
+			right: 5%;
+			bottom: 10%;
+			background-color: rgba(10, 80, 39, 0.6);
+		}
+	}
+}
+
+.credentials-background {
+	background: linear-gradient(to right, transparent 30%, rgba(10, 80, 39, 1));
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 40%;
+	height: 10%;
+	z-index: 1;
 }
 
 .navigation {
@@ -49,13 +99,96 @@ body {
 	left: 0;
 	top: 0;
 	position: fixed;
+	z-index: 2;
+
+	&__credentials {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+
+		&--signed-in {
+			align-self: center;
+			color: rgba(255, 255, 255, .7);
+			transition: all .4s, padding 0s;
+			overflow: hidden;
+			backface-visibility: hidden;
+
+			&:hover {
+				transform: scale(1.1) rotate(-5deg);
+				background-color: rgba(10, 80, 39, 1);
+				padding: 1rem;
+			}
+
+			&__username {
+				color: rgba(233, 174, 10, 0.8);
+				font-size: 1.1rem;
+			}
+		}
+
+		&--avatar {
+			position: fixed;
+			top: 1%;
+			right: 16%;
+			width: 10rem;
+			height: 10rem;
+			border-radius: 50%;
+			background-color: #fff;
+			overflow: hidden;
+			border: 1px solid rgba(10, 80, 39, 0.8);
+		}
+
+		img {
+			margin: 0 auto;
+			width: auto;
+			height: 100%;
+		}
+
+		a {
+			text-decoration: none;
+			transition: all .2s;
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+
+		&--span {
+			text-transform: uppercase;
+			color: #fff;
+			font-size: 1.2rem;
+		}
+
+		&--element {
+			margin: 2rem;
+			display: flex;
+
+			form {
+				display: flex;
+				align-items: center;
+			}
+		}
+
+		&--icon {
+			width: 3.5rem;
+			height: 3.5rem;
+			margin-left: 1rem;
+			fill: rgba(10, 80, 39, 0.8);
+			stroke: rgba(255, 255, 255, .6);
+			stroke-width: 0.1;
+			transition: all .2s;
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
 
 	&__span {
 		visibility: hidden;
 		opacity: 0;
-		width: 0;
 		position: absolute;
 		left: 100%;
+		width: 100%;
 		top: 50%;
 		transform: translate(0, -50%);
 		background-color: rgba(10, 80, 39, 0.8);
@@ -75,7 +208,6 @@ body {
 		&:hover ~ .navigation__span {
 			visibility: visible;
 			opacity: 1;
-			width: 100%;
 		}
 
 		&:hover .navigation__icon {

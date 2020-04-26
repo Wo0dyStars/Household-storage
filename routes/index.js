@@ -7,21 +7,14 @@ const passport = require('passport');
 const User = require('../models/users');
 const { validationResult } = require('express-validator');
 const Validators = require('../middleware/validators');
+const middleware = require('../middleware');
 
 const Basket = require('../models/basket');
-
-const isLoggedIn = function(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	req.flash('error', 'You must be logged in to do that.');
-	res.redirect('/login');
-};
 
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
 // **********************************
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', (req, res) => {
 	res.render('landing');
 });
 
@@ -70,7 +63,7 @@ router.post(
 	'/login',
 	passport.authenticate('local', {
 		successRedirect: '/',
-		failureRedirect: '/login'
+		failureRedirect: '/'
 	}),
 	(req, res) => {}
 );
@@ -78,7 +71,7 @@ router.post(
 router.get('/logout', (req, res) => {
 	req.logout();
 	req.flash('success', 'Logged you out!');
-	res.redirect('/login');
+	res.redirect('/');
 });
 
 // **********************************
