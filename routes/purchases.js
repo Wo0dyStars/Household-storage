@@ -11,6 +11,7 @@ const middleware = require('../middleware');
 const Purchase = require('../models/purchases');
 const Basket = require('../models/basket');
 const Team = require('../models/teams');
+const Stock = require('../models/stock');
 
 router.get('/', async (req, res) => {
 	await Purchase.find({}).populate('user_id').populate('items.id').then(async (purchases, err) => {
@@ -32,6 +33,7 @@ router.get('/', async (req, res) => {
 router.post('/new', async (req, res) => {
 	const { quantity, price, id } = req.body;
 	const items = [];
+	const stock = [];
 
 	if (quantity && price && id) {
 		quantity.forEach((qty, idx) => {
@@ -40,6 +42,11 @@ router.post('/new', async (req, res) => {
 				quantity: qty,
 				price: price[idx]
 			});
+			stock.push({
+				id: id[idx],
+				quantity: qty,
+				reorder_quantity: 0
+			});
 		});
 
 		await Purchase.create(
@@ -47,14 +54,46 @@ router.post('/new', async (req, res) => {
 				user_id: req.user._id,
 				items: items
 			},
-			(err, purchase) => {
+			async (err, purchase) => {
 				if (err) {
 					console.log('Error occurred creating a new purchase: ', err);
 				} else {
 					console.log('A new purchase has been created: ', purchase);
 
+					// Add elements to stock
+					stock.forEach((item, idx) => {
+						Stock.find({ team_id: req.user.team_id, 'items.id': item.id }).then(async (foundStock) => {
+							// IF EXIST
+							if (foundStock.length) {
+								await Stock.updateOne(
+									{ team_id: req.user.team_id, 'items.id': item.id },
+									{ $inc: { 'items.$.quantity': item.quantity } }
+								).then((updatedStock, err) => {
+									if (err) {
+										console.log('Error occured updating stock: ', err);
+									} else {
+										console.log('An existing stock has been updated: ', updatedStock);
+									}
+								});
+							} else {
+								// IF NOT EXIST
+								await Stock.updateOne(
+									{ team_id: req.user.team_id },
+									{ $push: { items: item } },
+									{ new: true, useFindAndModify: false }
+								).then((createdStock, err) => {
+									if (err) {
+										console.log('Error occured creating stock: ', err);
+									} else {
+										console.log('A new stock has been created: ', createdStock);
+									}
+								});
+							}
+						});
+					});
+
 					// Remove elements from basket
-					Basket.deleteOne({ user_id: req.user._id }, (err, basket) => {
+					await Basket.deleteOne({ user_id: req.user._id }, (err, basket) => {
 						if (err) {
 							console.log('Error deleting basket: ', err);
 						} else {
