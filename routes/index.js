@@ -9,8 +9,6 @@ const { validationResult } = require('express-validator');
 const Validators = require('../middleware/validators');
 const middleware = require('../middleware');
 
-const Basket = require('../models/basket');
-
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
 // **********************************

@@ -38,7 +38,6 @@ const Upload = Multer({ storage });
 // **********************************
 const Items = require('../models/items');
 const Categories = require('../models/categories');
-const Basket = require('../models/basket');
 const Stock = require('../models/stock');
 const Users = require('../models/users');
 
@@ -46,7 +45,6 @@ const Users = require('../models/users');
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
 router.get('/', async (req, res) => {
-	console.log('Basket qty: ', req.session.basketqty);
 	await Items.find({}).populate('category_id').exec((err, items) => {
 		if (err) {
 			console.log(err);

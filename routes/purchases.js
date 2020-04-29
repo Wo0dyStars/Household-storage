@@ -9,7 +9,6 @@ const middleware = require('../middleware');
 // SCHEMA IMPORTS
 // **********************************
 const Purchase = require('../models/purchases');
-const Basket = require('../models/basket');
 const Team = require('../models/teams');
 const Stock = require('../models/stock');
 
@@ -98,22 +97,15 @@ router.post('/new', async (req, res) => {
 							req.session.baskets.splice(idx, 1);
 						}
 					});
-					// await Basket.deleteOne({ user_id: req.user._id }, (err, basket) => {
-					// 	if (err) {
-					// 		console.log('Error deleting basket: ', err);
-					// 	} else {
-					// 		console.log('Basket has been deleted: ', basket);
-					// 	}
-					// });
 
 					req.flash('success', 'You have successfully created a new purchase!');
-					res.redirect('back');
+					res.redirect('/basket');
 				}
 			}
 		);
 	} else {
 		req.flash('error', 'You have not added items in your basket.');
-		res.redirect('back');
+		res.redirect('/basket');
 	}
 });
 
