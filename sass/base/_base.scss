@@ -275,6 +275,19 @@ body {
 		}
 	}
 
+	.basket-quantity {
+		position: absolute;
+		top: 0%;
+		right: 0%;
+		background-color: $Main-color-orange;
+		color: #fff;
+		width: 30%;
+		height: 30%;
+		text-align: center;
+		border-radius: 50%;
+		font-size: 1.8rem;
+	}
+
 	&__element {
 		display: flex;
 		align-items: center;

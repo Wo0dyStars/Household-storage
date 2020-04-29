@@ -289,6 +289,17 @@ body {
       background-color: rgba(56, 44, 3, 0.8); }
     .navigation__span--cart {
       background-color: rgba(92, 2, 2, 0.8); }
+  .navigation .basket-quantity {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    background-color: #f5ac0e;
+    color: #fff;
+    width: 30%;
+    height: 30%;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 1.8rem; }
   .navigation__element {
     display: flex;
     align-items: center;

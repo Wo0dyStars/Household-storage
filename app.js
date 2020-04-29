@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -41,6 +42,11 @@ mongoose.set('useUnifiedTopology', true);
 // **********************************
 // MONGOOSE CONNECTION
 // **********************************
+const store = new MongoDBStore({
+	uri: 'mongodb://localhost:27017/test__1',
+	collection: 'mySessions'
+});
+
 const URL = 'mongodb://localhost:27017/test__1';
 mongoose
 	.connect(URL)
@@ -60,7 +66,12 @@ const middlewares = [
 	session({
 		secret: 'super-secret-key',
 		resave: false,
-		saveUninitialized: false
+		saveUninitialized: true,
+		unset: 'destroy',
+		cookie: {
+			maxAge: 30 * 60 * 1000
+		},
+		store: store
 	}),
 	flash(),
 	passport.initialize(),
@@ -74,9 +85,26 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
-	// res.locals.basket = BasketContent;
-	// res.locals.error = req.flash('error');
-	// res.locals.success = req.flash('success');
+	if (req.user) {
+		if (req.session.baskets && req.session.baskets.length) {
+			let foundUser = false;
+			req.session.baskets.forEach((basket) => {
+				if (basket.id.equals(req.user._id)) {
+					foundUser = true;
+					req.session.basketqty = basket.items.length;
+					res.locals.BasketQuantity = basket.items.length;
+				}
+			});
+
+			if (!foundUser) {
+				req.session.basketqty = 0;
+				res.locals.BasketQuantity = 0;
+			}
+		} else {
+			req.session.basketqty = 0;
+			res.locals.BasketQuantity = 0;
+		}
+	}
 	next();
 });
 

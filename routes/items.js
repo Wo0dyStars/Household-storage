@@ -46,6 +46,7 @@ const Users = require('../models/users');
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
 router.get('/', async (req, res) => {
+	console.log('Basket qty: ', req.session.basketqty);
 	await Items.find({}).populate('category_id').exec((err, items) => {
 		if (err) {
 			console.log(err);

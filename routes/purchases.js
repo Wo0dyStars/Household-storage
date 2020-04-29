@@ -93,13 +93,18 @@ router.post('/new', async (req, res) => {
 					});
 
 					// Remove elements from basket
-					await Basket.deleteOne({ user_id: req.user._id }, (err, basket) => {
-						if (err) {
-							console.log('Error deleting basket: ', err);
-						} else {
-							console.log('Basket has been deleted: ', basket);
+					req.session.baskets.forEach((basket, idx) => {
+						if (basket.id.equals(req.user._id)) {
+							req.session.baskets.splice(idx, 1);
 						}
 					});
+					// await Basket.deleteOne({ user_id: req.user._id }, (err, basket) => {
+					// 	if (err) {
+					// 		console.log('Error deleting basket: ', err);
+					// 	} else {
+					// 		console.log('Basket has been deleted: ', basket);
+					// 	}
+					// });
 
 					req.flash('success', 'You have successfully created a new purchase!');
 					res.redirect('back');
