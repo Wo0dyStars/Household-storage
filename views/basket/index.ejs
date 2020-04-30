@@ -12,7 +12,7 @@
                     <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
                     <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
                     
-                    <form action="/basket/<%= item._id %>?_method=DELETE" method="POST">
+                    <form action="/basket/<%= item.id %>?_method=DELETE" method="POST">
                         <button class="item__group__button">Remove</button>
                     </form>
                 </div>
