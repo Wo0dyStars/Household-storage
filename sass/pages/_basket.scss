@@ -1,18 +1,109 @@
-.BasketTitle {
+.basket {
 	margin-top: 10rem;
+
+	.pagename {
+		background-color: $Main-color-green;
+		padding: 1rem;
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		animation: ConnectFromTop 1s ease;
+	}
+
+	.basket-form {
+		display: grid;
+		justify-items: right;
+		border: none;
+	}
+
+	.basket-next {
+		margin: 2rem;
+		text-transform: uppercase;
+		color: #fff;
+		background-color: $Main-color-orange;
+		border: none;
+		cursor: pointer;
+		padding: 1rem;
+		border-radius: .4rem;
+		transition: all .3s ease;
+
+		&:hover {
+			transform: translateY(-.3rem);
+		}
+	}
 }
 
 .basket-container {
-	width: 70%;
 	margin: 0 auto;
+	border-right: 1px solid rgba($Main-color-green, .3);
+	border-left: 1px solid rgba($Main-color-green, .3);
+	animation: ConnectFromBottom 1s ease;
+
+	.empty {
+		padding: 3rem;
+		color: rgba($Main-color-green, .8);
+		font-size: 1.8rem;
+		background-color: #fff;
+	}
+
 	.item__group {
+		margin: .2rem auto;
 		display: grid;
-		grid-template-columns: repeat(7, minmax(min-content, 1fr));
+		grid-template-columns: 1fr min-content 6fr 1fr;
+		align-items: center;
+		font-size: 1.8rem;
+		text-transform: uppercase;
+		border-bottom: 1px solid rgba($Main-color-green, .3);
+		background-color: rgba(255, 255, 255, .2);
+		color: rgba($Main-color-green, .8);
+		text-align: center;
+
+		&--confirm {
+			grid-template-columns: minmax(3rem, min-content) 1fr min-content 1fr 1fr minmax(3rem, min-content);
+		}
+
+		input[type=number] {
+			padding: 1rem;
+			text-align: center;
+			font-size: 1.1rem;
+			font-weight: 500;
+
+			&::-webkit-inner-spin-button,
+			::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		&:nth-child(2n) {
+			background-color: rgba($Main-color-green, .3);
+			color: rgba(255, 255, 255, 1);
+		}
 
 		&__image {
+			background-color: #fff;
 			img {
 				width: 6rem;
 				height: 6rem;
+			}
+		}
+
+		&__button {
+			text-transform: uppercase;
+			color: #fff;
+			background-color: red;
+			border: none;
+			cursor: pointer;
+			padding: .5em;
+			border-radius: .4rem;
+			transition: all .3s ease;
+
+			&:hover {
+				transform: translateY(-.3rem);
 			}
 		}
 	}

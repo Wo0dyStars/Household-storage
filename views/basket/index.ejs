@@ -1,32 +1,37 @@
 <%- include("../partials/header"); %>
 
-<h1 class="BasketTitle">This is the basket</h1>
-
-<div class="basket-container">
+<div class="basket">
+    <form class="basket-form" action="/basket/confirm" method="POST">
+        <button class="basket-next">Next</button>
+    </form>
+    <div class="pagename">Your Basket</div>
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+    <div class="basket-container">
     
         <% if (Basket) { %>
+
             <% Basket.items.forEach((item, idx) => { %>
                 <div class="item__group">
                     <span class="item__group__number"><%= idx + 1 %></span>
+                    <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
                     <span class="item__group__name"><%= item.name %></span>
                     <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
-                    <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
+                    
                     
                     <form action="/basket/<%= item.id %>?_method=DELETE" method="POST">
                         <button class="item__group__button">Remove</button>
                     </form>
                 </div>
             <% }); %>
-            <div class="totalClass">
-                Total: <span class="totalAmount"></span>
-            </div> 
         <% } else { %>
             <div class="empty">Your basket is empty</div>
         <% } %>
-
-        <form action="/basket/confirm" method="POST">
-            <button class="basket-next">Next</button>
-        </form>
    
+</div>
 </div>
 

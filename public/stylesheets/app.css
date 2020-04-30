@@ -939,18 +939,85 @@ body {
         .user-container .user-profile__info--about__title {
           font-size: 2rem; }
 
-.BasketTitle {
+.basket {
   margin-top: 10rem; }
+  .basket .pagename {
+    background-color: #037432;
+    padding: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    animation: ConnectFromTop 1s ease; }
+  .basket .basket-form {
+    display: grid;
+    justify-items: right;
+    border: none; }
+  .basket .basket-next {
+    margin: 2rem;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #f5ac0e;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: .4rem;
+    transition: all .3s ease; }
+    .basket .basket-next:hover {
+      transform: translateY(-0.3rem); }
 
 .basket-container {
-  width: 70%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  border-right: 1px solid rgba(3, 116, 50, 0.3);
+  border-left: 1px solid rgba(3, 116, 50, 0.3);
+  animation: ConnectFromBottom 1s ease; }
+  .basket-container .empty {
+    padding: 3rem;
+    color: rgba(3, 116, 50, 0.8);
+    font-size: 1.8rem;
+    background-color: #fff; }
   .basket-container .item__group {
+    margin: .2rem auto;
     display: grid;
-    grid-template-columns: repeat(7, minmax(min-content, 1fr)); }
-    .basket-container .item__group__image img {
-      width: 6rem;
-      height: 6rem; }
+    grid-template-columns: 1fr min-content 6fr 1fr;
+    align-items: center;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(3, 116, 50, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(3, 116, 50, 0.8);
+    text-align: center; }
+    .basket-container .item__group--confirm {
+      grid-template-columns: minmax(3rem, min-content) 1fr min-content 1fr 1fr minmax(3rem, min-content); }
+    .basket-container .item__group input[type=number] {
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 500; }
+      .basket-container .item__group input[type=number]::-webkit-inner-spin-button,
+      .basket-container .item__group input[type=number] ::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0; }
+      .basket-container .item__group input[type=number]:focus {
+        outline: none; }
+    .basket-container .item__group:nth-child(2n) {
+      background-color: rgba(3, 116, 50, 0.3);
+      color: white; }
+    .basket-container .item__group__image {
+      background-color: #fff; }
+      .basket-container .item__group__image img {
+        width: 6rem;
+        height: 6rem; }
+    .basket-container .item__group__button {
+      text-transform: uppercase;
+      color: #fff;
+      background-color: red;
+      border: none;
+      cursor: pointer;
+      padding: .5em;
+      border-radius: .4rem;
+      transition: all .3s ease; }
+      .basket-container .item__group__button:hover {
+        transform: translateY(-0.3rem); }
 
 .purchases-container {
   margin: 10rem auto;
