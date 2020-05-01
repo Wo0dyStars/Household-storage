@@ -11,7 +11,7 @@
 
     <div class="basket-container">
         <form action="/purchases/new" method="POST">
-            <% if (Basket && (Basket.length>1)) { %>
+            <% if (Basket && Basket.items.length) { %>
                 <% Basket.items.forEach((item, idx) => { %>
                     <div class="item__group item__group--confirm">
                         <span class="item__group__number"><%= idx + 1 %></span>

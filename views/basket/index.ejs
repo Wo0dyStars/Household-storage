@@ -13,7 +13,7 @@
     <% } %>
     <div class="basket-container">
     
-        <% if (Basket) { %>
+        <% if (Basket && Basket.items.length) { %>
 
             <% Basket.items.forEach((item, idx) => { %>
                 <div class="item__group">

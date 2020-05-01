@@ -4,7 +4,7 @@
 
 	.user-profile {
 		display: grid;
-		grid-template-rows: repeat(2, minmax(min-content, 1fr));
+		grid-template-rows: repeat(2, minmax(1fr, 50vh));
 
 		&__main {
 			grid-row: 1 / 2;
@@ -15,11 +15,10 @@
 
 			display: grid;
 			grid-template-rows: repeat(5, 1fr);
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: 1fr;
 
 			&-avatar {
 				grid-row: 1 / 5;
-				grid-column: 1 / 2;
 				justify-self: center;
 				align-self: center;
 				padding: 2rem;
@@ -33,7 +32,6 @@
 
 			&-upload {
 				grid-row: 5 / 6;
-				grid-column: 1 / 2;
 				justify-self: center;
 				align-self: center;
 
@@ -81,20 +79,50 @@
 
 			&-username {
 				font-size: 3rem;
-				color: rgba(3, 116, 50, 1);
-				align-self: center;
+				padding: 1rem;
+				color: $Main-color-green;
 			}
 
 			&-name {
 				font-size: 1rem;
-				color: rgba(3, 116, 50, 1);
-				align-self: center;
+				padding: 1rem;
+				color: rgba(255, 255, 255, .7);
+				background-color: rgba($Main-color-green, .4);
 			}
 
 			&-team {
 				font-size: 1rem;
-				color: rgba(3, 116, 50, 1);
-				align-self: center;
+				padding: 1rem;
+				color: rgba(255, 255, 255, .7);
+				background-color: rgba($Main-color-green, .7);
+			}
+		}
+
+		&__select,
+		&__createinput {
+			padding: .5rem;
+			margin-left: 1rem;
+			margin-bottom: 1rem;
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		&__join,
+		&__create {
+			margin-left: 1rem;
+			text-transform: uppercase;
+			color: #fff;
+			background-color: $Main-color-orange;
+			border: none;
+			cursor: pointer;
+			padding: .5em;
+			border-radius: .4rem;
+			transition: all .3s ease;
+
+			&:hover {
+				transform: translateY(-.3rem);
 			}
 		}
 
@@ -107,8 +135,48 @@
 				padding: 3rem;
 				font-size: 1.3rem;
 
+				& > * {
+					padding: 2rem;
+					background-color: rgba($Main-color-orange, .1);
+					border-bottom: 1px solid rgba($Main-color-orange, .2);
+				}
+
 				&__title {
 					font-size: 2rem;
+				}
+
+				&__email {
+				}
+
+				&__joined {
+				}
+
+				&__updated {
+				}
+			}
+
+			&--purchases {
+				padding: 3rem;
+				font-size: 1.3rem;
+
+				&__title {
+					font-size: 2rem;
+					margin-bottom: 1rem;
+				}
+
+				&__month {
+					border: 1px solid rgba($Main-color-green, .4);
+					padding: 2rem;
+					background-color: rgba($Main-color-green, .4);
+
+					&:nth-child(2n) {
+						background-color: rgba(255, 255, 255, .4);
+					}
+				}
+
+				&__total {
+					font-size: 1.6rem;
+					padding: 2rem 0;
 				}
 			}
 		}

@@ -1,5 +1,26 @@
 <%- include("../partials/header"); %>
 
+<%
+	function DateFormat(OriginalDate) {
+		var date = new Date(OriginalDate);
+		var d = date.getDate();
+		var m = date.getMonth() + 1;
+		var y = date.getFullYear();
+		return `${d}/${m}/${y}`;
+    }
+
+    function GetPurchasesByDate(purchases, DateBefore) {
+        let filtered = [];
+        purchases.forEach(purchase => {
+            if (purchase.purchased_at > DateBefore) {
+                filtered.push(purchase);
+            }
+        });
+        return filtered;
+    }
+    
+%>
+
 <div class="user-container">
     <div class="user-profile">
         <div class="user-profile__main">
@@ -15,14 +36,15 @@
                                 <option value="<%= name._id %>"><%= name.name %></option>
                             <% }) %>
                         </select> 
-                        <button class="user-profile__join">Join</button>
+                        <button class="user-profile__join">Send request</button>
                     </form>
                     <form action="/users/<%= user._id %>"  method="POST">
                         <label for="createteam" class="user-profile__label">Create a team</label>
-                        <input type="text" name="createteam" placeholder="Team name">
+                        <input type="text" class="user-profile__createinput" name="createteam" placeholder="Team name">
                         <button class="user-profile__create">Create</button>
                     </form>
                 <% } else { %>
+                    Member of the following team:
                     <%= teamname %>
                 <% } %>
             </div>
@@ -39,20 +61,28 @@
             <section class="user-profile__info--about">
                 <div class="user-profile__info--about__title">About</div>
                 <div class="user-profile__info--about__email">Email address: <%= user.email %></div>
-                <div class="user-profile__info--about__joined">Joined: 
-                    <% var date = new Date(user.joined_at); %>
-                    <% var d = date.getDate(); %>
-                    <% var m = date.getMonth()+1; %>
-                    <% var y = date.getFullYear(); %>
-                    <%= d %>-<%= m %>-<%= y %>
-                </div>
-                <div class="user-profile__info--about__updated">Last updated: 
-                    <% var date = new Date(user.updated_at); %>
-                    <% var d = date.getDate(); %>
-                    <% var m = date.getMonth()+1; %>
-                    <% var y = date.getFullYear(); %>
-                    <%= d %>-<%= m %>-<%= y %>
-                </div>
+                <div class="user-profile__info--about__joined">Joined: <%= DateFormat(user.joined_at) %></div>
+                <div class="user-profile__info--about__updated">Last updated: <%= DateFormat(user.updated_at) %></div>
+            </section>
+
+            <section class="user-profile__info--purchases">
+                <% if (purchases && purchases.length) { %>
+                    <div class="user-profile__info--purchases__title">Purchases</div>
+                    <% let sum = 0; %>
+                    <% purchases.forEach(purchase => { %>
+                        <div class="user-profile__info--purchases__month">
+                            <div>Date: <%= DateFormat(purchase.purchased_at) %></div>
+                            <% let localsum = 0; %>
+                            <% purchase.items.forEach(item => { %>
+                                <% localsum += item.quantity * item.price %>
+                            <% }) %>
+                            <div>Spending: £<%= localsum %></div>
+                        </div>
+                        <% sum += localsum %>
+                    <% }) %>
+                    
+                    <div class="user-profile__info--purchases__total">TOTAL: £<%= sum %></div>
+                <% } %>
             </section>
         </div>
     </div>

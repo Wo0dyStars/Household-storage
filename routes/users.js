@@ -13,6 +13,7 @@ const middleware = require('../middleware');
 // SCHEMA IMPORTS
 // **********************************
 const Users = require('../models/items');
+const Purchase = require('../models/purchases');
 const UserQueries = require('../queries/users');
 const TeamQueries = require('../queries/teams');
 
@@ -39,10 +40,13 @@ router.get('/:id', async (req, res) => {
 		if (user) {
 			const teamname = await TeamQueries.getTeamNameByID(user.team_id);
 			const names = await TeamQueries.getTeamNames();
+			const purchases = await Purchase.find({ user_id: req.params.id }).then((userPurchases) => {
+				return userPurchases;
+			});
 			if (teamname) {
-				res.render('users/show', { user, teamname: teamname.name, names });
+				res.render('users/show', { user, teamname: teamname.name, names, purchases });
 			} else {
-				res.render('users/show', { user, teamname: null, names });
+				res.render('users/show', { user, teamname: null, names, purchases });
 			}
 		} else {
 			req.flash('error', 'User is not in the database');

@@ -863,7 +863,7 @@ body {
   margin: 10rem auto; }
   .user-container .user-profile {
     display: grid;
-    grid-template-rows: repeat(2, minmax(min-content, 1fr)); }
+    grid-template-rows: repeat(2, minmax(1fr, 50vh)); }
     .user-container .user-profile__main {
       grid-row: 1 / 2;
       grid-column: 1 / 2;
@@ -872,10 +872,9 @@ body {
       background-color: rgba(3, 116, 50, 0.1);
       display: grid;
       grid-template-rows: repeat(5, 1fr);
-      grid-template-columns: repeat(2, 1fr); }
+      grid-template-columns: 1fr; }
       .user-container .user-profile__main-avatar {
         grid-row: 1 / 5;
-        grid-column: 1 / 2;
         justify-self: center;
         align-self: center;
         padding: 2rem; }
@@ -885,7 +884,6 @@ body {
           border: 2px dashed rgba(3, 116, 50, 0.5); }
       .user-container .user-profile__main-upload {
         grid-row: 5 / 6;
-        grid-column: 1 / 2;
         justify-self: center;
         align-self: center; }
         .user-container .user-profile__main-upload [type="file"] {
@@ -919,16 +917,36 @@ body {
             padding: 1.2rem 2rem; }
       .user-container .user-profile__main-username {
         font-size: 3rem;
-        color: #037432;
-        align-self: center; }
+        padding: 1rem;
+        color: #037432; }
       .user-container .user-profile__main-name {
         font-size: 1rem;
-        color: #037432;
-        align-self: center; }
+        padding: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(3, 116, 50, 0.4); }
       .user-container .user-profile__main-team {
         font-size: 1rem;
-        color: #037432;
-        align-self: center; }
+        padding: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(3, 116, 50, 0.7); }
+    .user-container .user-profile__select, .user-container .user-profile__createinput {
+      padding: .5rem;
+      margin-left: 1rem;
+      margin-bottom: 1rem; }
+      .user-container .user-profile__select:focus, .user-container .user-profile__createinput:focus {
+        outline: none; }
+    .user-container .user-profile__join, .user-container .user-profile__create {
+      margin-left: 1rem;
+      text-transform: uppercase;
+      color: #fff;
+      background-color: #f5ac0e;
+      border: none;
+      cursor: pointer;
+      padding: .5em;
+      border-radius: .4rem;
+      transition: all .3s ease; }
+      .user-container .user-profile__join:hover, .user-container .user-profile__create:hover {
+        transform: translateY(-0.3rem); }
     .user-container .user-profile__info {
       grid-row: 2 / 3;
       grid-column: 1 / 2;
@@ -936,8 +954,27 @@ body {
       .user-container .user-profile__info--about {
         padding: 3rem;
         font-size: 1.3rem; }
+        .user-container .user-profile__info--about > * {
+          padding: 2rem;
+          background-color: rgba(245, 172, 14, 0.1);
+          border-bottom: 1px solid rgba(245, 172, 14, 0.2); }
         .user-container .user-profile__info--about__title {
           font-size: 2rem; }
+      .user-container .user-profile__info--purchases {
+        padding: 3rem;
+        font-size: 1.3rem; }
+        .user-container .user-profile__info--purchases__title {
+          font-size: 2rem;
+          margin-bottom: 1rem; }
+        .user-container .user-profile__info--purchases__month {
+          border: 1px solid rgba(3, 116, 50, 0.4);
+          padding: 2rem;
+          background-color: rgba(3, 116, 50, 0.4); }
+          .user-container .user-profile__info--purchases__month:nth-child(2n) {
+            background-color: rgba(255, 255, 255, 0.4); }
+        .user-container .user-profile__info--purchases__total {
+          font-size: 1.6rem;
+          padding: 2rem 0; }
 
 .basket {
   margin-top: 10rem; }

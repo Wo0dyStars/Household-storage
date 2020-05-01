@@ -12,9 +12,10 @@
         <% Items.forEach((Item, idx) => { %>
             <div class="items_container__item">
                 <div class="items_container__item--top">
-                    <form action="/items/<%= Item._id %>?_method=DELETE" method="POST">
+                    <button class="delete-btn">X</button>
+                    <!-- <form action="/items/<%= Item._id %>?_method=DELETE" method="POST">
                         <button class="delete-btn">X</button>
-                    </form>
+                    </form> -->
                 </div>
                 <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
                 <h4 class="items_container__item--name"><%= Item.name %></h4>
