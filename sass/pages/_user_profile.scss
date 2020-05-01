@@ -11,7 +11,12 @@
 			grid-column: 1 / 2;
 			border: 1px solid rgba(3, 116, 50, .2);
 			border-bottom: 10px solid rgba(3, 116, 50, 1);
-			background-color: rgba(3, 116, 50, 0.1);
+			border-radius: 5rem;
+			box-shadow: .3rem .3rem 1rem rgba(3, 116, 50, 0.3);
+
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			background: linear-gradient(to top, rgba(255, 255, 255, .5) 35%, rgba($Main-color-green, .4));
 
 			display: grid;
 			grid-template-rows: repeat(5, 1fr);
@@ -27,6 +32,7 @@
 					width: 200px;
 					height: 200px;
 					border: 2px dashed rgba(3, 116, 50, 0.5);
+					box-shadow: .3rem .3rem 1rem rgba(3, 116, 50, 0.5);
 				}
 			}
 
@@ -80,21 +86,21 @@
 			&-username {
 				font-size: 3rem;
 				padding: 1rem;
-				color: $Main-color-green;
+				color: rgba(3, 116, 50, 1);
 			}
 
 			&-name {
 				font-size: 1rem;
 				padding: 1rem;
-				color: rgba(255, 255, 255, .7);
-				background-color: rgba($Main-color-green, .4);
+				color: #fff;
+				background-color: rgba($Main-color-green, 1);
 			}
 
 			&-team {
 				font-size: 1rem;
 				padding: 1rem;
-				color: rgba(255, 255, 255, .7);
-				background-color: rgba($Main-color-green, .7);
+				color: rgba($Main-color-green, 1);
+				background-color: rgba($Main-color-green, .2);
 			}
 		}
 
@@ -132,7 +138,6 @@
 			background-color: rgba(182, 248, 208, 0.1);
 
 			&--about {
-				padding: 3rem;
 				font-size: 1.3rem;
 
 				& > * {
@@ -156,8 +161,12 @@
 			}
 
 			&--purchases {
-				padding: 3rem;
 				font-size: 1.3rem;
+				background-color: rgba($Main-color-green, .1);
+
+				& > * {
+					padding: 2rem;
+				}
 
 				&__title {
 					font-size: 2rem;
@@ -165,8 +174,8 @@
 				}
 
 				&__month {
+					margin: 2rem;
 					border: 1px solid rgba($Main-color-green, .4);
-					padding: 2rem;
 					background-color: rgba($Main-color-green, .4);
 
 					&:nth-child(2n) {
@@ -176,7 +185,6 @@
 
 				&__total {
 					font-size: 1.6rem;
-					padding: 2rem 0;
 				}
 			}
 		}
