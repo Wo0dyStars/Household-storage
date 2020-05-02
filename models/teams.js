@@ -14,6 +14,23 @@ const TeamsSchema = new mongoose.Schema({
 			ref: 'Users'
 		}
 	],
+	requests: [
+		{
+			user_id: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Users'
+			},
+			acceptedBy: [
+				{
+					user_id: {
+						type: mongoose.Schema.Types.ObjectId,
+						ref: 'Users'
+					},
+					accepted: { type: Boolean, default: false }
+				}
+			]
+		}
+	],
 	created_at: { type: Date },
 	updated_at: { type: Date, default: Date.now }
 });

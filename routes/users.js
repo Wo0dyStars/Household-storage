@@ -13,9 +13,10 @@ const _ = require('lodash');
 // **********************************
 // SCHEMA IMPORTS
 // **********************************
-const Users = require('../models/items');
+const Users = require('../models/users');
 const Purchase = require('../models/purchases');
 const Items = require('../models/items');
+const Teams = require('../models/teams');
 const UserQueries = require('../queries/users');
 const TeamQueries = require('../queries/teams');
 
@@ -42,6 +43,17 @@ router.get('/:id', async (req, res) => {
 		if (user) {
 			const teamname = await TeamQueries.getTeamNameByID(user.team_id);
 			const names = await TeamQueries.getTeamNames();
+			const teamRequests = await Teams.findById(user.team_id, 'requests').then(async (requests) => {
+				let requestUsers = [];
+				if (requests) {
+					requests.requests.forEach((request) => {
+						console.log(request);
+						requestUsers.push(request.user_id);
+					});
+				}
+
+				return await Users.find().where('_id').in(requestUsers).select('username').exec();
+			});
 			const purchases = await Purchase.find({ user_id: req.params.id }).then((userPurchases) => {
 				return userPurchases;
 			});
@@ -73,9 +85,23 @@ router.get('/:id', async (req, res) => {
 				});
 
 			if (teamname) {
-				res.render('users/show', { user, teamname: teamname.name, names, purchases, favItems: Sorteditems });
+				res.render('users/show', {
+					user,
+					teamname: teamname.name,
+					names,
+					purchases,
+					favItems: Sorteditems,
+					teamRequests
+				});
 			} else {
-				res.render('users/show', { user, teamname: null, names, purchases, favItems: Sorteditems });
+				res.render('users/show', {
+					user,
+					teamname: null,
+					names,
+					purchases,
+					favItems: Sorteditems,
+					teamRequests
+				});
 			}
 		} else {
 			req.flash('error', 'User is not in the database');
@@ -89,8 +115,54 @@ router.get('/:id', async (req, res) => {
 
 router.post('/:id', middleware.isLoggedIn, Upload.single('avatar'), async (req, res) => {
 	if (req.body.selectteam) {
-		await TeamQueries.AddUserToTeam(req.body.selectteam, req.params.id);
-		res.redirect('back');
+		await Teams.findById(req.body.selectteam).then((SelectedTeam) => {
+			console.log(SelectedTeam);
+		});
+		await Teams.findById(req.body.selectteam).then(async (SelectedTeam) => {
+			// CREATE
+			let acceptedBy = [];
+			SelectedTeam.users.forEach((user) => {
+				acceptedBy.push({
+					user_id: user,
+					accepted: false
+				});
+			});
+			Request = {
+				user_id: req.params.id,
+				acceptedBy: acceptedBy
+			};
+			// CHECK IF REQUESTED
+			isContain = false;
+			await Teams.find({}).then(async (AllTeam) => {
+				AllTeam.forEach((team) => {
+					if (team.requests) {
+						team.requests.forEach((request) => {
+							if (request.user_id.equals(req.params.id)) {
+								isContain = true;
+							}
+						});
+					}
+				});
+			});
+			if (isContain) {
+				console.log('You have already sent request to a team.');
+				req.flash('error', 'You have already sent request to a team.');
+				res.redirect('back');
+			} else {
+				await Teams.findByIdAndUpdate(
+					req.body.selectteam,
+					{ $push: { requests: Request } },
+					{ new: true, useFindAndModify: false }
+				).then((Requested, err) => {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(Requested);
+						res.redirect('back');
+					}
+				});
+			}
+		});
 	}
 	if (req.body.createteam) {
 		await TeamQueries.createTeam(req.body.createteam, req.params.id);

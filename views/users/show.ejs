@@ -80,6 +80,11 @@
                 <% } else { %>
                     Member of the following team:
                     <%= teamname %>
+                    <% if (teamRequests) { %>
+                        <% teamRequests.forEach(request => { %>
+                            <a href="/users/<%= request._id %>"><%= request.username %></a> wants to join your team.
+                        <% }) %>
+                    <% } %>
                 <% } %>
             </div>
             <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
@@ -111,8 +116,6 @@
                             <div>Spending: £<%= purchase.sum %></div>
                         </div>
                     <% }) %>
-                    
-                    <div class="user-profile__info--purchases__total">TOTAL: £<%= Purchase.total %></div>
                 <% } %>
             </section>
         </div>
