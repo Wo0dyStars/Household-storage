@@ -8,12 +8,14 @@ const Multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const middleware = require('../middleware');
+const _ = require('lodash');
 
 // **********************************
 // SCHEMA IMPORTS
 // **********************************
 const Users = require('../models/items');
 const Purchase = require('../models/purchases');
+const Items = require('../models/items');
 const UserQueries = require('../queries/users');
 const TeamQueries = require('../queries/teams');
 
@@ -43,10 +45,37 @@ router.get('/:id', async (req, res) => {
 			const purchases = await Purchase.find({ user_id: req.params.id }).then((userPurchases) => {
 				return userPurchases;
 			});
+			const Sorteditems = await Purchase.find({ user_id: req.params.id })
+				.populate('items.id')
+				.then((purchases) => {
+					let FilteredItems = [];
+					purchases.forEach((purchase) => {
+						purchase.items.forEach((item) => {
+							FilteredItems.push({
+								id: item.id._id,
+								name: item.id.name,
+								image: item.id.image,
+								qty: item.quantity
+							});
+						});
+					});
+					return _(FilteredItems)
+						.groupBy('id')
+						.map((objs, key) => ({
+							id: key,
+							name: objs[0].name,
+							image: objs[0].image,
+							qty: _.sumBy(objs, 'qty')
+						}))
+						.orderBy('qty', 'desc')
+						.value()
+						.splice(0, 3);
+				});
+
 			if (teamname) {
-				res.render('users/show', { user, teamname: teamname.name, names, purchases });
+				res.render('users/show', { user, teamname: teamname.name, names, purchases, favItems: Sorteditems });
 			} else {
-				res.render('users/show', { user, teamname: null, names, purchases });
+				res.render('users/show', { user, teamname: null, names, purchases, favItems: Sorteditems });
 			}
 		} else {
 			req.flash('error', 'User is not in the database');

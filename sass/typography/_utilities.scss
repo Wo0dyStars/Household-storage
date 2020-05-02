@@ -1,0 +1,11 @@
+.main-button {
+	text-transform: uppercase;
+	color: #fff;
+	background-color: $Main-color-orange;
+	border: none;
+	cursor: pointer;
+	padding: 1.5rem;
+	border-radius: .4rem;
+	font-size: 1.1rem;
+	transition: all .3s ease;
+}

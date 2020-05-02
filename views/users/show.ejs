@@ -9,14 +9,28 @@
 		return `${d}/${m}/${y}`;
     }
 
-    function GetPurchasesByDate(purchases, DateBefore) {
-        let filtered = [];
-        purchases.forEach(purchase => {
-            if (purchase.purchased_at > DateBefore) {
-                filtered.push(purchase);
-            }
-        });
-        return filtered;
+    function GetPurchases(purchases) {
+        let purchase_arr = {
+            items: [],
+            total: 0
+        };
+        if (purchases && purchases.length) { 
+            let sum = 0;
+            purchases.forEach(purchase => {
+                let localsum = 0;
+                purchase.items.forEach(item => {
+                    localsum += item.quantity * item.price;
+                })
+                sum += localsum;
+                let item = {
+                    date: DateFormat(purchase.purchased_at),
+                    sum: localsum
+                }
+                purchase_arr.items.push(item);
+            })
+            purchase_arr.total = sum;
+        }
+        return purchase_arr;
     }
     
 %>
@@ -25,7 +39,27 @@
     <div class="user-profile">
         <div class="user-profile__main">
             <div class="user-profile__main-avatar"><img src="<%= user.avatar %>" alt=""></div>
+            <div class="user-profile__main-favitems">
+                <% if (favItems && favItems.length) { %>
+                    <% favItems.forEach((item, idx) => { %>
+                        <div class="user-profile__main-favitems__favitem">
+                            <span class="user-profile__main-favitems__favitem--name"><%= item.name %></span>
+                            <span class="user-profile__main-favitems__favitem--image"><img class="image-<%= idx %>" src="/images/<%= item.image %>" alt=""></span>
+                            <span class="user-profile__main-favitems__favitem--qty">Bought <%= item.qty %> times</span>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="user-profile__main-favitems__empty">You have not bought any items yet.</div>
+                <% } %>
+            </div>
             <div class="user-profile__main-username"><%= user.username %></div>
+            <div class="user-profile__main-spending">
+                <% let Purchase = GetPurchases(purchases) %>
+                <svg class="navigation__icon navigation__icon--home">
+                    <use xlink:href="/icons/sprite.svg#icon-coin-pound"></use>
+                </svg>
+                <%= Purchase.total %>
+            </div>
             <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
             <div class="user-profile__main-team">
                 <% if (!teamname) { %>
@@ -48,14 +82,17 @@
                     <%= teamname %>
                 <% } %>
             </div>
-            <div class="user-profile__main-upload">
-                <form action="/users/<%= user._id %>" enctype="multipart/form-data" method="POST">
-                    <input type="file" id="file" name="avatar" accept="image/*">
-                    <label for="file" class="upload-avatar">Browse</label>
-                    <input type="hidden" name="oldavatar" value="<%= user.avatar %>">
-                    <button>Save</button>
-                </form>
-            </div>
+            <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
+                <div class="user-profile__main-upload">
+                    <form action="/users/<%= user._id %>" enctype="multipart/form-data" method="POST">
+                        <span class="user-profile__main-upload--choose">Choose Avatar</span>
+                        <input type="file" id="file" name="avatar" accept="image/*">
+                        <label for="file" class="main-button">Browse</label>
+                        <input type="hidden" name="oldavatar" value="<%= user.avatar %>">
+                        <button class="main-button">Save</button>
+                    </form>
+                </div>
+            <% } %> 
         </div>
         <div class="user-profile__info">
             <section class="user-profile__info--about">
@@ -68,20 +105,14 @@
             <section class="user-profile__info--purchases">
                 <% if (purchases && purchases.length) { %>
                     <div class="user-profile__info--purchases__title">Purchases</div>
-                    <% let sum = 0; %>
-                    <% purchases.forEach(purchase => { %>
+                    <% Purchase.items.forEach(purchase => { %>
                         <div class="user-profile__info--purchases__month">
-                            <div>Date: <%= DateFormat(purchase.purchased_at) %></div>
-                            <% let localsum = 0; %>
-                            <% purchase.items.forEach(item => { %>
-                                <% localsum += item.quantity * item.price %>
-                            <% }) %>
-                            <div>Spending: £<%= localsum %></div>
+                            <div>Date: <%= purchase.date %></div>
+                            <div>Spending: £<%= purchase.sum %></div>
                         </div>
-                        <% sum += localsum %>
                     <% }) %>
                     
-                    <div class="user-profile__info--purchases__total">TOTAL: £<%= sum %></div>
+                    <div class="user-profile__info--purchases__total">TOTAL: £<%= Purchase.total %></div>
                 <% } %>
             </section>
         </div>

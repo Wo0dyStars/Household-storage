@@ -88,6 +88,17 @@
     transform: translateY(0);
     opacity: 1; } }
 
+.main-button {
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #f5ac0e;
+  border: none;
+  cursor: pointer;
+  padding: 1.5rem;
+  border-radius: .4rem;
+  font-size: 1.1rem;
+  transition: all .3s ease; }
+
 *,
 *:before,
 *:after {
@@ -872,67 +883,112 @@ body {
       grid-column: 1 / 2;
       border: 1px solid rgba(3, 116, 50, 0.2);
       border-bottom: 10px solid #037432;
-      border-radius: 5rem;
       box-shadow: 0.3rem 0.3rem 1rem rgba(3, 116, 50, 0.3);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 35%, rgba(3, 116, 50, 0.4));
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 35%, rgba(3, 116, 50, 0.2));
       display: grid;
-      grid-template-rows: repeat(5, 1fr);
-      grid-template-columns: 1fr; }
+      grid-template-rows: repeat(3, 1fr) min-content min-content;
+      grid-template-columns: repeat(3, minmax(min-content, 1fr)); }
       .user-container .user-profile__main-avatar {
-        grid-row: 1 / 5;
+        grid-row: 1 / 3;
+        grid-column: 1 / 2;
         justify-self: center;
         align-self: center;
         padding: 2rem; }
         .user-container .user-profile__main-avatar img {
+          box-sizing: content-box;
           width: 200px;
           height: 200px;
-          border: 2px dashed rgba(3, 116, 50, 0.5);
+          border: 1rem solid rgba(3, 116, 50, 0.2);
           box-shadow: 0.3rem 0.3rem 1rem rgba(3, 116, 50, 0.5); }
+      .user-container .user-profile__main-favitems {
+        grid-row: 1 / 4;
+        grid-column: 3 / 4;
+        box-shadow: 0.3rem 0.3rem 4rem rgba(3, 116, 50, 0.2); }
+        .user-container .user-profile__main-favitems__empty {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          font-size: 1.4rem;
+          color: rgba(0, 0, 0, 0.7); }
+        .user-container .user-profile__main-favitems__favitem {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          align-items: center;
+          text-align: center;
+          border-left: 1px solid rgba(3, 116, 50, 0.2);
+          border-bottom: 1px dashed rgba(3, 116, 50, 0.2);
+          padding: 1rem;
+          background-color: rgba(255, 255, 255, 0.6); }
+          .user-container .user-profile__main-favitems__favitem--name {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.6); }
+          .user-container .user-profile__main-favitems__favitem--image {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            box-sizing: content-box; }
+            .user-container .user-profile__main-favitems__favitem--image > * {
+              border: 1px solid rgba(3, 116, 50, 0.1);
+              border-radius: 1rem; }
+            .user-container .user-profile__main-favitems__favitem--image .image-0 {
+              width: 150px;
+              height: 150px; }
+            .user-container .user-profile__main-favitems__favitem--image .image-1 {
+              width: 100px;
+              height: 100px; }
+            .user-container .user-profile__main-favitems__favitem--image .image-2 {
+              width: 50px;
+              height: 50px; }
+          .user-container .user-profile__main-favitems__favitem--qty {
+            font-size: 1.4rem;
+            color: rgba(3, 116, 50, 0.7);
+            font-style: italic; }
       .user-container .user-profile__main-upload {
-        grid-row: 5 / 6;
-        justify-self: center;
+        grid-row: 1 / 3;
+        grid-column: 2 / 3;
         align-self: center; }
+        .user-container .user-profile__main-upload--choose {
+          font-size: 1.1rem;
+          color: #037432; }
         .user-container .user-profile__main-upload [type="file"] {
           height: 0;
           overflow: hidden;
           width: 0; }
-        .user-container .user-profile__main-upload [type="file"] + label {
-          border: none;
-          border-radius: 5px;
-          color: #fff;
-          cursor: pointer;
-          outline: none;
-          padding: 1.2rem 1rem;
-          transition: padding 0.3s; }
-          .user-container .user-profile__main-upload [type="file"] + label.upload-avatar {
-            background-color: #037432;
-            box-shadow: .1rem .1rem 1rem #fff; }
-            .user-container .user-profile__main-upload [type="file"] + label.upload-avatar:hover {
-              padding: 1.2rem 2rem; }
         .user-container .user-profile__main-upload button {
-          padding: 1.2rem 1rem;
-          background-color: #f00808;
-          border: 1px solid #fff;
-          box-shadow: .1rem .1rem 1rem #fff;
-          font-size: inherit;
-          cursor: pointer;
-          color: #fff;
-          transition: padding .3s;
-          border-radius: 5px; }
-          .user-container .user-profile__main-upload button:hover {
-            padding: 1.2rem 2rem; }
+          background-color: #037432; }
       .user-container .user-profile__main-username {
+        grid-row: 3 / 4;
+        grid-column: 1 / 2;
         font-size: 3rem;
         padding: 1rem;
-        color: #037432; }
+        color: #037432;
+        border-top: 1px solid rgba(3, 116, 50, 0.1);
+        border-bottom: 1px solid rgba(3, 116, 50, 0.1);
+        text-align: center;
+        align-self: center;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent); }
+      .user-container .user-profile__main-spending {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        padding: .1rem;
+        color: rgba(3, 116, 50, 0.6);
+        background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent); }
       .user-container .user-profile__main-name {
+        grid-row: 4 / 5;
+        grid-column: 1 / 4;
         font-size: 1rem;
         padding: 1rem;
         color: #fff;
         background-color: #037432; }
       .user-container .user-profile__main-team {
+        grid-row: 5 / 6;
+        grid-column: 1 / 4;
         font-size: 1rem;
         padding: 1rem;
         color: #037432;
