@@ -6,8 +6,23 @@ function CalculateRealTimePrices(index) {
 	const total = document.querySelector('.totalAmount');
 	let sum = 0;
 	for (let i = 0; i < price.length; i++) {
+		if (quantity[i].value < 0) {
+			quantity[i].value = 0;
+		}
+		if (price[i].value < 0) {
+			price[i].value = 0;
+		}
 		sum += quantity[i].value * price[i].value;
 	}
-	total.innerHTML = sum;
-	subtotal.innerHTML = quantity[index].value * price[index].value;
+	if (sum < 0) {
+		total.innerHTML = '£' + 0;
+	} else {
+		total.innerHTML = '£' + sum;
+	}
+
+	if (quantity[index].value > 0 && price[index].value > 0) {
+		subtotal.innerHTML = '£' + quantity[index].value * price[index].value;
+	} else {
+		subtotal.innerHTML = '£' + 0;
+	}
 }

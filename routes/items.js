@@ -107,6 +107,19 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 	}
 });
 
+router.post('/search', async (req, res) => {
+	console.log(req.body.search);
+	await Items.find({ name: { $regex: req.body.search, $options: 'i' } })
+		.populate('category_id')
+		.exec((err, items) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.render('items/index', { Items: items });
+			}
+		});
+});
+
 // **********************************
 // GET ROUTE FOR DISPLAYING AN ITEM
 // **********************************

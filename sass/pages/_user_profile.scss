@@ -39,6 +39,16 @@
 				justify-self: center;
 				align-self: center;
 				padding: 2rem;
+				transition: all .5s;
+				backface-visibility: hidden;
+
+				&:hover {
+					transform: scale(1.03);
+
+					img {
+						border: 1rem solid rgba($Main-color-orange, 0.2);
+					}
+				}
 
 				img {
 					box-sizing: content-box;
@@ -85,7 +95,7 @@
 					border-left: 1px solid rgba($Main-color-green, .2);
 					border-bottom: 1px dashed rgba($Main-color-green, .2);
 					padding: 1rem;
-					background-color: rgba(255, 255, 255, .6);
+					background-color: rgba(255, 255, 255, .5);
 
 					&--name {
 						font-size: 1.4rem;
@@ -121,8 +131,9 @@
 
 					&--qty {
 						font-size: 1.4rem;
-						color: rgba($Main-color-green, .7);
+						color: rgba(255, 255, 255, .7);
 						font-style: italic;
+						background-color: rgba($Main-color-green, .4);
 					}
 				}
 			}
@@ -159,6 +170,12 @@
 				text-align: center;
 				align-self: center;
 				background: linear-gradient(to right, rgba(255, 255, 255, .8), transparent);
+				transition: all .5s;
+
+				&:hover {
+					color: $Main-color-orange;
+					letter-spacing: .3rem;
+				}
 			}
 
 			&-spending {

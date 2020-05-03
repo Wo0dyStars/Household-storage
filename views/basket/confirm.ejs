@@ -10,35 +10,38 @@
     <% } %>
 
     <div class="basket-container">
-        <form action="/purchases/new" method="POST">
-            <% if (Basket && Basket.items.length) { %>
-                <% Basket.items.forEach((item, idx) => { %>
-                    <div class="item__group item__group--confirm">
-                        <span class="item__group__number"><%= idx + 1 %></span>
-                        <span class="item__group__name"><%= item.name %></span>
-                        <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
-                        <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
-                        <div class="item__group__form">
-                            <input type="number" id="basket-quantity" class="item__group-input" name="quantity[<%= idx %>]" placeholder="Quantity" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
-                            <label for="quantity" class="item__group-label">Quantity</label>
+        <div class="basket-container__inner">
+            <div class="basket-title">Your selected items</div>
+            <form action="/purchases/new" method="POST">
+                <% if (Basket && Basket.items.length) { %>
+                    <% Basket.items.forEach((item, idx) => { %>
+                        <div class="item__group item__group--confirm">
+                            <span class="item__group__number"><%= idx + 1 %></span>
+                            <span class="item__group__name"><%= item.name %></span>
+                            <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
+                            <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
+                            <div class="item__group__form">
+                                <input type="number" id="basket-quantity" class="item__group-input" name="quantity[<%= idx %>]" placeholder="Quantity" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
+                                <label for="quantity" class="item__group-label">Qty</label>
+                            </div>
+                            <div class="item__group__form">
+                                £
+                                <input type="number" id="basket-price" class="item__group-input" name="price[<%= idx %>]" placeholder="Price" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
+                                <label for="price" class="item__group-label">Price</label>
+                            </div>
+                            <div class="item__subtotal item__subtotal_<%= idx %>"></div>
                         </div>
-                        <div class="item__group__form">
-                            £
-                            <input type="number" id="basket-price" class="item__group-input" name="price[<%= idx %>]" placeholder="Price" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
-                            <label for="price" class="item__group-label">Price</label>
-                        </div>
-                        <div class="item__subtotal_<%= idx %>"></div>
-                    </div>
-                <% }); %>
-                <div class="totalClass">
-                    Total: <span class="totalAmount"></span>
-                    <button class="basket-next">Complete</button>
-                </div> 
-            <% } else { %>
-                <div class="empty">Your basket is empty</div>
-            <% } %>
+                    <% }); %>
+                    <div class="totalClass">
+                        <span class="totalLabel">Total:</span> <span class="totalAmount"></span>
+                        <a href="/basket" class="basket-back">BACK</a>
+                        <button class="basket-next">Complete</button>
+                    </div> 
+                <% } else { %>
+                    <div class="empty">Your basket is empty</div>
+                <% } %>
 
-        </form>
-    
+            </form>
+        </div>
     </div>
 </div>

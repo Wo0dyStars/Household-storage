@@ -1,5 +1,11 @@
 <%- include("../partials/header"); %>
 
+<div class="search-items">
+    <form action="/items/search" method="POST">
+        <input type="text" name="search">
+        <button>Search</button>
+    </form>
+</div>
 <div class="items">
     <div class="pagename">Items</div>
     <% if (messages.success) { %>

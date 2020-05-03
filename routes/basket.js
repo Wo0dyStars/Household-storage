@@ -5,6 +5,9 @@ const express = require('express');
 const router = express.Router();
 const middleware = require('../middleware');
 
+// *********************************************************
+// SHOW BASKET CONTENT TO SPECIFIED USER
+// *********************************************************
 router.get('/', middleware.isLoggedIn, async (req, res) => {
 	if (req.session.baskets && req.session.baskets.length) {
 		let foundUser = false;
@@ -23,6 +26,9 @@ router.get('/', middleware.isLoggedIn, async (req, res) => {
 	}
 });
 
+// *********************************************************
+// MOVE TO CONFIRM PAGE IF EVERYTHING IS READY
+// *********************************************************
 router.post('/confirm', middleware.isLoggedIn, async (req, res) => {
 	if (req.session.baskets && req.session.baskets.length) {
 		let foundUser = false;
@@ -41,6 +47,9 @@ router.post('/confirm', middleware.isLoggedIn, async (req, res) => {
 	}
 });
 
+// *********************************************************
+// CREATE A NEW BASKET OR ADD AN ITEM TO AN EXISTING BASKET
+// *********************************************************
 router.post('/new', middleware.isLoggedIn, async (req, res) => {
 	const { ID, Name, Image } = req.body.Item;
 	const newItem = {
@@ -90,20 +99,25 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 	}
 });
 
-router.delete('/:id', async (req, res) => {
+// **********************************
+// DELETE SELECTED ITEM FROM BASKET
+// **********************************
+router.delete('/:id', middleware.isLoggedIn, async (req, res) => {
 	if (req.session.baskets && req.user._id) {
 		req.session.baskets.forEach((basket) => {
 			if (basket.id.equals(req.user._id)) {
 				basket.items.forEach((item, idx) => {
 					if (item.id === req.params.id) {
 						basket.items.splice(idx, 1);
-						res.redirect('/basket');
+						req.flash('success', 'You have successfully removed this item.');
+						res.redirect('back');
 					}
 				});
 			}
 		});
 	} else {
-		res.redirect('/basket');
+		req.flash('error', 'An error occurred deleting this item.');
+		res.redirect('back');
 	}
 });
 

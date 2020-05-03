@@ -24,10 +24,16 @@
 		border: 1px solid rgba($Main-color-green, .1);
 		border-bottom: none;
 		box-shadow: .1rem .1rem .1rem rgba($Main-color-green, 0.1);
+		margin-top: 1rem;
 
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(2, minmax(3rem, min-content)) 1fr minmax(3rem, min-content);
+
+		&:hover {
+			background-color: rgba($Main-color-orange, 0.1);
+			transform: translateY(-.5rem);
+		}
 
 		&__user {
 			grid-column: 1 / 4;
@@ -57,6 +63,16 @@
 				padding: .4rem;
 				border-right: 1px solid black;
 				align-self: center;
+
+				a:link,
+				a:visited {
+					text-decoration: none;
+					color: rgba(0, 0, 0, .7);
+
+					&:hover {
+						color: $Main-color-orange;
+					}
+				}
 			}
 
 			&--teamname {
@@ -94,6 +110,7 @@
 
 		&__items {
 			grid-column: 1 / 4;
+			background-color: rgba(255, 255, 255, .6);
 
 			&--group {
 				display: grid;

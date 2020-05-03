@@ -212,10 +212,10 @@ body {
 
 			a {
 				text-decoration: none;
-				transition: all .2s;
 
 				&:hover {
 					transform: scale(1.1);
+					color: $Main-color-orange;
 				}
 			}
 		}
@@ -285,11 +285,12 @@ body {
 		position: absolute;
 		top: 0%;
 		right: 0%;
-		background-color: $Main-color-orange;
+		background-color: rgba($Main-color-orange, .8);
 		color: #fff;
 		width: 30%;
 		height: 30%;
 		text-align: center;
+		margin-right: .4rem;
 		border-radius: 50%;
 		font-size: 1.8rem;
 	}

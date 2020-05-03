@@ -13,20 +13,24 @@ const Team = require('../models/teams');
 const Stock = require('../models/stock');
 
 router.get('/', async (req, res) => {
-	await Purchase.find({}).populate('user_id').populate('items.id').then(async (purchases, err) => {
-		if (err) {
-			console.log('Error occurred loading Purchase data: ', err);
-			res.render('purchases/index', { purchases: null });
-		} else {
-			await Team.find({}, 'name').then((teams, err) => {
-				if (err) {
-					console.log('Error occured loading teams: ', err);
-				} else {
-					res.render('purchases/index', { purchases, teams });
-				}
-			});
-		}
-	});
+	await Purchase.find({})
+		.populate('user_id')
+		.populate('items.id')
+		.sort({ purchased_at: -1 })
+		.then(async (purchases, err) => {
+			if (err) {
+				console.log('Error occurred loading Purchase data: ', err);
+				res.render('purchases/index', { purchases: null });
+			} else {
+				await Team.find({}, 'name').then((teams, err) => {
+					if (err) {
+						console.log('Error occured loading teams: ', err);
+					} else {
+						res.render('purchases/index', { purchases, teams });
+					}
+				});
+			}
+		});
 });
 
 router.post('/new', async (req, res) => {

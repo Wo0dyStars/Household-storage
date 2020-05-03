@@ -12,26 +12,29 @@
         <div class="flash flash-error"><%= messages.error %></div>
     <% } %>
     <div class="basket-container">
-    
-        <% if (Basket && Basket.items.length) { %>
 
-            <% Basket.items.forEach((item, idx) => { %>
-                <div class="item__group">
-                    <span class="item__group__number"><%= idx + 1 %></span>
-                    <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
-                    <span class="item__group__name"><%= item.name %></span>
-                    <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
-                    
-                    
-                    <form action="/basket/<%= item.id %>?_method=DELETE" method="POST">
-                        <button class="item__group__button">Remove</button>
-                    </form>
-                </div>
-            <% }); %>
-        <% } else { %>
-            <div class="empty">Your basket is empty</div>
-        <% } %>
+        <div class="basket-container__inner">
+            <div class="basket-title">Your selected items</div>
+            <% if (Basket && Basket.items.length) { %>
+
+                <% Basket.items.forEach((item, idx) => { %>
+                    <div class="item__group">
+                        <span class="item__group__number"><%= idx + 1 %></span>
+                        <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
+                        <span class="item__group__name"><%= item.name %></span>
+                        <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
+                        
+                        
+                        <form action="/basket/<%= item.id %>?_method=DELETE" method="POST">
+                            <button class="item__group__button">Remove</button>
+                        </form>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="empty">Your basket is empty</div>
+            <% } %>
+        </div>
    
-</div>
+    </div>
 </div>
 

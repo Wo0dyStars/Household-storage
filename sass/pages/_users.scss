@@ -30,6 +30,13 @@
 			grid-auto-rows: repeat(3, 1fr);
 			position: relative;
 			border-radius: .3rem;
+			transition: all .3s;
+
+			&:hover,
+			&:focus {
+				transform: translateY(-.5rem);
+				background-color: rgba($Main-color-orange, 0.1);
+			}
 
 			&--avatar {
 				align-self: center;
@@ -66,6 +73,11 @@
 			a:visited {
 				text-decoration: none;
 				color: #fff;
+
+				&:hover,
+				&:focus {
+					color: $Main-color-orange;
+				}
 			}
 		}
 	}

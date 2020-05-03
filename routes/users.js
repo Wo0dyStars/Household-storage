@@ -15,10 +15,7 @@ const _ = require('lodash');
 // **********************************
 const Users = require('../models/users');
 const Purchase = require('../models/purchases');
-const Items = require('../models/items');
 const Teams = require('../models/teams');
-const UserQueries = require('../queries/users');
-const TeamQueries = require('../queries/teams');
 
 const storage = Multer.diskStorage({
 	destination: './public/avatars',
@@ -34,7 +31,7 @@ const Upload = Multer({ storage });
 // SHOW ALL USERS
 // *******************************************
 router.get('/', async (req, res) => {
-	const users = await Users.find({}).then((users, err) => {
+	const users = await Users.find({}).sort({ username: 1 }).then((users, err) => {
 		if (err) {
 			req.flash('error', 'An error occurred loading users data.');
 			res.redirect('back');
