@@ -234,9 +234,10 @@ body {
       backface-visibility: hidden;
       width: 100%;
       text-align: center; }
-      .navigation__credentials--signed-in__username {
+      .navigation__credentials--signed-in__username a {
         color: rgba(233, 174, 10, 0.8);
-        font-size: 1.4rem; }
+        font-size: 1.4rem;
+        text-decoration: none; }
     .navigation__credentials--avatar {
       position: absolute;
       top: 11%;
@@ -872,9 +873,21 @@ body {
         text-decoration: none;
         color: #fff; }
 
+.user {
+  margin-top: 10rem;
+  margin-bottom: 10rem; }
+  .user .pagename {
+    background-color: #037432;
+    padding: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    animation: ConnectFromTop 1s ease; }
+
 .user-container {
   width: 100%;
-  margin: 10rem auto; }
+  margin: 0 auto;
+  animation: ConnectFromBottom 1s ease; }
   .user-container .user-profile {
     display: grid;
     grid-template-rows: repeat(2, minmax(1fr, 50vh)); }
@@ -903,7 +916,18 @@ body {
       .user-container .user-profile__main-favitems {
         grid-row: 1 / 4;
         grid-column: 3 / 4;
-        box-shadow: 0.3rem 0.3rem 4rem rgba(3, 116, 50, 0.2); }
+        box-shadow: 0.3rem 0.3rem 4rem rgba(3, 116, 50, 0.2);
+        padding: .5rem;
+        position: relative; }
+        .user-container .user-profile__main-favitems .favourite-item {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: .5rem;
+          padding: 0.5rem;
+          background-color: #037432;
+          color: #fff;
+          text-transform: uppercase; }
         .user-container .user-profile__main-favitems__empty {
           display: flex;
           justify-content: center;
@@ -993,6 +1017,40 @@ body {
         padding: 1rem;
         color: #037432;
         background-color: rgba(3, 116, 50, 0.2); }
+      .user-container .user-profile__main .user-requests {
+        padding: 1rem; }
+      .user-container .user-profile__main .user-request {
+        display: flex;
+        padding: 1rem; }
+        .user-container .user-profile__main .user-request__username {
+          font-size: 1.4rem;
+          text-transform: uppercase;
+          align-self: center;
+          text-decoration: none;
+          color: rgba(0, 0, 0, 0.7);
+          padding: 1rem; }
+          .user-container .user-profile__main .user-request__username:hover, .user-container .user-profile__main .user-request__username:focus {
+            color: black; }
+        .user-container .user-profile__main .user-request__accept {
+          padding: 0.3rem; }
+          .user-container .user-profile__main .user-request__accept button {
+            background-color: #037432; }
+        .user-container .user-profile__main .user-request__reject {
+          padding: 0.3rem; }
+          .user-container .user-profile__main .user-request__reject button {
+            background-color: red; }
+        .user-container .user-profile__main .user-request__accepted {
+          align-self: center;
+          padding: .4rem;
+          border-radius: .5rem;
+          background-color: #037432;
+          color: #fff; }
+        .user-container .user-profile__main .user-request__rejected {
+          align-self: center;
+          padding: .4rem;
+          border-radius: .5rem;
+          background-color: red;
+          color: #fff; }
     .user-container .user-profile__select, .user-container .user-profile__createinput {
       padding: .5rem;
       margin-left: 1rem;
@@ -1018,19 +1076,23 @@ body {
       .user-container .user-profile__info--about {
         font-size: 1.3rem; }
         .user-container .user-profile__info--about > * {
-          padding: 2rem;
+          padding: 2rem 4rem;
           background-color: rgba(245, 172, 14, 0.1);
-          border-bottom: 1px solid rgba(245, 172, 14, 0.2); }
+          border-bottom: 1px solid rgba(245, 172, 14, 0.2);
+          color: rgba(3, 116, 50, 0.7); }
         .user-container .user-profile__info--about__title {
-          font-size: 2rem; }
+          font-size: 2rem;
+          color: rgba(0, 0, 0, 0.8); }
       .user-container .user-profile__info--purchases {
         font-size: 1.3rem;
-        background-color: rgba(3, 116, 50, 0.1); }
+        background-color: rgba(3, 116, 50, 0.1);
+        padding: 2rem; }
         .user-container .user-profile__info--purchases > * {
           padding: 2rem; }
         .user-container .user-profile__info--purchases__title {
           font-size: 2rem;
-          margin-bottom: 1rem; }
+          margin-bottom: 1rem;
+          color: rgba(0, 0, 0, 0.8); }
         .user-container .user-profile__info--purchases__month {
           margin: 2rem;
           border: 1px solid rgba(3, 116, 50, 0.4);

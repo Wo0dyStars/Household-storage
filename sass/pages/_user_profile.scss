@@ -1,6 +1,21 @@
+.user {
+	margin-top: 10rem;
+	margin-bottom: 10rem;
+
+	.pagename {
+		background-color: $Main-color-green;
+		padding: 1rem;
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		animation: ConnectFromTop 1s ease;
+	}
+}
+
 .user-container {
 	width: 100%;
-	margin: 10rem auto;
+	margin: 0 auto;
+	animation: ConnectFromBottom 1s ease;
 
 	.user-profile {
 		display: grid;
@@ -38,6 +53,19 @@
 				grid-row: 1 / 4;
 				grid-column: 3 / 4;
 				box-shadow: .3rem .3rem 4rem rgba($Main-color-green, .2);
+				padding: .5rem;
+				position: relative;
+
+				.favourite-item {
+					position: absolute;
+					top: 0;
+					right: 0;
+					margin: .5rem;
+					padding: 0.5rem;
+					background-color: $Main-color-green;
+					color: #fff;
+					text-transform: uppercase;
+				}
 
 				&__empty {
 					display: flex;
@@ -162,6 +190,59 @@
 				color: rgba($Main-color-green, 1);
 				background-color: rgba($Main-color-green, .2);
 			}
+
+			.user-requests {
+				padding: 1rem;
+			}
+
+			.user-request {
+				display: flex;
+				padding: 1rem;
+
+				&__username {
+					font-size: 1.4rem;
+					text-transform: uppercase;
+					align-self: center;
+					text-decoration: none;
+					color: rgba(0, 0, 0, .7);
+					padding: 1rem;
+
+					&:hover,
+					&:focus {
+						color: rgba(0, 0, 0, 1);
+					}
+				}
+
+				&__accept {
+					padding: 0.3rem;
+					button {
+						background-color: $Main-color-green;
+					}
+				}
+
+				&__reject {
+					padding: 0.3rem;
+					button {
+						background-color: red;
+					}
+				}
+
+				&__accepted {
+					align-self: center;
+					padding: .4rem;
+					border-radius: .5rem;
+					background-color: $Main-color-green;
+					color: #fff;
+				}
+
+				&__rejected {
+					align-self: center;
+					padding: .4rem;
+					border-radius: .5rem;
+					background-color: red;
+					color: #fff;
+				}
+			}
 		}
 
 		&__select,
@@ -201,13 +282,15 @@
 				font-size: 1.3rem;
 
 				& > * {
-					padding: 2rem;
+					padding: 2rem 4rem;
 					background-color: rgba($Main-color-orange, .1);
 					border-bottom: 1px solid rgba($Main-color-orange, .2);
+					color: rgba($Main-color-green, .7);
 				}
 
 				&__title {
 					font-size: 2rem;
+					color: rgba(0, 0, 0, .8);
 				}
 
 				&__email {
@@ -223,6 +306,7 @@
 			&--purchases {
 				font-size: 1.3rem;
 				background-color: rgba($Main-color-green, .1);
+				padding: 2rem;
 
 				& > * {
 					padding: 2rem;
@@ -231,6 +315,7 @@
 				&__title {
 					font-size: 2rem;
 					margin-bottom: 1rem;
+					color: rgba(0, 0, 0, .8);
 				}
 
 				&__month {

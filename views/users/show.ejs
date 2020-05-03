@@ -35,116 +35,128 @@
     
 %>
 
-<div class="user-container">
-    <div class="user-profile">
-        <div class="user-profile__main">
-            <div class="user-profile__main-avatar"><img src="<%= user.avatar %>" alt=""></div>
-            <div class="user-profile__main-favitems">
-                <% if (favItems && favItems.length) { %>
-                    <% favItems.forEach((item, idx) => { %>
-                        <div class="user-profile__main-favitems__favitem">
-                            <span class="user-profile__main-favitems__favitem--name"><%= item.name %></span>
-                            <span class="user-profile__main-favitems__favitem--image"><img class="image-<%= idx %>" src="/images/<%= item.image %>" alt=""></span>
-                            <span class="user-profile__main-favitems__favitem--qty">Bought <%= item.qty %> times</span>
-                        </div>
-                    <% }) %>
-                <% } else { %>
-                    <div class="user-profile__main-favitems__empty">You have not bought any items yet.</div>
-                <% } %>
-            </div>
-            <div class="user-profile__main-username"><%= user.username %></div>
-            <div class="user-profile__main-spending">
-                <% let Purchase = GetPurchases(purchases) %>
-                <svg class="navigation__icon navigation__icon--home">
-                    <use xlink:href="/icons/sprite.svg#icon-coin-pound"></use>
-                </svg>
-                <%= Purchase.total %>
-            </div>
-            <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
-            <div class="user-profile__main-team">
-                <% if (!teamname) { %>
-                    <% if (!onRequest) { %>
-                        <form action="/users/<%= user._id %>" method="POST">
-                            <label for="selectteam" class="user-profile__label">Select a team</label>
-                            <select class="user-profile__select" name="selectteam">
-                                <% names.forEach(name => { %>
-                                    <option value="<%= name._id %>"><%= name.name %></option>
-                                <% }) %>
-                            </select> 
-                            <button class="user-profile__join">Send request</button>
-                        </form>
-                        <form action="/users/<%= user._id %>"  method="POST">
-                            <label for="createteam" class="user-profile__label">Create a team</label>
-                            <input type="text" class="user-profile__createinput" name="createteam" placeholder="Team name">
-                            <button class="user-profile__create">Create</button>
-                        </form>
+<div class="user">
+    <div class="pagename">User profile</div>
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+    <div class="user-container">
+        <div class="user-profile">
+            <div class="user-profile__main">
+                <div class="user-profile__main-avatar"><img src="<%= user.avatar %>" alt=""></div>
+                <div class="user-profile__main-favitems">
+                    <% if (favItems && favItems.length) { %>
+                        <div class="favourite-item">Favourite item</div>
+                        <% favItems.forEach((item, idx) => { %>
+                            <div class="user-profile__main-favitems__favitem">
+                                <span class="user-profile__main-favitems__favitem--name"><%= item.name %></span>
+                                <span class="user-profile__main-favitems__favitem--image"><img class="image-<%= idx %>" src="/images/<%= item.image %>" alt=""></span>
+                                <span class="user-profile__main-favitems__favitem--qty">Bought <%= item.qty %> times</span>
+                            </div>
+                        <% }) %>
                     <% } else { %>
-                        <div class="onTeamRequest">You have requested membership already at <%= onRequest %></div>
+                        <div class="user-profile__main-favitems__empty">You have not bought any items yet.</div>
                     <% } %>
-                <% } else { %>
-                    Member of the following team:
-                    <%= teamname %>
-                    <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
-                        <% if (teamRequests) { %>
-                            <div class="user-requests">The following users would like to join your team:</div>
-                            <% teamRequests.forEach(request => { %>
-                                <div class="user-request">
-                                    <a href="/users/<%= request._id %>"><%= request.username %></a>
-                                    <% if (!request.selected) { %>
-                                        <form action="/users/<%= user._id %>"  method="POST">
-                                            <input type="hidden" name="AcceptRequest" value="<%= request._id %>">
-                                            <button class="main-button">Accept</button>
-                                        </form>
-                                        <form action="/users/<%= user._id %>"  method="POST">
-                                            <input type="hidden" name="RejectRequest" value="<%= request._id %>">
-                                            <button class="main-button">Reject</button>
-                                        </form>
-                                    <% } else { %>
-                                        <% if (request.accepted === true) { %>
-                                            <div class="user-request__accepted">Accepted</div>
-                                        <% } %>
-                                        <% if (request.accepted === false) { %>
-                                            <div class="user-request__rejected">Rejected</div>
-                                        <% } %>
-                                    <% } %>
-                                </div>
-                            <% }) %>
-                        <% } %>
-                    <% } %> 
-                <% } %>
-            </div>
-            <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
-                <div class="user-profile__main-upload">
-                    <form action="/users/<%= user._id %>" enctype="multipart/form-data" method="POST">
-                        <span class="user-profile__main-upload--choose">Choose Avatar</span>
-                        <input type="file" id="file" name="avatar" accept="image/*">
-                        <label for="file" class="main-button">Browse</label>
-                        <input type="hidden" name="oldavatar" value="<%= user.avatar %>">
-                        <button class="main-button">Save</button>
-                    </form>
                 </div>
-            <% } %> 
-        </div>
-        <div class="user-profile__info">
-            <section class="user-profile__info--about">
-                <div class="user-profile__info--about__title">About</div>
-                <div class="user-profile__info--about__email">Email address: <%= user.email %></div>
-                <div class="user-profile__info--about__joined">Joined: <%= DateFormat(user.joined_at) %></div>
-                <div class="user-profile__info--about__updated">Last updated: <%= DateFormat(user.updated_at) %></div>
-            </section>
-
-            <section class="user-profile__info--purchases">
-                <% if (purchases && purchases.length) { %>
-                    <div class="user-profile__info--purchases__title">Purchases</div>
-                    <% Purchase.items.forEach(purchase => { %>
-                        <div class="user-profile__info--purchases__month">
-                            <div>Date: <%= purchase.date %></div>
-                            <div>Spending: £<%= purchase.sum %></div>
-                        </div>
-                    <% }) %>
-                <% } %>
-            </section>
+                <div class="user-profile__main-username"><%= user.username %></div>
+                <div class="user-profile__main-spending">
+                    <% let Purchase = GetPurchases(purchases) %>
+                    <svg class="navigation__icon navigation__icon--home">
+                        <use xlink:href="/icons/sprite.svg#icon-coin-pound"></use>
+                    </svg>
+                    <%= Purchase.total %>
+                </div>
+                <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
+                <div class="user-profile__main-team">
+                    <% if (!teamname) { %>
+                        <% if (!onRequest) { %>
+                            <form action="/users/<%= user._id %>" method="POST">
+                                <label for="selectteam" class="user-profile__label">Select a team</label>
+                                <select class="user-profile__select" name="selectteam">
+                                    <% names.forEach(name => { %>
+                                        <option value="<%= name._id %>"><%= name.name %></option>
+                                    <% }) %>
+                                </select> 
+                                <button class="user-profile__join">Send request</button>
+                            </form>
+                            <form action="/users/<%= user._id %>"  method="POST">
+                                <label for="createteam" class="user-profile__label">Create a team</label>
+                                <input type="text" class="user-profile__createinput" name="createteam" placeholder="Team name">
+                                <button class="user-profile__create">Create</button>
+                            </form>
+                        <% } else { %>
+                            <div class="onTeamRequest">You have requested membership already at <%= onRequest %></div>
+                        <% } %>
+                    <% } else { %>
+                        Member of the following team:
+                        <%= teamname %>
+                        <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
+                            <% if (teamRequests) { %>
+                                <div class="user-requests">The following users would like to join your team:</div>
+                                <% teamRequests.forEach(request => { %>
+                                    <div class="user-request">
+                                        <a class="user-request__username" href="/users/<%= request._id %>"><%= request.username %></a>
+                                        <% if (!request.selected) { %>
+                                            <form class="user-request__accept" action="/users/<%= user._id %>"  method="POST">
+                                                <input type="hidden" name="AcceptRequest" value="<%= request._id %>">
+                                                <button class="main-button">Accept</button>
+                                            </form>
+                                            <form class="user-request__reject" action="/users/<%= user._id %>"  method="POST">
+                                                <input type="hidden" name="RejectRequest" value="<%= request._id %>">
+                                                <button class="main-button">Reject</button>
+                                            </form>
+                                        <% } else { %>
+                                            <% if (request.accepted === true) { %>
+                                                <div class="user-request__accepted">Accepted by you</div>
+                                            <% } %>
+                                            <% if (request.accepted === false) { %>
+                                                <div class="user-request__rejected">Rejected by you</div>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
+                                <% }) %>
+                            <% } %>
+                        <% } %> 
+                    <% } %>
+                </div>
+                <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
+                    <div class="user-profile__main-upload">
+                        <form action="/users/<%= user._id %>" enctype="multipart/form-data" method="POST">
+                            <span class="user-profile__main-upload--choose">Choose Avatar</span>
+                            <input type="file" id="file" name="avatar" accept="image/*">
+                            <label for="file" class="main-button">Browse</label>
+                            <input type="hidden" name="oldavatar" value="<%= user.avatar %>">
+                            <button class="main-button">Save</button>
+                        </form>
+                    </div>
+                <% } %> 
+            </div>
+            <div class="user-profile__info">
+                <section class="user-profile__info--about">
+                    <div class="user-profile__info--about__title">About</div>
+                    <div class="user-profile__info--about__email"><strong>Email address:</strong> <%= user.email %></div>
+                    <div class="user-profile__info--about__country"><strong>Country:</strong> <%= user.country %></div>
+                    <div class="user-profile__info--about__joined"><strong>Joined:</strong> <%= DateFormat(user.joined_at) %></div>
+                    <div class="user-profile__info--about__updated"><strong>Last updated:</strong> <%= DateFormat(user.updated_at) %></div>
+                </section>
+    
+                <section class="user-profile__info--purchases">
+                    <% if (purchases && purchases.length) { %>
+                        <div class="user-profile__info--purchases__title">Purchases</div>
+                        <% Purchase.items.forEach(purchase => { %>
+                            <div class="user-profile__info--purchases__month">
+                                <div>Date: <%= purchase.date %></div>
+                                <div>Spending: £<%= purchase.sum %></div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </section>
+            </div>
         </div>
     </div>
 </div>
+
 

@@ -117,7 +117,7 @@
                     <div class="credentials-background">
                         <div class="navigation__credentials">
                             <span class="navigation__credentials--signed-in">
-                                Signed in as <span class="navigation__credentials--signed-in__username"><%= currentUser.username %></span>
+                                Signed in as <span class="navigation__credentials--signed-in__username"><a href="/users/<%= currentUser._id %>"><%= currentUser.username %></a></span>
                             </span>
                             <div class="navigation__credentials--avatar">
                                 <img src="<%= currentUser.avatar%>" alt="">
