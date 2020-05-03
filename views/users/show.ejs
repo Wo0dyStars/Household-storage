@@ -63,28 +63,54 @@
             <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
             <div class="user-profile__main-team">
                 <% if (!teamname) { %>
-                    <form action="/users/<%= user._id %>" method="POST">
-                        <label for="selectteam" class="user-profile__label">Select a team</label>
-                        <select class="user-profile__select" name="selectteam">
-                            <% names.forEach(name => { %>
-                                <option value="<%= name._id %>"><%= name.name %></option>
-                            <% }) %>
-                        </select> 
-                        <button class="user-profile__join">Send request</button>
-                    </form>
-                    <form action="/users/<%= user._id %>"  method="POST">
-                        <label for="createteam" class="user-profile__label">Create a team</label>
-                        <input type="text" class="user-profile__createinput" name="createteam" placeholder="Team name">
-                        <button class="user-profile__create">Create</button>
-                    </form>
+                    <% if (!onRequest) { %>
+                        <form action="/users/<%= user._id %>" method="POST">
+                            <label for="selectteam" class="user-profile__label">Select a team</label>
+                            <select class="user-profile__select" name="selectteam">
+                                <% names.forEach(name => { %>
+                                    <option value="<%= name._id %>"><%= name.name %></option>
+                                <% }) %>
+                            </select> 
+                            <button class="user-profile__join">Send request</button>
+                        </form>
+                        <form action="/users/<%= user._id %>"  method="POST">
+                            <label for="createteam" class="user-profile__label">Create a team</label>
+                            <input type="text" class="user-profile__createinput" name="createteam" placeholder="Team name">
+                            <button class="user-profile__create">Create</button>
+                        </form>
+                    <% } else { %>
+                        <div class="onTeamRequest">You have requested membership already at <%= onRequest %></div>
+                    <% } %>
                 <% } else { %>
                     Member of the following team:
                     <%= teamname %>
-                    <% if (teamRequests) { %>
-                        <% teamRequests.forEach(request => { %>
-                            <a href="/users/<%= request._id %>"><%= request.username %></a> wants to join your team.
-                        <% }) %>
-                    <% } %>
+                    <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
+                        <% if (teamRequests) { %>
+                            <div class="user-requests">The following users would like to join your team:</div>
+                            <% teamRequests.forEach(request => { %>
+                                <div class="user-request">
+                                    <a href="/users/<%= request._id %>"><%= request.username %></a>
+                                    <% if (!request.selected) { %>
+                                        <form action="/users/<%= user._id %>"  method="POST">
+                                            <input type="hidden" name="AcceptRequest" value="<%= request._id %>">
+                                            <button class="main-button">Accept</button>
+                                        </form>
+                                        <form action="/users/<%= user._id %>"  method="POST">
+                                            <input type="hidden" name="RejectRequest" value="<%= request._id %>">
+                                            <button class="main-button">Reject</button>
+                                        </form>
+                                    <% } else { %>
+                                        <% if (request.accepted === true) { %>
+                                            <div class="user-request__accepted">Accepted</div>
+                                        <% } %>
+                                        <% if (request.accepted === false) { %>
+                                            <div class="user-request__rejected">Rejected</div>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                            <% }) %>
+                        <% } %>
+                    <% } %> 
                 <% } %>
             </div>
             <% if ((currentUser) && currentUser._id.equals(user._id)) { %>

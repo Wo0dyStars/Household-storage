@@ -26,7 +26,8 @@ const TeamsSchema = new mongoose.Schema({
 						type: mongoose.Schema.Types.ObjectId,
 						ref: 'Users'
 					},
-					accepted: { type: Boolean, default: false }
+					accepted: { type: Boolean, default: false },
+					selected: { type: Boolean, default: false }
 				}
 			]
 		}

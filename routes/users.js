@@ -31,6 +31,9 @@ const storage = Multer.diskStorage({
 const Upload = Multer({ storage });
 
 router.get('/', async (req, res) => {
+	await Teams.find({}, 'requests').then((found) => {
+		console.log(found);
+	});
 	const users = await UserQueries.getUsers();
 	const names = await TeamQueries.getTeamNames();
 	res.render('users', { users, teamnames: names });
@@ -45,14 +48,34 @@ router.get('/:id', async (req, res) => {
 			const names = await TeamQueries.getTeamNames();
 			const teamRequests = await Teams.findById(user.team_id, 'requests').then(async (requests) => {
 				let requestUsers = [];
+				let selected = [];
 				if (requests) {
 					requests.requests.forEach((request) => {
-						console.log(request);
 						requestUsers.push(request.user_id);
+						request.acceptedBy.forEach((user) => {
+							if (user.user_id.equals(req.params.id)) {
+								selected.push({
+									user_id: request.user_id,
+									selected: user.selected,
+									accepted: user.accepted
+								});
+							}
+						});
 					});
 				}
 
-				return await Users.find().where('_id').in(requestUsers).select('username').exec();
+				const requested = await Users.find().where('_id').in(requestUsers).select('username').lean().exec();
+
+				requested.forEach((request) => {
+					selected.forEach((select) => {
+						if (request._id.equals(select.user_id)) {
+							request.selected = select.selected;
+							request.accepted = select.accepted;
+						}
+					});
+				});
+
+				return requested;
 			});
 			const purchases = await Purchase.find({ user_id: req.params.id }).then((userPurchases) => {
 				return userPurchases;
@@ -84,6 +107,20 @@ router.get('/:id', async (req, res) => {
 						.splice(0, 3);
 				});
 
+			const onRequest = await Teams.find({}).then((requests) => {
+				let foundRequest;
+				if (requests.length) {
+					requests.forEach((request) => {
+						request.requests.forEach((user) => {
+							if (user.user_id.equals(req.params.id)) {
+								foundRequest = request.name;
+							}
+						});
+					});
+				}
+				return foundRequest;
+			});
+
 			if (teamname) {
 				res.render('users/show', {
 					user,
@@ -91,7 +128,8 @@ router.get('/:id', async (req, res) => {
 					names,
 					purchases,
 					favItems: Sorteditems,
-					teamRequests
+					teamRequests,
+					onRequest
 				});
 			} else {
 				res.render('users/show', {
@@ -100,7 +138,8 @@ router.get('/:id', async (req, res) => {
 					names,
 					purchases,
 					favItems: Sorteditems,
-					teamRequests
+					teamRequests,
+					onRequest
 				});
 			}
 		} else {
@@ -114,6 +153,89 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/:id', middleware.isLoggedIn, Upload.single('avatar'), async (req, res) => {
+	if (req.body.AcceptRequest) {
+		if (req.user) {
+			await Teams.updateOne(
+				{
+					_id: req.user.team_id,
+					'requests.user_id': req.body.AcceptRequest
+				},
+				{
+					$set: {
+						'requests.$[].acceptedBy.$[user].accepted': true,
+						'requests.$[].acceptedBy.$[user].selected': true
+					}
+				},
+				{
+					arrayFilters: [ { 'user.user_id': req.user._id } ]
+				}
+			).then(async (updatedRequest, err) => {
+				if (err) {
+					req.flash('error', 'An error occurred updating request.');
+					res.redirect('back');
+				} else {
+					await Teams.findById(req.user.team_id, 'requests').then(async (requested) => {
+						let AllSelected = true;
+						let AllAccepted = true;
+						console.log(requested.requests[0].acceptedBy);
+						requested.requests[0].acceptedBy.forEach((user) => {
+							if (user.selected === false) {
+								AllSelected = false;
+							}
+							if (user.selected === false || user.accepted === false) {
+								AllAccepted = false;
+							}
+						});
+
+						if (AllSelected) {
+							// Decision has been made
+							if (AllAccepted) {
+								// user joins team
+								await TeamQueries.AddUserToTeam(req.user.team_id, requested.requests[0].user_id);
+							}
+
+							// Remove request
+							console.log('request id: ', requested.requests[0].user_id);
+							await Teams.findByIdAndUpdate(req.user.team_id, {
+								$pull: { requests: { user_id: requested.requests[0].user_id } }
+							}).then((DeletedRequest) => {
+								console.log('Request has been deleted: ', DeletedRequest);
+							});
+						}
+					});
+					req.flash('success', 'You have accepted this user.');
+					res.redirect('back');
+				}
+			});
+		}
+	}
+	if (req.body.RejectRequest) {
+		if (req.user) {
+			await Teams.updateOne(
+				{
+					_id: req.user.team_id,
+					'requests.user_id': req.body.RejectRequest
+				},
+				{
+					$set: {
+						'requests.$[].acceptedBy.$[user].accepted': false,
+						'requests.$[].acceptedBy.$[user].selected': true
+					}
+				},
+				{
+					arrayFilters: [ { 'user.user_id': req.user._id } ]
+				}
+			).then((updatedRequest, err) => {
+				if (err) {
+					req.flash('error', 'An error occurred updating request.');
+					res.redirect('back');
+				} else {
+					req.flash('success', 'You have rejected this user.');
+					res.redirect('back');
+				}
+			});
+		}
+	}
 	if (req.body.selectteam) {
 		await Teams.findById(req.body.selectteam).then((SelectedTeam) => {
 			console.log(SelectedTeam);
@@ -173,14 +295,16 @@ router.post('/:id', middleware.isLoggedIn, Upload.single('avatar'), async (req, 
 		await UserQueries.updateUser(req.params.id, 'avatar', filepath);
 
 		// Remove old avatar from the local server
-		const absfilepath = './public' + req.body.oldavatar;
-		fs.unlink(absfilepath, (err) => {
-			if (err) {
-				console.log(err);
-			} else {
-				console.log('File ', req.body.oldavatar, ' removed.');
-			}
-		});
+		if (req.body.oldavatar !== '/avatars/no-avatar.png') {
+			const absfilepath = './public' + req.body.oldavatar;
+			fs.unlink(absfilepath, (err) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log('File ', req.body.oldavatar, ' removed.');
+				}
+			});
+		}
 
 		res.redirect('back');
 	}
