@@ -363,19 +363,33 @@ body {
         color: #fff;
         cursor: pointer; }
 
-.items {
-  margin-top: 10rem; }
-  .items .pagename {
-    background-color: #037432;
-    padding: 1rem;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 1.2rem;
-    animation: ConnectFromTop 1s ease; }
+.search-items {
+  margin: 5rem auto;
+  text-align: center; }
+  .search-items input[type="text"] {
+    padding: 1.1rem;
+    border-radius: .4rem;
+    border: none;
+    margin-right: .4rem;
+    color: rgba(0, 0, 0, 0.7); }
+    .search-items input[type="text"]::-webkit-input-placeholder {
+      color: rgba(0, 0, 0, 0.4); }
+    .search-items input[type="text"]:focus {
+      outline: none; }
+  .search-items .search-button:hover {
+    transform: translateY(-0.4rem); }
+
+.items .pagename {
+  background-color: #037432;
+  padding: 1rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  animation: ConnectFromTop 1s ease; }
 
 .items_container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  grid-template-columns: repeat(auto-fit, 24rem);
   grid-auto-rows: 1fr;
   align-items: center;
   background: rgba(3, 116, 50, 0.1);

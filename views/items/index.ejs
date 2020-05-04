@@ -1,9 +1,9 @@
 <%- include("../partials/header"); %>
 
 <div class="search-items">
-    <form action="/items/search" method="POST">
-        <input type="text" name="search">
-        <button>Search</button>
+    <form action="/items/search" method="POST" autocomplete="off">
+        <input type="text" name="search" placeholder="Search for items">
+        <button class="main-button search-button">Search</button>
     </form>
 </div>
 <div class="items">

@@ -45,7 +45,7 @@ const Users = require('../models/users');
 // GET ROUTE FOR DISPLAYING ALL ITEMS
 // **********************************
 router.get('/', async (req, res) => {
-	await Items.find({}).populate('category_id').exec((err, items) => {
+	await Items.find({}).populate('category_id').sort({ name: 1 }).exec((err, items) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -107,17 +107,40 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 	}
 });
 
+router.get('/search', async (req, res) => {
+	await Items.find({}).populate('category_id').sort({ name: 1 }).exec((err, items) => {
+		if (err) {
+			req.flash('error', 'An error occurred loading items data.');
+			res.redirect('back');
+		} else {
+			res.render('items/index', { Items: items });
+		}
+	});
+});
+
 router.post('/search', async (req, res) => {
-	console.log(req.body.search);
-	await Items.find({ name: { $regex: req.body.search, $options: 'i' } })
-		.populate('category_id')
-		.exec((err, items) => {
-			if (err) {
-				console.log(err);
-			} else {
-				res.render('items/index', { Items: items });
-			}
-		});
+	if (req.body.search) {
+		await Items.find({ name: { $regex: req.body.search, $options: 'i' } })
+			.populate('category_id')
+			.sort({ name: 1 })
+			.exec((err, items) => {
+				if (err) {
+					req.flash('error', 'An error occurred loading items data.');
+					res.redirect('back');
+				} else {
+					if (items.length) {
+						req.flash('success', `You have successfully found ${items.length} item(s).`);
+						res.render('items/index', { Items: items });
+					} else {
+						req.flash('error', 'Unfortunately, you have found 0 items.');
+						res.render('items/index', { Items: items });
+					}
+				}
+			});
+	} else {
+		req.flash('error', 'You have not entered search data.');
+		res.redirect('back');
+	}
 });
 
 // **********************************

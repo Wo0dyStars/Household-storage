@@ -1,6 +1,31 @@
-.items {
-	margin-top: 10rem;
+.search-items {
+	margin: 5rem auto;
+	text-align: center;
 
+	input[type="text"] {
+		padding: 1.1rem;
+		border-radius: .4rem;
+		border: none;
+		margin-right: .4rem;
+		color: rgba(0, 0, 0, .7);
+
+		&::-webkit-input-placeholder {
+			color: rgba(0, 0, 0, .4);
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.search-button {
+		&:hover {
+			transform: translateY(-.4rem);
+		}
+	}
+}
+
+.items {
 	.pagename {
 		background-color: $Main-color-green;
 		padding: 1rem;
@@ -13,7 +38,7 @@
 
 .items_container {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+	grid-template-columns: repeat(auto-fit, 24rem);
 	grid-auto-rows: 1fr;
 	align-items: center;
 	background: rgba($Main-color-green, .1);
