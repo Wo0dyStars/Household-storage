@@ -4,6 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const middleware = require('../middleware');
+const mongoose = require('mongoose');
 
 // **********************************
 // SCHEMA IMPORTS
@@ -31,6 +32,35 @@ router.get('/', async (req, res) => {
 				});
 			}
 		});
+});
+
+router.get('/:id', async (req, res) => {
+	if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+		await Purchase.findById(req.params.id).populate('user_id').populate('items.id').then(async (purchase, err) => {
+			if (err) {
+				req.flash('error', 'An error occurred finding your purchase.');
+				res.render('purchases/show', { purchase: null });
+			} else {
+				await Team.find({}, 'name').then((teams, err) => {
+					if (err) {
+						req.flash('error', 'An error occurred loading your team data.');
+						res.render('purchases/show', { purchase: null });
+					} else {
+						if (purchase) {
+							req.flash('success', 'You have successfully found your purchase.');
+							res.render('purchases/show', { purchase, teams });
+						} else {
+							req.flash('error', 'There is no purchase with this purchase ID.');
+							res.render('purchases/show', { purchase: null });
+						}
+					}
+				});
+			}
+		});
+	} else {
+		req.flash('error', 'You have entered an invalid purchase ID.');
+		res.render('purchases/show', { purchase: null });
+	}
 });
 
 router.post('/new', async (req, res) => {

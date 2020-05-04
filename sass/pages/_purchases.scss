@@ -141,10 +141,18 @@
 		&__date {
 			grid-column: 1 / 4;
 			background-color: $Main-color-green;
-			color: #fff;
 			display: flex;
 			align-items: center;
 			padding-left: 2rem;
+
+			a {
+				color: #fff;
+				text-decoration: none;
+
+				&:hover {
+					color: $Main-color-orange;
+				}
+			}
 		}
 	}
 }

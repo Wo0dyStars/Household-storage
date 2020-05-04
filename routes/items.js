@@ -41,31 +41,31 @@ const Categories = require('../models/categories');
 const Stock = require('../models/stock');
 const Users = require('../models/users');
 
-// **********************************
+// *******************************************************
 // GET ROUTE FOR DISPLAYING ALL ITEMS
-// **********************************
+// *******************************************************
 router.get('/', async (req, res) => {
 	await Items.find({}).populate('category_id').sort({ name: 1 }).exec((err, items) => {
 		if (err) {
-			console.log(err);
+			req.flash('error', 'An error occurred loading items data.');
+			res.redirect('back');
 		} else {
 			res.render('items/index', { Items: items });
 		}
 	});
 });
 
-// **********************************
+// *******************************************************
 // GET ROUTE FOR HANDLING NEW ITEMS
-// **********************************
+// *******************************************************
 router.get('/new', middleware.isLoggedIn, async (req, res) => {
 	const categories = await getCategories();
 	res.render('items/new', { data: {}, errors: {}, categories });
 });
 
-// **********************************
+// *******************************************************
 // POST ROUTE FOR HANDLING NEW ITEMS
-// **********************************
-
+// *******************************************************
 router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -107,6 +107,9 @@ router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (re
 	}
 });
 
+// *******************************************************
+// GET ROUTE FOR SEARCH
+// *******************************************************
 router.get('/search', async (req, res) => {
 	await Items.find({}).populate('category_id').sort({ name: 1 }).exec((err, items) => {
 		if (err) {
@@ -118,6 +121,9 @@ router.get('/search', async (req, res) => {
 	});
 });
 
+// *******************************************************
+// POST ROUTE FOR SEARCHING ITEMS
+// *******************************************************
 router.post('/search', async (req, res) => {
 	if (req.body.search) {
 		await Items.find({ name: { $regex: req.body.search, $options: 'i' } })
@@ -143,19 +149,24 @@ router.post('/search', async (req, res) => {
 	}
 });
 
-// **********************************
+// *******************************************************
 // GET ROUTE FOR DISPLAYING AN ITEM
-// **********************************
-router.get('/:id', (req, res) => {
-	res.render('items/show', { ItemID: req.params.id });
+// *******************************************************
+router.get('/:id', async (req, res) => {
+	await Items.findById(req.params.id).populate('category_id').exec((err, item) => {
+		if (err) {
+			req.flash('error', 'An error occurred finding this item.');
+			res.redirect('back');
+		} else {
+			req.flash('success', 'You have successfully found this item.');
+			res.render('items/show', { Item: item });
+		}
+	});
 });
 
-// **********************************
-// DELETE ROUTE FOR DELETING ITEMS
-// **********************************
-// Stock.find({}).then((err, ok) => {
-// 	console.log(err);
-// });
+// *******************************************************
+// DELETE ROUTE FOR DELETING ITEMS, ONLY FOR ADMINS LATER
+// *******************************************************
 router.delete('/:id', async (req, res) => {
 	await ItemQueries.DeleteItemByID(req.params.id);
 	await Stock.updateMany(
@@ -171,7 +182,7 @@ router.delete('/:id', async (req, res) => {
 	res.redirect('/items');
 });
 
-// **********************************
+// *******************************************************
 // EXPORTING ROUTER
-// **********************************
+// *******************************************************
 module.exports = router;

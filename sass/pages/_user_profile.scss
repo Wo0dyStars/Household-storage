@@ -100,7 +100,15 @@
 					&--name {
 						font-size: 1.4rem;
 						text-transform: uppercase;
-						color: rgba(0, 0, 0, .6);
+
+						a {
+							text-decoration: none;
+							color: rgba(0, 0, 0, .6);
+
+							&:hover {
+								color: $Main-color-orange;
+							}
+						}
 					}
 
 					&--image {
@@ -342,6 +350,15 @@
 
 					&:nth-child(2n) {
 						background-color: rgba(255, 255, 255, .4);
+					}
+
+					a {
+						color: rgba(0, 0, 0, .7);
+						text-decoration: none;
+
+						&:hover {
+							color: $Main-color-orange;
+						}
 					}
 				}
 			}

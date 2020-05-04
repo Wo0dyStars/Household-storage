@@ -1,1 +1,43 @@
-Item id is <%= ItemID %>
+<%- include("../partials/header"); %>
+
+<div class="items items--show">
+    <div class="pagename">Item</div>
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+    <div class="items_container">
+            <div class="items_container__item">
+                <div class="items_container__item--top">
+                    <button class="delete-btn">X</button>
+                    <!-- <form action="/items/<%= Item._id %>?_method=DELETE" method="POST">
+                        <button class="delete-btn">X</button>
+                    </form> -->
+                </div>
+                <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
+                <h4 class="items_container__item--name"><a href="/items/<%= Item._id %>"><%= Item.name %></a></h4>
+                <span class="items_container__item--category items_container__item--category-text">Category</span>
+                <span class="items_container__item--category items_container__item--category-value"><%=  Item.category_id.name %></span>
+                <span class="items_container__item--store items_container__item--store-text">Store</span>
+                <span class="items_container__item--store items_container__item--store-value"><%=  Item.store %></span>
+                <span class="items_container__item--basket">
+                    <form action="/basket/new" method="POST">
+                        <input type="hidden" name="Item[ID]" value="<%= Item._id %>">
+                        <input type="hidden" name="Item[Name]" value="<%= Item.name %>">
+                        <input type="hidden" name="Item[Image]" value="<%= Item.image %> ">
+                        <button>Basket</button>
+                    </form>
+                </span>
+                <span class="items_container__item--stock">
+                    <form action="/stock/new" method="POST">
+                        <input type="hidden" name="StockID" value="<%= Item._id %>">
+                        <button>Stock</button>
+                    </form>
+                </span>
+            </div>
+    </div>
+</div>
+
+<%- include("../partials/footer"); %>

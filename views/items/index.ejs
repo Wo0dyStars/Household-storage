@@ -24,7 +24,7 @@
                     </form> -->
                 </div>
                 <img class="items_container__item--image" src="/images/<%= Item.image %>" alt="<%= Item.name %>">
-                <h4 class="items_container__item--name"><%= Item.name %></h4>
+                <h4 class="items_container__item--name"><a href="/items/<%= Item._id %>"><%= Item.name %></a></h4>
                 <span class="items_container__item--category items_container__item--category-text">Category</span>
                 <span class="items_container__item--category items_container__item--category-value"><%=  Item.category_id.name %></span>
                 <span class="items_container__item--store items_container__item--store-text">Store</span>

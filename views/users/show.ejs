@@ -23,6 +23,7 @@
                 })
                 sum += localsum;
                 let item = {
+                    id: purchase._id,
                     date: DateFormat(purchase.purchased_at),
                     sum: localsum
                 }
@@ -52,7 +53,7 @@
                         <div class="favourite-item">Favourite item</div>
                         <% favItems.forEach((item, idx) => { %>
                             <div class="user-profile__main-favitems__favitem">
-                                <span class="user-profile__main-favitems__favitem--name"><%= item.name %></span>
+                                <span class="user-profile__main-favitems__favitem--name"><a href="/items/<%= item.id %>"><%= item.name %></a></span>
                                 <span class="user-profile__main-favitems__favitem--image"><img class="image-<%= idx %>" src="/images/<%= item.image %>" alt=""></span>
                                 <span class="user-profile__main-favitems__favitem--qty">Bought <%= item.qty %> times</span>
                             </div>
@@ -153,7 +154,7 @@
                         <% Purchase.items.forEach(purchase => { %>
                             <div class="user-profile__info--purchases__month">
                                 <div>Date: <%= purchase.date %></div>
-                                <div>Spending: £<%= purchase.sum %></div>
+                                <div><a href="/purchases/<%= purchase.id %>">Spending: £<%= purchase.sum %></a></div>
                             </div>
                         <% }) %>
                     <% } %>

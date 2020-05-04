@@ -34,6 +34,10 @@
 		font-size: 1.2rem;
 		animation: ConnectFromTop 1s ease;
 	}
+
+	&--show {
+		margin-top: 10rem;
+	}
 }
 
 .items_container {
@@ -80,11 +84,19 @@
 			align-items: center;
 			width: 100%;
 			height: 100%;
-			font-size: 1.1rem;
-			color: #fff;
-			text-transform: uppercase;
-			font-weight: 300;
 			background-color: rgba($Main-color-green, .8);
+
+			a {
+				font-size: 1.1rem;
+				color: #fff;
+				text-transform: uppercase;
+				font-weight: 300;
+				text-decoration: none;
+
+				&:hover {
+					color: $Main-color-orange;
+				}
+			}
 		}
 
 		&--image {
