@@ -98,6 +98,11 @@
   border-radius: .4rem;
   font-size: 1.1rem;
   transition: all .3s ease; }
+  .main-button:focus {
+    outline: none; }
+
+.margin_bottom_small {
+  margin-bottom: 2rem; }
 
 *,
 *:before,
@@ -1393,7 +1398,7 @@ body {
     animation: ConnectFromTop 1s ease; }
   .stock-container__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fit, 20rem);
     grid-auto-rows: 1fr;
     grid-gap: 2rem;
     padding: 2rem;

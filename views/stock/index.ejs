@@ -1,12 +1,15 @@
 <%- include("../partials/header"); %>
 
-
-
 <div class="stock-container">
-
-    <% if (stock && stock.length === 1) { %>
+    <div class="search-items">
+        <form action="/stock/search" method="POST" autocomplete="off">
+            <input type="text" name="search" placeholder="Search for stock items">
+            <button class="main-button search-button">Search</button>
+        </form>
+    </div>
+    <% if (stock && stock.length) { %>
         <form action="/stock/edit" method="POST">
-            <button class="stock-container__save">Save changes</button>
+            <button class="main-button margin_bottom_small">Save changes</button>
             <div class="pagename">Stock</div>
             <% if (messages.success) { %>
                 <div class="flash flash-success"><%= messages.success %></div>
@@ -17,23 +20,26 @@
             <div class="stock-container__items">
                 <% stock.forEach(stock_ => { %>
                     <% stock_.items.forEach((item, idx) => { %>
-                        <div class="stock-item">
-                            <span class="stock-item__name"><%= item.id.name %></span>
-                            <span class="stock-item__image"><img src="/images/<%= item.id.image %>" alt=""></span>
-                            <input type="hidden" name="item[<%= idx %>]" value="<%= item.id._id %>">
-                            <span class="stock-item__label--qty">Qty</span>
-                            <div class="stock_item--quantity">
-                                <input type="Number" id="stock-qty" name="item[<%= idx %>]" class="stock-item__quantity" value="<%= item.quantity %>" min="1" step="1">
-                                <span class="qty-up" onclick="ChangeNumberValue('up', 'stock-qty', <%= idx %>)">+</span>
-                                <span class="qty-down" onclick="ChangeNumberValue('down', 'stock-qty', <%= idx %>)">-</span>
+                        <% if (item.id) { %>
+                            <div class="stock-item">
+                                <span class="stock-item__name"><%= item.id.name %></span>
+                                <span class="stock-item__image"><img src="/images/<%= item.id.image %>" alt=""></span>
+                                <input type="hidden" name="item[<%= idx %>]" value="<%= item.id._id %>">
+                                <span class="stock-item__label--qty">Qty</span>
+                                <div class="stock_item--quantity">
+                                    <input type="Number" id="stock-qty" name="item[<%= idx %>]" class="stock-item__quantity" value="<%= item.quantity %>" min="1" step="1">
+                                    <span class="qty-up" onclick="ChangeNumberValue('up', 'stock-qty', <%= idx %>)">+</span>
+                                    <span class="qty-down" onclick="ChangeNumberValue('down', 'stock-qty', <%= idx %>)">-</span>
+                                </div>
+                                <div class="stock_item--reorder">
+                                    <input type="Number" id="stock-reorder" name="item[<%= idx %>]" class="stock-item__reorder_quantity" value="<%= item.reorder_quantity %>" min="0" step="1">
+                                    <span class="qty-up" onclick="ChangeNumberValue('up', 'stock-reorder', <%= idx %>)">+</span>
+                                    <span class="qty-down" onclick="ChangeNumberValue('down', 'stock-reorder', <%= idx %>)">-</span>
+                                </div>
+                                <span class="stock-item__label--reorder">Reorder</span>
                             </div>
-                            <div class="stock_item--reorder">
-                                <input type="Number" id="stock-reorder" name="item[<%= idx %>]" class="stock-item__reorder_quantity" value="<%= item.reorder_quantity %>" min="0" step="1">
-                                <span class="qty-up" onclick="ChangeNumberValue('up', 'stock-reorder', <%= idx %>)">+</span>
-                                <span class="qty-down" onclick="ChangeNumberValue('down', 'stock-reorder', <%= idx %>)">-</span>
-                            </div>
-                            <span class="stock-item__label--reorder">Reorder</span>
-                        </div>
+                        <% } %>
+                        
                     <% }) %>
                 <% }) %>
             </div>

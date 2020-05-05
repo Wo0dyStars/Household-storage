@@ -8,4 +8,12 @@
 	border-radius: .4rem;
 	font-size: 1.1rem;
 	transition: all .3s ease;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.margin_bottom_small {
+	margin-bottom: 2rem;
 }

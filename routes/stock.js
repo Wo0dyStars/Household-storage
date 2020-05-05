@@ -84,6 +84,62 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 	});
 });
 
+// *******************************************************
+// GET ROUTE FOR SEARCH
+// *******************************************************
+router.get('/search', async (req, res) => {
+	await Stock.find({ team_id: req.user.team_id }).populate('items.id').then((stock, err) => {
+		if (err) {
+			req.flash('error', 'An error occurred loading items data.');
+			res.redirect('back');
+		} else {
+			res.render('stock/index', { stock });
+		}
+	});
+});
+
+// *******************************************************
+// POST ROUTE FOR SEARCHING STOCK ITEMS
+// *******************************************************
+router.post('/search', async (req, res) => {
+	if (req.body.search) {
+		console.log('search: ', req.body.search);
+		if (req.user) {
+			await Stock.find({ team_id: req.user.team_id })
+				.populate({
+					path: 'items.id',
+					match: { name: { $regex: req.body.search, $options: 'i' } }
+				})
+				.then((stock, err) => {
+					if (err) {
+						req.flash('error', 'An error occurred loading your stock items.');
+						res.redirect('back');
+					} else {
+						if (stock.length) {
+							let length = 0;
+							stock[0].items.forEach((item) => {
+								if (item.id) {
+									length++;
+								}
+							});
+							req.flash('success', `You have successfully found ${length} item(s).`);
+							res.render('stock/index', { stock });
+						} else {
+							req.flash('error', 'Unfortunately, you have found 0 items.');
+							res.render('stock/index', { stock });
+						}
+					}
+				});
+		} else {
+			req.flash('error', 'You must be signed in to do this.');
+			res.redirect('back');
+		}
+	} else {
+		req.flash('error', 'You have not entered search data.');
+		res.redirect('back');
+	}
+});
+
 router.post('/edit', async (req, res) => {
 	const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
 		return user.team_id;
