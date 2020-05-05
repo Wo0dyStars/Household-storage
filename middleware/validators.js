@@ -3,8 +3,10 @@ const { check, body } = require('express-validator');
 const Validators = {
 	register: [
 		check('username').isLength({ min: 8, max: 20 }).withMessage('Username must be between 8 and 20 characters.'),
-		check('register[email]').isEmail().withMessage('Email address must be valid.'),
-		check('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters.')
+		check('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters.'),
+		check('register[email]').isEmail().withMessage('Email address must be valid, for example: "email@email.com".'),
+		check('register[firstname]').isLength({ min: 2 }).withMessage('First name must be at least 2 characters.'),
+		check('register[lastname]').isLength({ min: 2 }).withMessage('Last name must be at least 2 characters.')
 	],
 	newitem: [
 		check('items[name]')
