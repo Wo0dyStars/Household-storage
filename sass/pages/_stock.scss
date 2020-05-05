@@ -52,6 +52,11 @@
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		border: 1px solid rgba(130, 243, 187, 0.6);
+		transition: all .4s;
+
+		&:hover {
+			transform: translateY(-.4rem);
+		}
 
 		& > * {
 			text-align: center;

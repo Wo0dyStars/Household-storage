@@ -59,8 +59,9 @@ router.get('/', async (req, res) => {
 // GET ROUTE FOR HANDLING NEW ITEMS
 // *******************************************************
 router.get('/new', middleware.isLoggedIn, async (req, res) => {
-	const categories = await getCategories();
-	res.render('items/new', { data: {}, errors: {}, categories });
+	await Categories.find({}).then((categories) => {
+		res.render('items/new', { data: {}, errors: {}, categories });
+	});
 });
 
 // *******************************************************
@@ -69,41 +70,59 @@ router.get('/new', middleware.isLoggedIn, async (req, res) => {
 router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		const categories = await getCategories();
-		res.render('items/new', {
-			data: req.body,
-			errors: errors.mapped(),
-			categories
+		await Categories.find({}).then((categories) => {
+			res.render('items/new', {
+				data: req.body,
+				errors: errors.mapped(),
+				categories
+			});
 		});
 	} else {
-		const { name, quantity, reorder_quantity, category, store } = req.body.items;
-		const Item = {
-			name,
-			image: req.file.filename,
-			category_id: category,
-			store,
-			created_at: Date.now()
-		};
+		const { name, category, store } = req.body.items;
+		let image = req.file ? req.file.filename : 'no_image.png';
 
-		await Items.create(Item).then(async (item, err) => {
-			if (err) {
-				console.log('Error occured creating a new item: ', err);
-			} else {
-				await Categories.findByIdAndUpdate(
-					category,
-					{ $push: { items: item._id } },
-					{ new: true, useFindAndModify: false }
-				).then((category_, err) => {
-					if (err) {
-						console.log('Error occured updating category id: ', err);
-					} else {
-						console.log('A new category has been added: ', category_);
-						req.flash('success', 'You just successfully added a new item!');
-						res.redirect('/items/new');
-					}
-				});
-			}
-		});
+		if (req.file && !req.file.originalname.match(/\.(jpg|JPG|jfif|JFIF|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+			// NOT AN IMAGE FILE WAS SELECTED
+			req.flash('error', 'Only image files are allowed for upload.');
+			res.redirect('back');
+		} else {
+			// CHECK IF NAME ALREADY EXISTS
+			await Items.find({ name: name.toLowerCase() }).then(async (found_item) => {
+				if (found_item.length) {
+					req.flash('error', 'Item with this name already exists.');
+					res.redirect('back');
+				} else {
+					const Item = {
+						name: name.toLowerCase(),
+						image: image,
+						category_id: category,
+						store,
+						created_at: Date.now()
+					};
+
+					await Items.create(Item).then(async (item, err) => {
+						if (err) {
+							req.flash('error', 'An error occurred creating your item.');
+							res.redirect('back');
+						} else {
+							await Categories.findByIdAndUpdate(
+								category,
+								{ $push: { items: item._id } },
+								{ new: true, useFindAndModify: false }
+							).then((category_, err) => {
+								if (err) {
+									req.flash('error', 'An error occurred updating the category of the item.');
+									res.redirect('back');
+								} else {
+									req.flash('success', 'You just successfully added a new item!');
+									res.redirect('back');
+								}
+							});
+						}
+					});
+				}
+			});
+		}
 	}
 });
 

@@ -9,53 +9,51 @@ const middleware = require('../middleware');
 // SCHEMA IMPORTS
 // **********************************
 const Stock = require('../models/stock');
-const Users = require('../models/users');
 
-router.get('/', async (req, res) => {
+// *******************************************************
+// GET ROUTE FOR DISPLAYING STOCK
+// *******************************************************
+router.get('/', middleware.isLoggedIn, async (req, res) => {
 	if (req.user) {
-		const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
-			return user.team_id;
-		});
-
-		await Stock.find({ team_id: TeamID }).populate('items.id').then((stock, err) => {
+		await Stock.find({ team_id: req.user.team_id }).populate('items.id').then((stock, err) => {
 			if (err) {
-				console.log('Error occured loading stock data: ', err);
+				req.flash('error', 'An error occurred loading your stock data.');
+				res.render('stock/index', { stock: null });
 			} else {
 				res.render('stock/index', { stock });
 			}
 		});
 	} else {
-		console.log('User is not found.');
+		req.flash('error', 'User has been not found.');
 		res.render('stock/index', { stock: null });
 	}
 });
 
+// ************************************************************
+// POST ROUTE FOR ADDING NEW STOCK OR UPDATING EXISTING STOCK
+// ************************************************************
 router.post('/new', middleware.isLoggedIn, async (req, res) => {
-	const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
-		return user.team_id;
-	});
-
 	const StockItem = {
 		id: req.body.StockID,
 		quantity: 1,
 		reorder_quantity: 0
 	};
 
-	await Stock.find({ team_id: TeamID }).then(async (found_team) => {
+	await Stock.find({ team_id: req.user.team_id }).then(async (found_team) => {
 		if (found_team.length) {
 			// UPDATE
-			await Stock.find({ 'items.id': req.body.StockID, team_id: TeamID }).then(async (found_item) => {
+			await Stock.find({ 'items.id': req.body.StockID, team_id: req.user.team_id }).then(async (found_item) => {
 				if (!found_item.length) {
 					// ITEM DOES NOT EXIST IN STOCK
 					await Stock.updateOne(
-						{ team_id: TeamID },
+						{ team_id: req.user.team_id },
 						{ $push: { items: StockItem } },
 						{ new: true, useFindAndModify: false }
 					).then((updated_stock, err) => {
 						if (err) {
-							console.log('Error occured updating stock: ', err);
+							req.flash('error', 'An error occurred updating your stock data.');
+							res.redirect('back');
 						} else {
-							console.log('An existing stock has been updated: ', updated_stock);
 							req.flash('success', 'You have successfully added this item to your stock.');
 							res.redirect('back');
 						}
@@ -69,13 +67,13 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 		} else {
 			// CREATE
 			await Stock.create({
-				team_id: TeamID,
+				team_id: req.user.team_id,
 				items: [ StockItem ]
 			}).then((stock, err) => {
 				if (err) {
-					console.log('Error occured creating stock: ', err);
+					req.flash('error', 'An error occurred creating new stock.');
+					res.redirect('back');
 				} else {
-					console.log('A new stock has been added: ', stock);
 					req.flash('success', 'You have successfully added this item to your stock.');
 					res.redirect('back');
 				}
@@ -87,7 +85,7 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 // *******************************************************
 // GET ROUTE FOR SEARCH
 // *******************************************************
-router.get('/search', async (req, res) => {
+router.get('/search', middleware.isLoggedIn, async (req, res) => {
 	await Stock.find({ team_id: req.user.team_id }).populate('items.id').then((stock, err) => {
 		if (err) {
 			req.flash('error', 'An error occurred loading items data.');
@@ -101,9 +99,8 @@ router.get('/search', async (req, res) => {
 // *******************************************************
 // POST ROUTE FOR SEARCHING STOCK ITEMS
 // *******************************************************
-router.post('/search', async (req, res) => {
+router.post('/search', middleware.isLoggedIn, async (req, res) => {
 	if (req.body.search) {
-		console.log('search: ', req.body.search);
 		if (req.user) {
 			await Stock.find({ team_id: req.user.team_id })
 				.populate({
@@ -140,29 +137,27 @@ router.post('/search', async (req, res) => {
 	}
 });
 
-router.post('/edit', async (req, res) => {
-	const TeamID = await Users.findById(req.user._id, 'team_id').then((user) => {
-		return user.team_id;
-	});
-
+// *******************************************************
+// EDIT ROUTE FOR UPDATING STOCK
+// *******************************************************
+router.post('/edit', middleware.isLoggedIn, async (req, res) => {
 	Items = req.body.item;
 	let Modified = 0;
 	await Items.forEach((item, idx) => {
 		Stock.updateOne(
-			{ team_id: TeamID, 'items.id': item[0] },
+			{ team_id: req.user.team_id, 'items.id': item[0] },
 			{ $set: { 'items.$.quantity': item[1], 'items.$.reorder_quantity': item[2] } }
 		).then((updated_stock, err) => {
 			if (err) {
-				console.log('Error occured updating values in stock: ', err);
+				req.flash('error', 'An error occurred updating your stock data.');
+				res.redirect('back');
 			} else {
-				console.log('Details have been updated in stock. ', updated_stock);
 				if (updated_stock.nModified === 1) {
 					Modified++;
 				}
 			}
 
 			if (idx === Items.length - 1) {
-				console.log('modified: ', Modified);
 				if (Modified > 0) {
 					req.flash('success', 'You have successfully updated details of items.');
 					res.redirect('back');
@@ -175,4 +170,7 @@ router.post('/edit', async (req, res) => {
 	});
 });
 
+// *******************************************************
+// EXPORTING STOCK ROUTER
+// *******************************************************
 module.exports = router;

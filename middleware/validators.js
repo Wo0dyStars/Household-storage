@@ -8,23 +8,13 @@ const Validators = {
 	],
 	newitem: [
 		check('items[name]')
-			.isLength({ min: 5, max: 20 })
-			.withMessage('Name must be between 5 and 20 characters')
+			.isLength({ min: 4, max: 20 })
+			.withMessage('Name must be between 4 and 20 characters')
 			.trim(),
-		body('items[quantity]').custom((value) => {
-			if (value < 1) {
-				return Promise.reject('Quantity must be at least 1');
-			} else {
-				return Promise.resolve();
-			}
-		}),
-		body('items[reorder_quantity]').custom((value) => {
-			if (value < 1) {
-				return Promise.reject('Reorder quantity must be at least 1');
-			} else {
-				return Promise.resolve();
-			}
-		})
+		check('items[store]')
+			.isLength({ min: 4, max: 20 })
+			.withMessage('Store must be between 4 and 20 characters')
+			.trim()
 	]
 };
 

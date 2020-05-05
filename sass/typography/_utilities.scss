@@ -12,6 +12,10 @@
 	&:focus {
 		outline: none;
 	}
+
+	&:hover {
+		transform: translateY(-.4rem);
+	}
 }
 
 .margin_bottom_small {
