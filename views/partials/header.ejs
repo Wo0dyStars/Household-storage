@@ -20,7 +20,11 @@
         </div>
 
         <div class="navigation">
-            <ul>
+            <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+            <label for="navi-toggle" class="navigation__button">
+                <span class="navigation__toggle">&nbsp;</span>
+            </label>
+            <ul class="navigation__nav">
                 <li>
                     <div class="navigation__element">
                         <a href="/">
@@ -62,27 +66,7 @@
                     <span class="navigation__span navigation__span--card">Purchases</span>
                 </li>
                 
-                <% if(!currentUser) { %>
-                    <div class="credentials-background">
-                        <div class="navigation__credentials">
-                            <div class="navigation__credentials--element">
-                                <form action="/login" method="POST" autocomplete="off">
-                                    <span class="login__text">Sign In</span>
-                                    <input type="text" class="login__form-input" name="username" placeholder="Username" required>
-                                    <input type="password" class="login__password" name="password" placeholder="Password" required>
-                                    <button class="login__button">
-                                        <svg class="navigation__credentials--icon navigation__icon--enter">
-                                            <use xlink:href="/icons/sprite.svg#icon-enter"></use>
-                                        </svg>
-                                    </button>
-                                    <a href="/register" class="login__signup">
-                                        <span>Sign up</span>
-                                    </a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <% } else { %>
+                <% if(currentUser) { %>
                     <li>
                         <div class="navigation__element">
                             <a href="/items/new">
@@ -114,6 +98,31 @@
                         <span class="basket-quantity"><%= BasketQuantity %></span>
                         <span class="navigation__span navigation__span--cart">Basket</span>
                     </li>
+                <% } %>  
+            </ul>
+
+            <div class="user-authentication">
+                <% if(!currentUser) { %>
+                    <div class="credentials-background">
+                        <div class="navigation__credentials">
+                            <div class="navigation__credentials--element">
+                                <form action="/login" method="POST" autocomplete="off">
+                                    <span class="login__text">Sign In</span>
+                                    <input type="text" class="login__form-input" name="username" placeholder="Username" required>
+                                    <input type="password" class="login__password" name="password" placeholder="Password" required>
+                                    <button class="login__button">
+                                        <svg class="navigation__credentials--icon navigation__icon--enter">
+                                            <use xlink:href="/icons/sprite.svg#icon-enter"></use>
+                                        </svg>
+                                    </button>
+                                    <a href="/register" class="login__signup">
+                                        <span>Sign up</span>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>
                     <div class="credentials-background">
                         <div class="navigation__credentials">
                             <span class="navigation__credentials--signed-in">
@@ -132,6 +141,6 @@
                         </div>
                     </div>
                 <% } %>  
-            </ul>
+            </div>
         </div>
     

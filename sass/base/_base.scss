@@ -8,9 +8,25 @@
 
 html {
 	box-sizing: border-box;
-	font-size: 62.5%;
+	font-size: 37.5%;
 	margin-left: calc(100vw - 100%);
 	overflow-y: scroll;
+
+	@include tablet-portrait {
+		font-size: 50%;
+	}
+
+	@include tablet-landscape {
+		font-size: 56.25%;
+	}
+
+	@include desktop {
+		font-size: 62.5%;
+	}
+
+	@include big-desktop {
+		font-size: 75%;
+	}
 }
 
 body {
@@ -20,8 +36,12 @@ body {
 }
 
 .container {
-	width: 65%;
+	width: 100%;
 	margin: 0 10% auto 10%;
+
+	@include tablet-landscape {
+		width: 65%;
+	}
 }
 
 .flash {
@@ -147,17 +167,130 @@ body {
 }
 
 .navigation {
-	background: linear-gradient(to right bottom, rgba(238, 240, 238, 0.6) 25%, transparent);
-	border-left: 1px solid rgba(10, 80, 39, .3);
-	box-shadow: 1rem 1rem 5rem rgba(10, 80, 39, .3);
-	height: 100vh;
-	width: 7vw;
-	left: 0;
-	top: 0;
-	position: fixed;
-	z-index: 3;
-	display: grid;
-	align-items: center;
+	&__checkbox {
+		display: none;
+	}
+
+	&__checkbox:checked ~ &__nav {
+		opacity: 1;
+		width: 10vw;
+	}
+
+	&__button {
+		background-color: #fff;
+		height: 7rem;
+		width: 7rem;
+		position: fixed;
+		top: 2vh;
+		left: 1.2vw;
+		border-radius: 50%;
+		z-index: 2000;
+		box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1);
+		text-align: center;
+		cursor: pointer;
+
+		@include tablet-portrait {
+			left: 1.5vw;
+		}
+
+		@include tablet-landscape {
+			display: none;
+		}
+	}
+
+	&__nav {
+		list-style: none;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1500;
+		opacity: 0;
+		transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 0;
+		border-left: 1px solid rgba(10, 80, 39, .3);
+		box-shadow: 1rem 1rem 5rem rgba(10, 80, 39, .3);
+		background: linear-gradient(to right bottom, rgba(238, 240, 238, 0.6) 25%, transparent);
+
+		@include tablet-landscape {
+			width: 8vw;
+			opacity: 1;
+		}
+
+		@include desktop {
+			width: 6vw;
+			opacity: 1;
+		}
+
+		li {
+			text-transform: uppercase;
+			font-size: 1.3rem;
+			position: relative;
+
+			a:link,
+			a:visited {
+				outline: none;
+				text-decoration: none;
+				color: #fff;
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__toggle {
+		position: relative;
+		margin-top: 3.5rem;
+
+		&,
+		&::before,
+		&::after {
+			width: 3rem;
+			height: 2px;
+			background-color: rgba(0, 0, 0, .7);
+			display: inline-block;
+		}
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			transition: all .2s;
+		}
+
+		&::before {
+			top: -.8rem;
+		}
+
+		&::after {
+			top: .8rem;
+		}
+	}
+
+	&__button:hover &__toggle::before {
+		top: -1rem;
+	}
+
+	&__button:hover &__toggle::after {
+		top: 1rem;
+	}
+
+	&__checkbox:checked + &__button &__toggle {
+		background-color: transparent;
+	}
+
+	&__checkbox:checked + &__button &__toggle::before {
+		top: 0;
+		transform: rotate(135deg);
+	}
+
+	&__checkbox:checked + &__button &__toggle::after {
+		top: 0;
+		transform: rotate(-135deg);
+	}
 
 	&__credentials {
 		display: grid;
@@ -347,25 +480,6 @@ body {
 
 		&--cart {
 			fill: rgba(92, 2, 2, 0.8);
-		}
-	}
-
-	ul {
-		list-style: none;
-
-		li {
-			height: 100%;
-			text-transform: uppercase;
-			font-size: 1.3rem;
-			position: relative;
-
-			a:link,
-			a:visited {
-				outline: none;
-				text-decoration: none;
-				color: #fff;
-				cursor: pointer;
-			}
 		}
 	}
 }
