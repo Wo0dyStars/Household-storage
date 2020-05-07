@@ -22,8 +22,8 @@
 
 	&__items {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, 20rem);
-		grid-auto-rows: 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+		grid-auto-rows: minmax(30rem, 1fr);
 		grid-gap: 2rem;
 		padding: 2rem;
 		background-color: rgba($Main-color-green, .1);

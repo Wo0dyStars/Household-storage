@@ -4,10 +4,14 @@
 	margin-left: auto;
 	background-color: rgba(247, 244, 244, 0.4);
 	border-radius: 1rem;
-	width: 70%;
+	width: 95%;
 	border: 1px solid rgba(0, 0, 0, .2);
 	box-shadow: 0.2rem 0.4rem 0.4rem rgba(0, 0, 0, 0.2);
 	animation: SlideDownAndBackUp 1s;
+
+	@include tablet-portrait {
+		width: 80%;
+	}
 
 	ul {
 		list-style: none;

@@ -101,17 +101,25 @@
                 <% } %>  
             </ul>
 
-            <div class="user-authentication">
+            <div class="authentication">
+                <input type="checkbox" class="authentication__checkbox" id="auth-toggle">
+                <label for="auth-toggle" class="authentication__button">
+                    <span class="authentication__toggle">
+                        <svg class="authentication__toggle--icon">
+                            <use xlink:href="/icons/sprite.svg#icon-enter"></use>
+                        </svg>
+                    </span>
+                </label>
                 <% if(!currentUser) { %>
                     <div class="credentials-background">
-                        <div class="navigation__credentials">
-                            <div class="navigation__credentials--element">
+                        <div class="authentication__credentials">
+                            <div class="authentication__credentials--element">
                                 <form action="/login" method="POST" autocomplete="off">
                                     <span class="login__text">Sign In</span>
                                     <input type="text" class="login__form-input" name="username" placeholder="Username" required>
                                     <input type="password" class="login__password" name="password" placeholder="Password" required>
                                     <button class="login__button">
-                                        <svg class="navigation__credentials--icon navigation__icon--enter">
+                                        <svg class="authentication__credentials--icon authentication__icon--enter">
                                             <use xlink:href="/icons/sprite.svg#icon-enter"></use>
                                         </svg>
                                     </button>
@@ -124,16 +132,16 @@
                     </div>
                 <% } else { %>
                     <div class="credentials-background">
-                        <div class="navigation__credentials">
-                            <span class="navigation__credentials--signed-in">
-                                Signed in as <span class="navigation__credentials--signed-in__username"><a href="/users/<%= currentUser._id %>"><%= currentUser.username %></a></span>
+                        <div class="authentication__credentials">
+                            <span class="authentication__credentials--signed-in">
+                                Signed in as <span class="authentication__credentials--signed-in__username"><a href="/users/<%= currentUser._id %>"><%= currentUser.username %></a></span>
                             </span>
-                            <div class="navigation__credentials--avatar">
+                            <div class="authentication__credentials--avatar">
                                 <img src="<%= currentUser.avatar%>" alt="">
                             </div>
-                            <div class="navigation__credentials--element">
+                            <div class="authentication__credentials--element">
                                 <a href="/logout">
-                                    <svg class="navigation__credentials--icon navigation__icon--exit">
+                                    <svg class="authentication__credentials--icon authentication__icon--exit">
                                         <use xlink:href="/icons/sprite.svg#icon-exit"></use>
                                     </svg>
                                 </a>

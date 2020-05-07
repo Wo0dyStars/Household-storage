@@ -1,12 +1,16 @@
 .newitem {
 	background-color: rgba(247, 244, 244, 0.4);
 	border-radius: 1rem;
-	width: 50%;
+	width: 95%;
 	margin: 10rem auto auto auto;
 	padding: 3rem;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	box-shadow: .1rem .4rem .1rem rgba(0, 0, 0, 0.3);
 	animation: SlideDownAndBackUp 1s;
+
+	@include tablet-portrait {
+		width: 80%;
+	}
 
 	.error_header {
 		color: black;
