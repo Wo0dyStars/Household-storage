@@ -23,12 +23,13 @@
 		background-color: $Main-color-orange;
 		border: none;
 		cursor: pointer;
-		padding: 1rem;
+		padding: 1.3rem;
 		border-radius: .4rem;
 		transition: all .3s ease;
+		font-size: 1rem;
 
 		&:hover {
-			padding: 1rem 1.3rem;
+			padding: 1.3rem 1.6rem;
 		}
 	}
 
@@ -40,6 +41,7 @@
 		color: #fff;
 		border-radius: .4rem;
 		transition: all .3s ease;
+		font-size: 1rem;
 
 		&:hover {
 			padding: 1.3rem 1.6rem;
@@ -69,20 +71,22 @@
 
 	.empty {
 		padding: 3rem;
-		color: rgba($Main-color-green, .8);
-		font-size: 1.8rem;
+		font-size: 1.1rem;
+		color: rgba(0, 0, 0, .7);
 		background-color: rgba(255, 255, 255, .4);
 	}
 
 	.item__group {
-		margin: .2rem auto;
+		margin: .4rem auto;
 		display: grid;
 		grid-template-columns: 1fr min-content 6fr 1fr;
 		align-items: center;
 		font-size: 1.8rem;
 		text-transform: uppercase;
-		border-bottom: 1px solid rgba($Main-color-green, .3);
-		background-color: rgba(255, 255, 255, .2);
+		border-bottom: 3px solid rgba($Main-color-green, .1);
+		border-top: 3px solid rgba($Main-color-orange, .1);
+		box-shadow: 0 1rem 1rem rgba(0, 0, 0, .2);
+		background-color: rgba(255, 255, 255, 1);
 		color: rgba($Main-color-green, .8);
 		text-align: center;
 
@@ -113,13 +117,19 @@
 			min-width: 5rem;
 		}
 
-		&:nth-child(2n) {
-			background-color: rgba($Main-color-green, .1);
-			color: rgba(0, 0, 0, .7);
+		&__name {
+			clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+			background: linear-gradient(to right, rgba($Main-color-orange, .1), transparent);
+			height: 100%;
+			color: rgba(0, 0, 0, .5);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		&__image {
 			background-color: #fff;
+			padding: 2rem;
 			img {
 				width: 4rem;
 				height: 4rem;
@@ -132,7 +142,8 @@
 			background-color: red;
 			border: none;
 			cursor: pointer;
-			padding: .5em;
+			padding: 1rem;
+			margin: 2rem;
 			border-radius: .4rem;
 			transition: all .3s ease;
 

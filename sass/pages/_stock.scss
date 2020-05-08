@@ -1,5 +1,6 @@
 .stock-container {
 	margin-top: 10rem;
+	margin-bottom: 10rem;
 
 	.pagename {
 		background-color: $Main-color-green;
@@ -8,6 +9,12 @@
 		text-transform: uppercase;
 		font-size: 1.2rem;
 		animation: ConnectFromTop 1s ease;
+	}
+
+	.no-stock {
+		font-size: 1.1rem;
+		color: rgba(0, 0, 0, .7);
+		padding: 2rem;
 	}
 
 	&__save {

@@ -11,12 +11,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash');
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
-
-const Items = require('./queries/items');
-const Categories = require('./queries/categories');
-const Users = require('./queries/users');
-const Teams = require('./queries/teams');
+const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('./models/users');
 
@@ -25,7 +20,6 @@ const User = require('./models/users');
 // **********************************
 const ItemsRoutes = require('./routes/items');
 const UsersRoutes = require('./routes/users');
-const ShoppingRoutes = require('./routes/shoppings');
 const IndexRoutes = require('./routes/index');
 const BasketRoutes = require('./routes/basket');
 const PurchasesRoutes = require('./routes/purchases');
@@ -69,7 +63,7 @@ const middlewares = [
 		saveUninitialized: true,
 		unset: 'destroy',
 		cookie: {
-			maxAge: 30 * 60 * 1000
+			maxAge: 65000
 		},
 		store: store
 	}),
@@ -79,9 +73,9 @@ const middlewares = [
 ];
 
 app.use(middlewares);
-passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));
 
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
@@ -114,10 +108,13 @@ app.use((req, res, next) => {
 app.use('/', IndexRoutes);
 app.use('/items', ItemsRoutes);
 app.use('/users', UsersRoutes);
-app.use('/shoppings', ShoppingRoutes);
 app.use('/basket', BasketRoutes);
 app.use('/purchases', PurchasesRoutes);
 app.use('/stock', StockRoutes);
+
+app.all('*', (req, res) => {
+	res.render('landing');
+});
 
 // **********************************
 // CONNECTING TO THE SERVER AT PORT 3000

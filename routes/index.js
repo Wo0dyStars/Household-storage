@@ -53,22 +53,30 @@ router.post('/register', [ Validators['register'] ], (req, res) => {
 	}
 });
 
-router.get('/login', (req, res) => {
-	res.render('login');
+router.post('/login', function(req, res, next) {
+	passport.authenticate('local', function(err, user, info) {
+		if (err) {
+			req.flash('error', err.message);
+			return next(err);
+		}
+		if (!user) {
+			req.flash('error', 'You provided Invalid username or password');
+			return res.redirect('/');
+		}
+		req.logIn(user, function(err) {
+			if (err) {
+				req.flash('error', err.message);
+				return next(err);
+			}
+			req.flash('success', `Welcome back, ${user.username}!`);
+			return res.redirect('/');
+		});
+	})(req, res, next);
 });
 
-router.post(
-	'/login',
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/'
-	}),
-	(req, res) => {}
-);
-
-router.get('/logout', (req, res) => {
+router.get('/logout', middleware.isLoggedIn, (req, res) => {
 	req.logout();
-	req.flash('success', 'Logged you out!');
+	req.flash('success', 'You have successfully logged out. See you soon!');
 	res.redirect('/');
 });
 

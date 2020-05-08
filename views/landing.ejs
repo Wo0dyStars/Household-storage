@@ -1,8 +1,13 @@
 <%- include("partials/header"); %>
 
 <div class="landing-container">
-
     <div class="landing">
+        <% if (messages.success) { %>
+            <div class="flash flash-success flash-success__landing"><%= messages.success %></div>
+        <% } %>
+        <% if (messages.error) { %>
+            <div class="flash flash-error flash-error__landing"><%= messages.error %></div>
+        <% } %>
         <div class="landing__welcome">
             <span class="landing__welcome--main">Welcome to </span>
             <span class="landing__welcome--title">House stocker</span>

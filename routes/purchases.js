@@ -13,9 +13,12 @@ const Purchase = require('../models/purchases');
 const Team = require('../models/teams');
 const Stock = require('../models/stock');
 
-router.get('/', async (req, res) => {
+router.get('/', middleware.isLoggedIn, async (req, res) => {
 	await Purchase.find({})
-		.populate('user_id')
+		.populate({
+			path: 'user_id',
+			match: { team_id: req.user.team_id }
+		})
 		.populate('items.id')
 		.sort({ purchased_at: -1 })
 		.then(async (purchases, err) => {
@@ -34,7 +37,51 @@ router.get('/', async (req, res) => {
 		});
 });
 
-router.get('/:id', async (req, res) => {
+router.post('/search', middleware.isLoggedIn, async (req, res) => {
+	if (req.body.to && req.body.from) {
+		let From = new Date(req.body.from);
+		let To = new Date(req.body.to).setHours(23, 59, 59, 999);
+		if (From < To) {
+			await Purchase.find({
+				purchased_at: { $gte: From, $lt: To }
+			})
+				.populate({
+					path: 'user_id',
+					match: { team_id: req.user.team_id }
+				})
+				.populate('items.id')
+				.then(async (purchases, err) => {
+					if (err) {
+						req.flash('error', 'An error occurred finding your purchases.');
+						res.render('purchases/index', { purchases: null });
+					} else {
+						await Team.find({}, 'name').then((teams, err) => {
+							if (err) {
+								req.flash('error', 'An error occurred loading your team data.');
+								res.render('purchases/index', { purchases: null });
+							} else {
+								if (purchases && purchases.length) {
+									req.flash('success', `You have successfully found ${purchases.length} purchases.`);
+									res.render('purchases/index', { purchases, teams });
+								} else {
+									req.flash('error', 'There are no purchases for the provided period');
+									res.render('purchases/index', { purchases: null });
+								}
+							}
+						});
+					}
+				});
+		} else {
+			req.flash('error', 'You must supply a valid range for the dates.');
+			res.render('purchases/index', { purchases: null });
+		}
+	} else {
+		req.flash('error', 'You have not provided valid dates.');
+		res.render('purchases/index', { purchases: null });
+	}
+});
+
+router.get('/:id', middleware.isLoggedIn, async (req, res) => {
 	if (mongoose.Types.ObjectId.isValid(req.params.id)) {
 		await Purchase.findById(req.params.id).populate('user_id').populate('items.id').then(async (purchase, err) => {
 			if (err) {
@@ -63,7 +110,7 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new', middleware.isLoggedIn, async (req, res) => {
 	const { quantity, price, id } = req.body;
 	const items = [];
 	const stock = [];

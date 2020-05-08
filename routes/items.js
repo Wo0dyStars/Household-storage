@@ -67,7 +67,7 @@ router.get('/new', middleware.isLoggedIn, async (req, res) => {
 // *******************************************************
 // POST ROUTE FOR HANDLING NEW ITEMS
 // *******************************************************
-router.post('/new', Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
+router.post('/new', middleware.isLoggedIn, Upload.single('image'), [ Validators['newitem'] ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		await Categories.find({}).then((categories) => {
@@ -186,7 +186,7 @@ router.get('/:id', async (req, res) => {
 // *******************************************************
 // DELETE ROUTE FOR DELETING ITEMS, ONLY FOR ADMINS LATER
 // *******************************************************
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', middleware.isLoggedIn, async (req, res) => {
 	await ItemQueries.DeleteItemByID(req.params.id);
 	await Stock.updateMany(
 		{ 'items.id': req.params.id },

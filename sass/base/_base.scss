@@ -60,10 +60,20 @@ body {
 
 	&-success {
 		background-color: rgb(3, 68, 30);
+
+		&__landing {
+			width: 100%;
+			margin-bottom: 4rem;
+		}
 	}
 
 	&-error {
 		background-color: rgb(240, 8, 8);
+
+		&__landing {
+			width: 100%;
+			margin-bottom: 4rem;
+		}
 	}
 }
 
@@ -160,6 +170,7 @@ body {
 
 	&__checkbox:checked ~ .credentials-background {
 		opacity: 1;
+		visibility: visible;
 		width: 55%;
 
 		@include tablet-portrait {
@@ -177,6 +188,7 @@ body {
 		top: 0;
 		right: 0;
 		opacity: 0;
+		visibility: hidden;
 		width: 0;
 		height: 100%;
 		z-index: 1;
@@ -187,6 +199,7 @@ body {
 		@include desktop {
 			background: linear-gradient(to left bottom, rgba(238, 240, 238, 0.6) 25%, transparent);
 			width: 20%;
+			visibility: visible;
 			opacity: 1;
 		}
 	}
@@ -369,7 +382,7 @@ body {
 
 		@include tablet-landscape {
 			background: linear-gradient(to right bottom, rgba(238, 240, 238, 0.6) 25%, transparent);
-			width: 8vw;
+			width: 9vw;
 			opacity: 1;
 		}
 
@@ -462,6 +475,10 @@ body {
 		justify-content: space-around;
 		clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
 
+		@include tablet-landscape {
+			left: 100%;
+		}
+
 		&--home {
 			background-color: rgba(10, 80, 39, 0.8);
 		}
@@ -493,16 +510,15 @@ body {
 
 	.basket-quantity {
 		position: absolute;
-		top: 0%;
-		right: 0%;
+		top: 29%;
+		left: 60%;
+		transform: translate(-50%, -50%);
 		background-color: rgba($Main-color-orange, .8);
 		color: #fff;
-		width: 30%;
-		height: 30%;
+		width: 3rem;
+		height: 2rem;
 		text-align: center;
-		margin-right: .4rem;
-		border-radius: 50%;
-		font-size: 1.8rem;
+		font-size: 1rem;
 	}
 
 	&__element {

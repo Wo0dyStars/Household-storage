@@ -1,6 +1,60 @@
+.search-purchases {
+	margin: 0 auto;
+	margin-top: 5rem;
+	text-align: center;
+
+	form {
+		padding: 1rem;
+	}
+
+	&__title {
+		color: rgba(0, 0, 0, .8);
+		font-size: 1.1rem;
+	}
+
+	&__label {
+		padding: 1rem;
+		color: rgba(0, 0, 0, .7);
+		font-size: 1.1rem;
+	}
+
+	input[type="date"] {
+		padding: 1.1rem;
+		border-radius: .4rem;
+		border: none;
+		margin-right: .4rem;
+		color: rgba(0, 0, 0, .7);
+		text-align: center;
+
+		&::-webkit-inner-spin-button {
+			display: none;
+		}
+
+		&::-webkit-input-placeholder {
+			color: rgba(0, 0, 0, .4);
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.search-button {
+		&:hover {
+			transform: translateY(-.4rem);
+		}
+	}
+}
+
 .purchases-container {
-	margin: 10rem auto;
+	margin: 5rem auto;
 	background-color: rgba($Main-color-green, 0.1);
+
+	.no-purchases {
+		font-size: 1.1rem;
+		color: rgba(0, 0, 0, .7);
+		padding: 4rem;
+	}
 
 	.purchases {
 		display: grid;

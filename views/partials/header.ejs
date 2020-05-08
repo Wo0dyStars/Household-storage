@@ -55,18 +55,18 @@
                     </div>
                     <span class="navigation__span navigation__span--users">Users</span>
                 </li>
-                <li>
-                    <div class="navigation__element">
-                        <a href="/purchases">
-                            <svg class="navigation__icon navigation__icon--card">
-                                <use xlink:href="/icons/sprite.svg#icon-credit-card"></use>
-                            </svg>
-                        </a>
-                    </div>
-                    <span class="navigation__span navigation__span--card">Purchases</span>
-                </li>
                 
                 <% if(currentUser) { %>
+                    <li>
+                        <div class="navigation__element">
+                            <a href="/purchases">
+                                <svg class="navigation__icon navigation__icon--card">
+                                    <use xlink:href="/icons/sprite.svg#icon-credit-card"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <span class="navigation__span navigation__span--card">Purchases</span>
+                    </li>
                     <li>
                         <div class="navigation__element">
                             <a href="/items/new">

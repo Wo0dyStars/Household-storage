@@ -17,11 +17,11 @@ function CalculateRealTimePrices(index) {
 	if (sum < 0) {
 		total.innerHTML = '£' + 0;
 	} else {
-		total.innerHTML = '£' + sum;
+		total.innerHTML = '£' + sum.toFixed(2);
 	}
 
 	if (quantity[index].value > 0 && price[index].value > 0) {
-		subtotal.innerHTML = '£' + quantity[index].value * price[index].value;
+		subtotal.innerHTML = '£' + (quantity[index].value * price[index].value).toFixed(2);
 	} else {
 		subtotal.innerHTML = '£' + 0;
 	}

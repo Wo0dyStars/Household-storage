@@ -63,13 +63,15 @@
                     <% } %>
                 </div>
                 <div class="user-profile__main-username"><%= user.username %></div>
-                <div class="user-profile__main-spending">
-                    <% let Purchase = GetPurchases(purchases) %>
-                    <svg class="navigation__icon navigation__icon--home">
-                        <use xlink:href="/icons/sprite.svg#icon-coin-pound"></use>
-                    </svg>
-                    <%= Purchase.total %>
-                </div>
+                <% let Purchase = GetPurchases(purchases) %>
+                <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
+                    <div class="user-profile__main-spending">
+                        <svg class="navigation__icon navigation__icon--home">
+                            <use xlink:href="/icons/sprite.svg#icon-coin-pound"></use>
+                        </svg>
+                        <%= Purchase.total.toFixed(2) %>
+                    </div>
+                <% } %>
                 <div class="user-profile__main-name"><%= user.firstname %> <%= user.middlename %> <%= user.lastname %></div>
                 <div class="user-profile__main-team">
                     <% if (!teamname) { %>
@@ -147,18 +149,19 @@
                     <div class="user-profile__info--about__joined"><strong>Joined:</strong> <%= DateFormat(user.joined_at) %></div>
                     <div class="user-profile__info--about__updated"><strong>Last updated:</strong> <%= DateFormat(user.updated_at) %></div>
                 </section>
-    
-                <section class="user-profile__info--purchases">
-                    <% if (purchases && purchases.length) { %>
-                        <div class="user-profile__info--purchases__title">Purchases</div>
-                        <% Purchase.items.forEach(purchase => { %>
-                            <div class="user-profile__info--purchases__month">
-                                <div>Date: <%= purchase.date %></div>
-                                <div><a href="/purchases/<%= purchase.id %>">Spending: £<%= purchase.sum %></a></div>
-                            </div>
-                        <% }) %>
-                    <% } %>
-                </section>
+                <% if ((currentUser) && currentUser._id.equals(user._id)) { %>
+                    <section class="user-profile__info--purchases">
+                        <% if (purchases && purchases.length) { %>
+                            <div class="user-profile__info--purchases__title">Purchases</div>
+                            <% Purchase.items.forEach(purchase => { %>
+                                <div class="user-profile__info--purchases__month">
+                                    <div>Date: <%= purchase.date %></div>
+                                    <div><a href="/purchases/<%= purchase.id %>">Spending: £<%= purchase.sum %></a></div>
+                                </div>
+                            <% }) %>
+                        <% } %>
+                    </section>
+                <% } %>
             </div>
         </div>
     </div>
