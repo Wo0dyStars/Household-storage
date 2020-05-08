@@ -85,22 +85,16 @@ body {
 }
 
 .footer {
-	position: fixed;
-	right: 0;
-	border-top-left-radius: 50%;
-	width: 20%;
-	height: 40%;
 	background: linear-gradient(to left top, rgb(14, 97, 49) 30%, transparent);
 	color: #fff;
-	padding: 5rem 0;
 	font-size: 1.1rem;
-	z-index: 5;
-	bottom: -32%;
 	transition: all .5s;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 
 	display: grid;
-	grid-template-rows: repeat(2, 1fr);
-	grid-gap: 2rem;
+	grid-template-rows: min-content 1fr;
 	justify-items: center;
 
 	&:hover {
@@ -108,7 +102,7 @@ body {
 	}
 
 	&__navigation {
-		padding-top: 2rem;
+		padding: 2rem;
 		display: inline-block;
 	}
 
@@ -147,8 +141,7 @@ body {
 
 	&__copyright {
 		border-top: 1px solid rgba(3, 49, 22, 0.9);
-		padding-top: 2rem;
-		width: 80%;
+		padding: 2rem;
 		text-align: justify;
 		color: rgba(255, 255, 255, .7);
 

@@ -110,45 +110,55 @@
                         </svg>
                     </span>
                 </label>
-                <% if(!currentUser) { %>
-                    <div class="credentials-background">
-                        <div class="authentication__credentials">
-                            <div class="authentication__credentials--element">
-                                <form action="/login" method="POST" autocomplete="off">
-                                    <span class="login__text">Sign In</span>
-                                    <input type="text" class="login__form-input" name="username" placeholder="Username" required>
-                                    <input type="password" class="login__password" name="password" placeholder="Password" required>
-                                    <button class="login__button">
-                                        <svg class="authentication__credentials--icon authentication__icon--enter">
-                                            <use xlink:href="/icons/sprite.svg#icon-enter"></use>
+
+                <div class="credentials-background">
+                    <% if(!currentUser) { %>
+                            <div class="authentication__credentials">
+                                <div class="authentication__credentials--element">
+                                    <form action="/login" method="POST" autocomplete="off">
+                                        <span class="login__text">Sign In</span>
+                                        <input type="text" class="login__form-input" name="username" placeholder="Username" required>
+                                        <input type="password" class="login__password" name="password" placeholder="Password" required>
+                                        <button class="login__button">
+                                            <svg class="authentication__credentials--icon authentication__icon--enter">
+                                                <use xlink:href="/icons/sprite.svg#icon-enter"></use>
+                                            </svg>
+                                        </button>
+                                        <a href="/register" class="login__signup">
+                                            <span>Sign up</span>
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+                    <% } else { %>
+                            <div class="authentication__credentials">
+                                <span class="authentication__credentials--signed-in">
+                                    Signed in as <span class="authentication__credentials--signed-in__username"><a href="/users/<%= currentUser._id %>"><%= currentUser.username %></a></span>
+                                </span>
+                                <div class="authentication__credentials--avatar">
+                                    <img src="<%= currentUser.avatar%>" alt="">
+                                </div>
+                                <div class="authentication__credentials--element">
+                                    <a href="/logout">
+                                        <svg class="authentication__credentials--icon authentication__icon--exit">
+                                            <use xlink:href="/icons/sprite.svg#icon-exit"></use>
                                         </svg>
-                                    </button>
-                                    <a href="/register" class="login__signup">
-                                        <span>Sign up</span>
                                     </a>
-                                </form>
+                                </div>
                             </div>
+                    <% } %> 
+                    <div class="footer">
+                        <div class="footer__navigation">
+                            <ul class="footer__list">
+                                <li class="footer__item"><a href="#" class="footer__link">Contact Me</a></li>
+                                <li class="footer__item"><a href="#" class="footer__link">My Portfolio website</a></li>
+                            </ul>
                         </div>
-                    </div>
-                <% } else { %>
-                    <div class="credentials-background">
-                        <div class="authentication__credentials">
-                            <span class="authentication__credentials--signed-in">
-                                Signed in as <span class="authentication__credentials--signed-in__username"><a href="/users/<%= currentUser._id %>"><%= currentUser.username %></a></span>
-                            </span>
-                            <div class="authentication__credentials--avatar">
-                                <img src="<%= currentUser.avatar%>" alt="">
-                            </div>
-                            <div class="authentication__credentials--element">
-                                <a href="/logout">
-                                    <svg class="authentication__credentials--icon authentication__icon--exit">
-                                        <use xlink:href="/icons/sprite.svg#icon-exit"></use>
-                                    </svg>
-                                </a>
-                            </div>
+                        <div class="footer__copyright">
+                            This website has been built with passion for modern web design solutions and flexible technologies. These technologies include <strong>Express</strong> for route handling, <strong>Node JS</strong> for backend development, <strong>MongoDB</strong> for NoSQL database, <strong>HTML5</strong> for layout and <strong>CSS3</strong> for visual representation. <p> Copyright &copy; by Peter Kertesz 2020.</p> 
                         </div>
-                    </div>
-                <% } %>  
+                    </div> 
+                </div>
             </div>
         </div>
     
