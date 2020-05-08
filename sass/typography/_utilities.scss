@@ -21,3 +21,47 @@
 .margin_bottom_small {
 	margin-bottom: 2rem;
 }
+
+.flash {
+	padding: 1rem;
+	color: white;
+	text-transform: uppercase;
+	text-align: center;
+	text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+	animation: OpacityIn 1s;
+
+	&-success {
+		background-color: rgb(3, 68, 30);
+
+		&__landing {
+			width: 100%;
+			margin-bottom: 4rem;
+		}
+	}
+
+	&-error {
+		background-color: rgb(240, 8, 8);
+
+		&__landing {
+			width: 100%;
+			margin-bottom: 4rem;
+		}
+	}
+}
+
+.message-404 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+
+	.main-button {
+		margin-top: 2rem;
+
+		a {
+			text-decoration: none;
+			color: #fff;
+		}
+	}
+}

@@ -1,0 +1,249 @@
+.navigation {
+	&__checkbox {
+		display: none;
+	}
+
+	&__checkbox:checked ~ &__nav {
+		opacity: 1;
+		width: 16vw;
+
+		@include tablet-portrait {
+			width: 15vw;
+		}
+	}
+
+	&__button {
+		background-color: #fff;
+		height: 7rem;
+		width: 7rem;
+		position: fixed;
+		top: 1vh;
+		left: 1.2vw;
+		border-radius: 50%;
+		z-index: 2000;
+		box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1);
+		text-align: center;
+		cursor: pointer;
+
+		@include tablet-portrait {
+			left: 1.5vw;
+		}
+
+		@include tablet-landscape {
+			display: none;
+		}
+	}
+
+	&__nav {
+		list-style: none;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1500;
+		opacity: 0;
+		transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 0;
+		border-left: 1px solid rgba(10, 80, 39, .3);
+		box-shadow: 1rem 1rem 5rem rgba(10, 80, 39, .3);
+		background-color: rgb(238, 240, 238);
+
+		@include tablet-landscape {
+			background: linear-gradient(to right bottom, rgba(238, 240, 238, 0.6) 25%, transparent);
+			width: 9vw;
+			opacity: 1;
+		}
+
+		@include desktop {
+			width: 7vw;
+			opacity: 1;
+		}
+
+		li {
+			text-transform: uppercase;
+			font-size: 1.3rem;
+			position: relative;
+
+			a:link,
+			a:visited {
+				outline: none;
+				text-decoration: none;
+				color: #fff;
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__toggle {
+		position: relative;
+		margin-top: 3.5rem;
+
+		&,
+		&::before,
+		&::after {
+			width: 3rem;
+			height: 2px;
+			background-color: rgba(0, 0, 0, .7);
+			display: inline-block;
+		}
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			transition: all .2s;
+		}
+
+		&::before {
+			top: -.8rem;
+		}
+
+		&::after {
+			top: .8rem;
+		}
+	}
+
+	&__button:hover &__toggle::before {
+		top: -1rem;
+	}
+
+	&__button:hover &__toggle::after {
+		top: 1rem;
+	}
+
+	&__checkbox:checked + &__button &__toggle {
+		background-color: transparent;
+	}
+
+	&__checkbox:checked + &__button &__toggle::before {
+		top: 0;
+		transform: rotate(135deg);
+	}
+
+	&__checkbox:checked + &__button &__toggle::after {
+		top: 0;
+		transform: rotate(-135deg);
+	}
+
+	&__span {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		left: 90%;
+		width: 100%;
+		top: 50%;
+		transform: translate(0, -50%);
+		height: 70%;
+		transition: all 1s;
+		font-size: 0.9rem;
+		color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
+
+		@include tablet-landscape {
+			left: 100%;
+		}
+
+		&--home {
+			background-color: rgba(10, 80, 39, 0.8);
+		}
+
+		&--file {
+			background-color: rgba(5, 4, 73, 0.8);
+		}
+
+		&--users {
+			background-color: rgba(121, 93, 3, 0.8);
+		}
+
+		&--card {
+			background-color: rgba(56, 55, 52, 0.8);
+		}
+
+		&--add {
+			background-color: rgba(100, 3, 71, 0.8);
+		}
+
+		&--clipboard {
+			background-color: rgba(56, 44, 3, 0.8);
+		}
+
+		&--cart {
+			background-color: rgba(92, 2, 2, 0.8);
+		}
+	}
+
+	.basket-quantity {
+		position: absolute;
+		top: 29%;
+		left: 60%;
+		transform: translate(-50%, -50%);
+		background-color: rgba($Main-color-orange, .8);
+		color: #fff;
+		width: 3rem;
+		height: 2rem;
+		text-align: center;
+		font-size: 1rem;
+	}
+
+	&__element {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+
+		&:hover ~ .navigation__span {
+			visibility: visible;
+			opacity: 1;
+		}
+
+		&:hover .navigation__icon {
+			transform: scale(1.1);
+			opacity: 1;
+		}
+	}
+
+	&__icon {
+		height: 7rem;
+		width: 7rem;
+		margin: .5rem;
+		padding: .1rem;
+		stroke: rgba(255, 255, 255, .9);
+		stroke-width: 0.1;
+		transition: all .2s;
+		opacity: 0.9;
+
+		&--home {
+			fill: rgba(2, 46, 20, 0.8);
+		}
+
+		&--file {
+			fill: rgba(5, 4, 73, 0.8);
+		}
+
+		&--users {
+			fill: rgba(121, 93, 3, 0.8);
+		}
+
+		&--card {
+			fill: rgba(56, 55, 52, 0.8);
+		}
+
+		&--add {
+			fill: rgba(100, 3, 71, 0.8);
+		}
+
+		&--clipboard {
+			fill: rgba(56, 44, 3, 0.8);
+		}
+
+		&--cart {
+			fill: rgba(92, 2, 2, 0.8);
+		}
+	}
+}

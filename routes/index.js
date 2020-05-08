@@ -9,11 +9,27 @@ const { validationResult } = require('express-validator');
 const Validators = require('../middleware/validators');
 const middleware = require('../middleware');
 
+const Stock = require('../models/stock');
+
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
 // **********************************
 router.get('/', (req, res) => {
 	res.render('landing');
+});
+
+router.get('/list', middleware.isLoggedIn, async (req, res) => {
+	await Stock.find({ team_id: req.user.team_id }).populate('items.id').lean().then((stock, err) => {
+		let list = [];
+		if (stock && stock.length) {
+			stock[0].items.forEach((item) => {
+				if (item.reorder_quantity >= item.quantity) {
+					list.push(item.id);
+				}
+			});
+		}
+		res.render('list', { list });
+	});
 });
 
 router.get('/register', (req, res) => {

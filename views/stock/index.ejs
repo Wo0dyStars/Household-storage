@@ -28,7 +28,7 @@
                                 <input type="hidden" name="item[<%= idx %>]" value="<%= item.id._id %>">
                                 <span class="stock-item__label--qty">Qty</span>
                                 <div class="stock_item--quantity">
-                                    <input type="Number" id="stock-qty" name="item[<%= idx %>]" class="stock-item__quantity" value="<%= item.quantity %>" min="1" step="1">
+                                    <input type="Number" id="stock-qty" name="item[<%= idx %>]" class="stock-item__quantity" value="<%= item.quantity %>" min="0" step="1">
                                     <span class="qty-up" onclick="ChangeNumberValue('up', 'stock-qty', <%= index %>)">+</span>
                                     <span class="qty-down" onclick="ChangeNumberValue('down', 'stock-qty', <%= index %>)">-</span>
                                 </div>

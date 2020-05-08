@@ -21,16 +21,33 @@ router.get('/', middleware.isLoggedIn, async (req, res) => {
 		})
 		.populate('items.id')
 		.sort({ purchased_at: -1 })
+		.lean()
 		.then(async (purchases, err) => {
 			if (err) {
-				console.log('Error occurred loading Purchase data: ', err);
+				req.flash('error', 'An error occurred finding your purchases.');
 				res.render('purchases/index', { purchases: null });
 			} else {
+				let Total = 0;
+				purchases.forEach((purchase) => {
+					if (purchase.user_id) {
+						purchase.items.forEach((item) => {
+							Total += item.quantity * item.price;
+						});
+					}
+				});
+
 				await Team.find({}, 'name').then((teams, err) => {
 					if (err) {
-						console.log('Error occured loading teams: ', err);
+						req.flash('error', 'An error occurred loading your teams.');
+						res.render('purchases/index', { purchases: null });
 					} else {
-						res.render('purchases/index', { purchases, teams });
+						res.render('purchases/index', {
+							purchases,
+							teams,
+							TotalPurchase: Total,
+							fromDate: '',
+							toDate: ''
+						});
 					}
 				});
 			}
@@ -55,14 +72,31 @@ router.post('/search', middleware.isLoggedIn, async (req, res) => {
 						req.flash('error', 'An error occurred finding your purchases.');
 						res.render('purchases/index', { purchases: null });
 					} else {
+						let Total = 0;
+						let Length = 0;
+						purchases.forEach((purchase) => {
+							if (purchase.user_id) {
+								Length++;
+								purchase.items.forEach((item) => {
+									Total += item.quantity * item.price;
+								});
+							}
+						});
+
 						await Team.find({}, 'name').then((teams, err) => {
 							if (err) {
 								req.flash('error', 'An error occurred loading your team data.');
 								res.render('purchases/index', { purchases: null });
 							} else {
 								if (purchases && purchases.length) {
-									req.flash('success', `You have successfully found ${purchases.length} purchases.`);
-									res.render('purchases/index', { purchases, teams });
+									req.flash('success', `You have successfully found ${Length} purchases.`);
+									res.render('purchases/index', {
+										purchases,
+										teams,
+										TotalPurchase: Total,
+										fromDate: req.body.from,
+										toDate: req.body.to
+									});
 								} else {
 									req.flash('error', 'There are no purchases for the provided period');
 									res.render('purchases/index', { purchases: null });

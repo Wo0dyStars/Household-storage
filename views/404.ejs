@@ -1,0 +1,10 @@
+<%- include("partials/header"); %>
+
+<div class="message-404">
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+    <button class="main-button"><a href="/">Home</a></button>
+</div>
+
+<%- include("partials/footer"); %>

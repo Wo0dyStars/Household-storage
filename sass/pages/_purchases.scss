@@ -46,8 +46,26 @@
 	}
 }
 
+.total-purchase {
+	background-color: rgba($Main-color-green, .1);
+	margin-top: 2rem;
+	padding: 3rem;
+	text-align: center;
+	color: rgba(0, 0, 0, .7);
+	font-size: 1.2rem;
+
+	&__date {
+		margin: 1rem;
+		font-size: 1.3rem;
+		letter-spacing: 0.1rem;
+		text-transform: uppercase;
+		font-weight: 500;
+		color: rgba($Main-color-green, .8);
+	}
+}
+
 .purchases-container {
-	margin: 5rem auto;
+	margin: 3rem auto;
 	background-color: rgba($Main-color-green, 0.1);
 
 	.no-purchases {
@@ -87,6 +105,25 @@
 		&:hover {
 			background-color: rgba($Main-color-orange, 0.1);
 			transform: translateY(-.5rem);
+		}
+
+		&--is-user-owner {
+			background-color: rgba($Main-color-orange, 0.2);
+
+			.purchase__date {
+				background-color: rgba($Main-color-orange, 0.8);
+
+				a {
+					&:hover {
+						color: rgba(0, 0, 0, .4);
+					}
+				}
+			}
+
+			.purchase__header {
+				color: rgba($Main-color-orange, .9);
+				text-shadow: 0rem 0.1rem rgba(255, 255, 255, .3);
+			}
 		}
 
 		&__user {
@@ -140,7 +177,7 @@
 		&__header {
 			text-align: center;
 			text-transform: uppercase;
-			color: rgba(3, 65, 13, .7);
+			color: rgba($Main-color-green-dark, .7);
 			font-weight: 600;
 			font-size: 1.3rem;
 			grid-column: 1 / 4;
@@ -171,7 +208,7 @@
 				grid-template-columns: repeat(3, 1fr);
 				justify-items: center;
 				padding: 1rem;
-				border-top: 1px solid rgba(3, 65, 13, .2);
+				border-top: 1px solid rgba($Main-color-green-dark, .2);
 			}
 
 			& > * {

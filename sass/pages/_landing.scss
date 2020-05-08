@@ -14,17 +14,17 @@
 
 			&--main {
 				color: rgba(255, 255, 255, 1);
-				background-color: rgb(3, 68, 30);
+				background-color: $Main-color-green-dark;
 				padding: 3rem;
-				border: 3px solid rgba(3, 68, 30, .6);
+				border: 3px solid rgba($Main-color-green-dark, .6);
 				border-right: none;
 			}
 
 			&--title {
-				color: rgb(3, 68, 30);
+				color: $Main-color-green-dark;
 				background-color: rgba(255, 255, 255, .8);
 				padding: 3rem;
-				border: 3px solid rgba(3, 68, 30, .6);
+				border: 3px solid rgba($Main-color-green-dark, .6);
 				border-left: none;
 			}
 		}
@@ -33,38 +33,39 @@
 			margin-top: 3rem;
 			text-align: center;
 			font-size: 2rem;
-			color: rgb(3, 68, 30);
+			color: $Main-color-green-dark;
 			animation: MoveInFromTop 2s ease;
 		}
 
 		&__buttons {
 			text-align: center;
 			margin-top: 6rem;
+			transition: all .3s ease;
 
 			& > * {
 				padding: 2rem;
 				text-transform: uppercase;
 				border-radius: .4rem;
 				box-shadow: 0.1rem 0.4rem 1rem rgba(0, 0, 0, .4);
-				transition: all .3s ease;
+				transition: all .1s ease;
 				animation: MoveInFromTop 2s ease;
+			}
+
+			a {
+				text-decoration: none;
+				color: #fff;
 
 				&:hover {
 					padding: 2.25rem;
 				}
-
-				a {
-					text-decoration: none;
-					color: #fff;
-				}
 			}
 
-			&--join {
-				background-color: rgb(226, 130, 5);
+			a:nth-child(1) {
+				background-color: $Main-color-orange;
 			}
 
-			&--seeitems {
-				background-color: rgb(3, 68, 30);
+			a:nth-child(2) {
+				background-color: $Main-color-green-dark;
 			}
 		}
 	}

@@ -50,11 +50,11 @@
 		&:focus {
 			outline: none;
 			box-shadow: 0 1rem 2rem rgba(0, 0, 0, .1);
-			border-bottom: 3px solid rgba(3, 116, 50, 0.5);
+			border-bottom: 3px solid rgba($Main-color-green, 0.5);
 		}
 
 		&:focus:invalid {
-			border-bottom: 3px solid rgba(240, 8, 8, 0.3);
+			border-bottom: 3px solid rgba($Main-color-red-light, 0.3);
 		}
 
 		&::-webkit-input-placeholder {
@@ -73,7 +73,7 @@
 		font-weight: 700;
 		margin-left: 2rem;
 		margin-top: .7rem;
-		color: rgba(3, 116, 50, 0.5);
+		color: rgba($Main-color-green, 0.5);
 		display: block;
 		transition: opacity .9s;
 	}
@@ -136,14 +136,14 @@
 		padding: 1.8rem;
 		cursor: pointer;
 		border: none;
-		background-color: rgba(226, 9, 9, 0.8);
+		background-color: rgba($Main-color-red-light, 0.8);
 		color: #fff;
 		text-transform: uppercase;
 		border-radius: .2rem;
 		margin-top: 2rem;
 
 		&:hover {
-			background-color: rgba(226, 9, 9, 1);
+			background-color: $Main-color-red-light;
 		}
 	}
 }

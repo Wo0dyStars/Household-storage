@@ -63,7 +63,7 @@ const middlewares = [
 		saveUninitialized: true,
 		unset: 'destroy',
 		cookie: {
-			maxAge: 65000
+			maxAge: Date.now() + 30 * 86400 * 1000
 		},
 		store: store
 	}),
@@ -112,8 +112,9 @@ app.use('/basket', BasketRoutes);
 app.use('/purchases', PurchasesRoutes);
 app.use('/stock', StockRoutes);
 
-app.all('*', (req, res) => {
-	res.render('landing');
+app.get('*', function(req, res) {
+	req.flash('error', 'This page you entered does not exist in the application. Please return to the home page.');
+	res.render('404');
 });
 
 // **********************************

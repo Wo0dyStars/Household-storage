@@ -1,0 +1,20 @@
+<%- include("partials/header"); %>
+
+<div class="shopping-list-container">
+    <div class="pagename">Shopping list</div>
+    <div class="shopping-list__message">This shopping list contains those items that your stock lacks.</div>
+    <div class="shopping-list">
+        <% if (list && list.length) { %>
+            <% list.forEach(item => { %>
+                <div class="shopping-list__item">
+                    <div class="span shopping-list__item--name"><%= item.name %></div>
+                    <div class="span shopping-list__item--image"><img src="/images/<%= item.image %>" alt=""></div>
+                </div>
+            <% }) %>
+        <% } else { %>
+                <div class="shopping-list__no-item">There is currently no items required to buy.</div>
+        <% } %>
+    </div>
+</div>
+
+<%- include("partials/footer"); %>

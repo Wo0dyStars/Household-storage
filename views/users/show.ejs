@@ -156,7 +156,7 @@
                             <% Purchase.items.forEach(purchase => { %>
                                 <div class="user-profile__info--purchases__month">
                                     <div>Date: <%= purchase.date %></div>
-                                    <div><a href="/purchases/<%= purchase.id %>">Spending: £<%= purchase.sum %></a></div>
+                                    <div><a href="/purchases/<%= purchase.id %>">Spending: £<%= purchase.sum.toFixed(2) %></a></div>
                                 </div>
                             <% }) %>
                         <% } %>
