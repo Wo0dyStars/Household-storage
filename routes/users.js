@@ -292,61 +292,7 @@ router.post('/:id/request', middleware.isLoggedIn, async (req, res) => {
 					req.flash('error', 'An error occurred updating request.');
 					res.redirect('back');
 				} else {
-					await Teams.findById(req.user.team_id, 'requests').then(async (requested) => {
-						let AllSelected = true;
-						let AllAccepted = true;
-						requested.requests[0].acceptedBy.forEach((user) => {
-							if (user.selected === false) {
-								AllSelected = false;
-							}
-							if (user.selected === false || user.accepted === false) {
-								AllAccepted = false;
-							}
-						});
-
-						if (AllSelected) {
-							// DECISION HAS BEEN MADE
-							if (AllAccepted) {
-								// user joins team
-								// await TeamQueries.AddUserToTeam(req.user.team_id, requested.requests[0].user_id);
-								await Teams.findByIdAndUpdate(
-									req.user.team_id,
-									{ $push: { users: requested.requests[0].user_id } },
-									{ new: true, useFindAndModify: false }
-								).then(async (saved_user, err) => {
-									if (err) {
-										req.flash('error', 'An error occurred saving your data in the team.');
-										res.redirect('back');
-									} else {
-										await Users.findByIdAndUpdate(requested.requests[0].user_id, {
-											team_id: req.user.team_id
-										}).then(async (saved_team, err) => {
-											if (err) {
-												req.flash('error', 'An error occurred saving team data for you.');
-												res.redirect('back');
-											} else {
-												req.flash('success', 'You have accepted this user.');
-											}
-										});
-									}
-								});
-							}
-
-							await Teams.findByIdAndUpdate(req.user.team_id, {
-								$pull: { requests: { user_id: requested.requests[0].user_id } }
-							}).then((removed_request, err) => {
-								if (err) {
-									req.flash('error', 'An error occurred removing requests.');
-									res.redirect('back');
-								} else {
-									res.redirect('back');
-								}
-							});
-						} else {
-							req.flash('success', 'You have accepted this user.');
-							res.redirect('back');
-						}
-					});
+					req.flash('success', 'You have successfully accepted this user.');
 				}
 			});
 		}
@@ -375,11 +321,63 @@ router.post('/:id/request', middleware.isLoggedIn, async (req, res) => {
 					res.redirect('back');
 				} else {
 					req.flash('success', 'You have successfully rejected this user.');
-					res.redirect('back');
 				}
 			});
 		}
 	}
+
+	await Teams.findById(req.user.team_id, 'requests').then(async (requested) => {
+		let AllSelected = true;
+		let AllAccepted = true;
+		requested.requests[0].acceptedBy.forEach((user) => {
+			if (user.selected === false) {
+				AllSelected = false;
+			}
+			if (user.selected === false || user.accepted === false) {
+				AllAccepted = false;
+			}
+		});
+
+		if (AllSelected) {
+			// DECISION HAS BEEN MADE
+			if (AllAccepted) {
+				// user joins team
+				// await TeamQueries.AddUserToTeam(req.user.team_id, requested.requests[0].user_id);
+				await Teams.findByIdAndUpdate(
+					req.user.team_id,
+					{ $push: { users: requested.requests[0].user_id } },
+					{ new: true, useFindAndModify: false }
+				).then(async (saved_user, err) => {
+					if (err) {
+						req.flash('error', 'An error occurred saving your data in the team.');
+						res.redirect('back');
+					} else {
+						await Users.findByIdAndUpdate(requested.requests[0].user_id, {
+							team_id: req.user.team_id
+						}).then(async (saved_team, err) => {
+							if (err) {
+								req.flash('error', 'An error occurred saving team data for you.');
+								res.redirect('back');
+							}
+						});
+					}
+				});
+			}
+
+			await Teams.findByIdAndUpdate(req.user.team_id, {
+				$pull: { requests: { user_id: requested.requests[0].user_id } }
+			}).then((removed_request, err) => {
+				if (err) {
+					req.flash('error', 'An error occurred removing requests.');
+					res.redirect('back');
+				} else {
+					res.redirect('back');
+				}
+			});
+		} else {
+			res.redirect('back');
+		}
+	});
 });
 
 // **************************************
