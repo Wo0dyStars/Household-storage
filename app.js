@@ -126,6 +126,6 @@ app.get('*', function(req, res) {
 // **********************************
 // CONNECTING TO THE SERVER AT PORT 3000
 // **********************************
-app.listen(3000, (err) => {
-	console.log('Server is listening to port 3000.');
+app.listen(process.env.PORT || 8000, (err) => {
+	console.log('Server is listening to port 8000.');
 });
