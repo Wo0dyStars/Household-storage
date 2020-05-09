@@ -54,7 +54,7 @@
                         <% favItems.forEach((item, idx) => { %>
                             <div class="user-profile__main-favitems__favitem">
                                 <span class="user-profile__main-favitems__favitem--name"><a href="/items/<%= item.id %>"><%= item.name %></a></span>
-                                <span class="user-profile__main-favitems__favitem--image"><img class="image-<%= idx %>" src="/images/<%= item.image %>" alt=""></span>
+                                <span class="user-profile__main-favitems__favitem--image"><img class="image-<%= idx %>" src="<%= item.image %>" alt=""></span>
                                 <span class="user-profile__main-favitems__favitem--qty">Bought <%= item.qty %> times</span>
                             </div>
                         <% }) %>

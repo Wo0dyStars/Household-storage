@@ -10,8 +10,8 @@ const Validators = {
 	],
 	newitem: [
 		check('items[name]')
-			.isLength({ min: 4, max: 20 })
-			.withMessage('Name must be between 4 and 20 characters')
+			.isLength({ min: 4, max: 30 })
+			.withMessage('Name must be between 4 and 30 characters')
 			.trim(),
 		check('items[store]')
 			.isLength({ min: 4, max: 20 })

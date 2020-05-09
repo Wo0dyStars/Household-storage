@@ -24,7 +24,7 @@
                         <% if (item.id) { %>
                             <div class="stock-item">
                                 <span class="stock-item__name"><%= item.id.name %></span>
-                                <span class="stock-item__image"><img src="/images/<%= item.id.image %>" alt=""></span>
+                                <span class="stock-item__image"><img src="<%= item.id.image %>" alt=""></span>
                                 <input type="hidden" name="item[<%= idx %>]" value="<%= item.id._id %>">
                                 <span class="stock-item__label--qty">Qty</span>
                                 <div class="stock_item--quantity">

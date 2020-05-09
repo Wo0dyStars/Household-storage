@@ -6,7 +6,7 @@
 	&__checkbox:checked ~ .credentials-background {
 		opacity: 1;
 		visibility: visible;
-		width: 55%;
+		width: 65%;
 
 		@include tablet-portrait {
 			width: 40%;

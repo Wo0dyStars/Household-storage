@@ -5,7 +5,7 @@
 
 	&__checkbox:checked ~ &__nav {
 		opacity: 1;
-		width: 16vw;
+		width: 20vw;
 
 		@include tablet-portrait {
 			width: 15vw;
