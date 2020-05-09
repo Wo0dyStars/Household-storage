@@ -85,7 +85,7 @@
 			background-color: rgba(255, 255, 255, .6);
 			overflow: hidden;
 			border: 3px solid rgba(10, 80, 39, 0.5);
-			z-index: -1;
+			z-index: 1;
 
 			@include tablet-portrait {
 				top: 16%;

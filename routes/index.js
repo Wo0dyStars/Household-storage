@@ -84,7 +84,7 @@ router.post('/register', middleware.isNotLoggedIn, [ Validators['register'] ], (
 			} else {
 				passport.authenticate('local')(req, res, () => {
 					req.flash('success', 'You have successfully registered ', user.username);
-					res.redirect('/register');
+					res.redirect('/');
 				});
 			}
 		});

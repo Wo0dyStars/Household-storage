@@ -136,7 +136,7 @@
                                     Signed in as <span class="authentication__credentials--signed-in__username"><a href="/users/<%= currentUser._id %>"><%= currentUser.username %></a></span>
                                 </span>
                                 <div class="authentication__credentials--avatar">
-                                    <img src="<%= currentUser.avatar%>" alt="">
+                                    <a href="/users/<%= currentUser._id %>"><img src="<%= currentUser.avatar%>" alt=""></a>
                                 </div>
                                 <div class="authentication__credentials--element">
                                     <a href="/logout">
