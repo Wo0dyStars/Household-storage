@@ -5,6 +5,16 @@
 
 	form {
 		padding: 1rem;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(3, 1fr);
+		grid-gap: 2rem;
+
+		@include tablet-landscape {
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: repeat(2, 1fr);
+		}
 	}
 
 	&__title {
@@ -21,10 +31,15 @@
 	input[type="date"] {
 		padding: 1.1rem;
 		border-radius: .4rem;
-		border: none;
+		border: 1px dashed rgba(0, 0, 0, .1);
 		margin-right: .4rem;
 		color: rgba(0, 0, 0, .7);
 		text-align: center;
+		box-shadow: .1rem .1rem .6rem rgba(0, 0, 0, .3);
+
+		@include tablet-landscape {
+			width: 75%;
+		}
 
 		&::-webkit-inner-spin-button {
 			display: none;
@@ -40,6 +55,14 @@
 	}
 
 	.search-button {
+		margin-top: 1rem;
+		width: 30%;
+		justify-self: center;
+
+		@include tablet-landscape {
+			grid-column: 1 / 3;
+		}
+
 		&:hover {
 			transform: translateY(-.4rem);
 		}

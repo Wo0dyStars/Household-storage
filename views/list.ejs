@@ -8,7 +8,7 @@
             <% list.forEach(item => { %>
                 <div class="shopping-list__item">
                     <div class="span shopping-list__item--name"><%= item.name %></div>
-                    <div class="span shopping-list__item--image"><img src="/images/<%= item.image %>" alt=""></div>
+                    <div class="span shopping-list__item--image"><img src="<%= item.image %>" alt=""></div>
                 </div>
             <% }) %>
         <% } else { %>

@@ -19,9 +19,9 @@
                             <span class="item__group__number"><%= idx + 1 %></span>
                             <span class="item__group__name"><%= item.name %></span>
                             <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
-                            <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
+                            <span class="item__group__image"><img src="<%= item.image %>" alt=""></span>
                             <div class="item__group__form">
-                                <input type="number" id="basket-quantity" class="item__group-input" name="quantity[<%= idx %>]" placeholder="Quantity" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
+                                <input type="number" id="basket-quantity" class="item__group-input" name="quantity[<%= idx %>]" placeholder="Qty" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
                                 
                             </div>
                             <div class="item__group__form">

@@ -4,10 +4,15 @@
     
    <span class="search-purchases__title">Search purchases by selecting dates</span>
     <form action="/purchases/search" method="POST" autocomplete="off">
-        <label for="from" class="search-purchases__label">From</label>
-        <input type="date" id="from" name="from" required>
-        <label for="to" class="search-purchases__label">To</label>
-        <input type="date" id="to" name="to" required>
+        <div class="search-purchases__group">
+            <label for="from" class="search-purchases__label">From</label>
+            <input type="date" id="from" name="from" required>
+        </div>
+        
+        <div class="search-purchases__group">
+            <label for="to" class="search-purchases__label">To</label>
+            <input type="date" id="to" name="to" required>
+        </div>
         <button class="main-button search-button">Search</button>
     </form>
 </div>

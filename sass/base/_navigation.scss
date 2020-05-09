@@ -198,8 +198,10 @@
 		justify-content: space-around;
 
 		&:hover ~ .navigation__span {
-			visibility: visible;
-			opacity: 1;
+			@include tablet-landscape {
+				visibility: visible;
+				opacity: 1;
+			}
 		}
 
 		&:hover .navigation__icon {
@@ -209,14 +211,24 @@
 	}
 
 	&__icon {
-		height: 7rem;
-		width: 7rem;
+		height: 5.5rem;
+		width: 5.5rem;
 		margin: .5rem;
 		padding: .1rem;
 		stroke: rgba(255, 255, 255, .9);
 		stroke-width: 0.1;
 		transition: all .2s;
 		opacity: 0.9;
+
+		@include tablet-portrait {
+			height: 6rem;
+			width: 6rem;
+		}
+
+		@include tablet-landscape {
+			height: 7rem;
+			width: 7rem;
+		}
 
 		&--home {
 			fill: rgba(2, 46, 20, 0.8);

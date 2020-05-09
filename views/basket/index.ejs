@@ -20,7 +20,7 @@
                 <% Basket.items.forEach((item, idx) => { %>
                     <div class="item__group">
                         <span class="item__group__number"><%= idx + 1 %></span>
-                        <span class="item__group__image"><img src="/images/<%= item.image %>" alt=""></span>
+                        <span class="item__group__image"><img src="<%= item.image %>" alt=""></span>
                         <span class="item__group__name"><%= item.name %></span>
                         <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
                         
