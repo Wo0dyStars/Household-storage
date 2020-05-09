@@ -37,10 +37,10 @@ mongoose.set('useUnifiedTopology', true);
 // **********************************
 // MONGOOSE CONNECTION
 // **********************************
-// const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env
-// 	.DB_DATABASENAME}-85xng.mongodb.net/test?retryWrites=true&w=majority`;
+const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env
+	.DB_DATABASENAME}-85xng.mongodb.net/test?retryWrites=true&w=majority`;
 
-const URL = `mongodb+srv://Wo0dyStars:AsTa98as@house-storage-85xng.mongodb.net/test?retryWrites=true&w=majority`;
+// const URL = `mongodb+srv://Wo0dyStars:AsTa98as@house-storage-85xng.mongodb.net/test?retryWrites=true&w=majority`;
 // const URL = 'mongodb://localhost:27017/test__1';
 
 const store = new MongoDBStore({
