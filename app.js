@@ -12,7 +12,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-require('./config.env');
+const dotenv = require('dotenv').config();
 
 const User = require('./models/users');
 
