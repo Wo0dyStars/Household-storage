@@ -12,6 +12,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+require('./config.env');
 
 const User = require('./models/users');
 
@@ -36,12 +37,15 @@ mongoose.set('useUnifiedTopology', true);
 // **********************************
 // MONGOOSE CONNECTION
 // **********************************
+const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env
+	.DB_DATABASENAME}-85xng.mongodb.net/test?retryWrites=true&w=majority`;
+// const URL = 'mongodb://localhost:27017/test__1';
+
 const store = new MongoDBStore({
-	uri: 'mongodb://localhost:27017/test__1',
+	uri: URL,
 	collection: 'mySessions'
 });
 
-const URL = 'mongodb://localhost:27017/test__1';
 mongoose
 	.connect(URL)
 	.then(() => console.log('Successful connection to the Mongo server'))
@@ -63,7 +67,7 @@ const middlewares = [
 		saveUninitialized: true,
 		unset: 'destroy',
 		cookie: {
-			maxAge: Date.now() + 30 * 86400 * 1000
+			maxAge: 225000
 		},
 		store: store
 	}),

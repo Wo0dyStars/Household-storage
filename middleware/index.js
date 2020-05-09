@@ -8,4 +8,12 @@ middleware.isLoggedIn = function(req, res, next) {
 	res.redirect('back');
 };
 
+middleware.isNotLoggedIn = function(req, res, next) {
+	if (!req.isAuthenticated()) {
+		return next();
+	}
+	req.flash('error', 'You are already logged in.');
+	res.redirect('back');
+};
+
 module.exports = middleware;

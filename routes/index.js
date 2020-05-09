@@ -54,11 +54,11 @@ router.post('/contact', async (req, res) => {
 	});
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', middleware.isNotLoggedIn, (req, res) => {
 	res.render('register', { data: {}, errors: {} });
 });
 
-router.post('/register', [ Validators['register'] ], (req, res) => {
+router.post('/register', middleware.isNotLoggedIn, [ Validators['register'] ], (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		res.render('register', {
