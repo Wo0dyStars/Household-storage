@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const middleware = require('../middleware');
 const _ = require('lodash');
+const AWS = require('aws-sdk');
 
 // **********************************
 // SCHEMA IMPORTS
@@ -17,14 +18,12 @@ const Users = require('../models/users');
 const Purchase = require('../models/purchases');
 const Teams = require('../models/teams');
 
-const storage = Multer.diskStorage({
-	destination: './public/avatars',
-	filename: function(req, file, cb) {
-		const uniqueSuffix = Date.now() + Math.round(Math.random() * 1e9) + path.extname(file.originalname);
-		cb(null, uniqueSuffix);
-	}
+const s3 = new AWS.S3({
+	accessKeyId: process.env.S3_ACCESSKEYID,
+	secretAccessKey: process.env.S3_SECRETKEY
 });
 
+const storage = Multer.memoryStorage();
 const Upload = Multer({ storage });
 
 // *******************************************
@@ -391,25 +390,34 @@ router.post('/:id/edit', middleware.isLoggedIn, Upload.single('avatar'), async (
 			req.flash('error', 'Only image files are allowed for update.');
 			res.redirect('back');
 		} else {
-			const filepath = '/avatars/' + req.file.filename;
-			await Users.updateOne({ _id: req.params.id }, { $set: { avatar: filepath } }, (err, updateduser) => {
+			const extension = req.file.originalname.replace(/^.*\./, '');
+			const filename = req.user._id + '.' + extension;
+			const params = {
+				Bucket: 'house-storage-avatars',
+				Key: filename,
+				Body: req.file.buffer,
+				ContentType: req.file.mimetype,
+				ACL: 'public-read'
+			};
+
+			s3.upload(params, async function(err, data) {
 				if (err) {
 					req.flash('error', 'Error occurred while updating your avatar.');
 					res.redirect('back');
 				} else {
-					// REMOVE OLD AVATAR FROM SERVER BUT KEEP STANDARD AVATAR
-					if (req.body.oldavatar !== '/avatars/no-avatar.png') {
-						const absfilepath = './public' + req.body.oldavatar;
-						fs.unlink(absfilepath, (err) => {
+					await Users.updateOne(
+						{ _id: req.params.id },
+						{ $set: { avatar: process.env.S3_BUCKETAVATAR + filename } },
+						(err, updateduser) => {
 							if (err) {
-								req.flash('error', 'Error occurred while removing your old avatar.');
+								req.flash('error', 'Error occurred while updating your avatar.');
 								res.redirect('back');
 							} else {
 								req.flash('success', 'You have successfully changed your avatar.');
 								res.redirect('back');
 							}
-						});
-					}
+						}
+					);
 				}
 			});
 		}

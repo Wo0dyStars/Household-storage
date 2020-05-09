@@ -94,7 +94,8 @@ const CategoryObject = [
 	'Jams and Spreads',
 	'Coffee and Tea',
 	'Biscuits, Chocolates and Sweets',
-	'Crisps and Nuts'
+	'Crisps and Nuts',
+	'Everything else'
 ];
 
 const GenerateCategories = function() {
@@ -109,7 +110,7 @@ const GenerateCategories = function() {
 const run = async function() {
 	// GenerateCategories();
 	// await DeleteCategories();
-	await printCategories();
+	// await printCategories();
 };
 
 // ****************************************************

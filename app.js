@@ -52,6 +52,8 @@ mongoose
 	.then(() => console.log('Successful connection to the Mongo server'))
 	.catch((err) => console.log('Error caught', err.stack));
 
+// const cat = require('./queries/categories');
+
 // **********************************
 // APP CONFIGURATIONS
 // **********************************
