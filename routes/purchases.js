@@ -170,10 +170,9 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 			},
 			async (err, purchase) => {
 				if (err) {
-					console.log('Error occurred creating a new purchase: ', err);
+					req.flash('error', 'An error occurred creating your purchase.');
+					res.redirect('/basket');
 				} else {
-					console.log('A new purchase has been created: ', purchase);
-
 					// Add elements to stock
 					stock.forEach((item, idx) => {
 						Stock.find({ team_id: req.user.team_id, 'items.id': item.id }).then(async (foundStock) => {
@@ -185,21 +184,16 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 								).then((updatedStock, err) => {
 									if (err) {
 										console.log('Error occured updating stock: ', err);
-									} else {
-										console.log('An existing stock has been updated: ', updatedStock);
 									}
 								});
 							} else {
 								// IF NOT EXIST
-								await Stock.updateOne(
-									{ team_id: req.user.team_id },
-									{ $push: { items: item } },
-									{ new: true, useFindAndModify: false }
-								).then((createdStock, err) => {
+								await Stock.create({
+									team_id: req.user.team_id,
+									items: [ item ]
+								}).then((createdStock, err) => {
 									if (err) {
 										console.log('Error occured creating stock: ', err);
-									} else {
-										console.log('A new stock has been created: ', createdStock);
 									}
 								});
 							}

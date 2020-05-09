@@ -1,0 +1,35 @@
+<%- include("partials/header"); %>
+
+<div class="contact-container">
+    <div class="pagename">Contact</div>
+    <% if (messages.success) { %>
+        <div class="flash flash-success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.error) { %>
+        <div class="flash flash-error"><%= messages.error %></div>
+    <% } %>
+    <div class="contact">
+        <form action="/contact" method="POST" autocomplete="off">
+            <div class="contact-group">
+                <label for="name">Your name</label>
+                <input type="text" name="name" placeholder="Your name" required>
+            </div>
+
+            <div class="contact-group">
+                <label for="email">Your email address</label>
+                <input type="email" name="email" placeholder="Your email address" required>
+            </div>
+
+            <div class="contact-group">
+                <label for="message">Your message [Min: 20 characters, Max: 300 characters]</label>
+                <textarea name="message" placeholder="Your message..." required maxlength="300" minlength="20" spellcheck="true"></textarea>
+            </div>
+
+            <div class="contact-group--button">
+                <button class="main-button">Send message</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer"); %>

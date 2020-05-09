@@ -1,0 +1,122 @@
+.contact-container {
+	margin: 10rem auto;
+	width: 80%;
+
+	@include tablet-landscape {
+		width: 70%;
+	}
+
+	@include desktop {
+		width: 60%;
+	}
+
+	.pagename {
+		background-color: $Main-color-green;
+		padding: 1rem;
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		animation: ConnectFromTop 1s ease;
+	}
+
+	.contact {
+		background-color: rgba($Main-color-green, .1);
+		padding: 3rem;
+		display: flex;
+		justify-content: space-evenly;
+		animation: ConnectFromBottom 1s ease;
+		box-shadow: .1rem .1rem 1rem rgba($Main-color-green, .3);
+		border: 1px solid rgba($Main-color-green, .1);
+
+		form {
+			width: 80%;
+		}
+
+		&-group {
+			padding: 1rem;
+
+			&--button {
+				display: flex;
+				justify-content: space-around;
+			}
+
+			label {
+				display: block;
+				padding: 1rem;
+				font-size: 1.1rem;
+				letter-spacing: .1rem;
+				color: rgba($Main-color-green, .7);
+			}
+
+			input[type="text"],
+			input[type="email"] {
+				padding: 2rem;
+				width: 100%;
+				border: 1px dashed rgba($Main-color-green, .1);
+				border-radius: 1rem;
+				box-shadow: .1rem .1rem 1rem rgba($Main-color-green, .1);
+				color: rgba(0, 0, 0, .6);
+				font-size: 1.2rem;
+
+				&::-webkit-input-placeholder {
+					font-family: inherit;
+					color: rgba(0, 0, 0, .5);
+					font-size: 1.2rem;
+				}
+
+				&:valid {
+					border: 1px dashed rgba($Main-color-green, .9);
+				}
+
+				&:focus {
+					outline: none;
+
+					&:invalid {
+						border: 1px dashed rgba($Main-color-red, .9);
+					}
+				}
+			}
+
+			textarea {
+				width: 100%;
+				height: 15rem;
+				border: 1px dashed rgba($Main-color-green, .1);
+				border-radius: 1rem;
+				padding: 2rem;
+				color: rgba(255, 255, 255, 1);
+				box-shadow: .1rem .1rem 1rem rgba($Main-color-green, .2);
+				background-color: rgba($Main-color-green, .2);
+				text-shadow: .1rem .1rem rgba(0, 0, 0, .3);
+				resize: none;
+				font-size: 1.2rem;
+
+				&::-webkit-scrollbar {
+					width: .6rem;
+				}
+
+				&::-webkit-scrollbar-track {
+					box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+					-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+					border-radius: .4rem;
+				}
+
+				&::-webkit-scrollbar-thumb {
+					border-radius: .4rem;
+					box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+					-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+				}
+
+				&::-webkit-input-placeholder {
+					font-family: inherit;
+					color: rgba(255, 255, 255, .9);
+					text-shadow: .1rem .1rem rgba(0, 0, 0, .3);
+					font-size: 1.2rem;
+				}
+
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+	}
+}

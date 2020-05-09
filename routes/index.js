@@ -10,6 +10,7 @@ const Validators = require('../middleware/validators');
 const middleware = require('../middleware');
 
 const Stock = require('../models/stock');
+const Message = require('../models/messages');
 
 // **********************************
 // GET ROUTE FOR HANDLING LANDING PAGE
@@ -29,6 +30,27 @@ router.get('/list', middleware.isLoggedIn, async (req, res) => {
 			});
 		}
 		res.render('list', { list });
+	});
+});
+
+router.get('/contact', (req, res) => {
+	res.render('contact');
+});
+
+router.post('/contact', async (req, res) => {
+	const message = {
+		username: req.body.name,
+		email: req.body.email,
+		message: req.body.message
+	};
+	await Message.create(message).then((new_message, err) => {
+		if (err) {
+			req.flash('error', 'An error occurred saving your data.');
+			res.redirect('back');
+		} else {
+			req.flash('success', 'You have successfully sent your message.');
+			res.redirect('back');
+		}
 	});
 });
 
