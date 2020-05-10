@@ -1469,7 +1469,11 @@ body {
   border-top: none;
   animation: ConnectFromBottom 1s ease; }
   .basket-container__inner {
-    padding: 3rem; }
+    padding: .2rem;
+    padding-top: 1rem; }
+    @media (min-width: 900px) {
+      .basket-container__inner {
+        padding: 3rem; } }
     .basket-container__inner .basket-title {
       background-color: rgba(3, 116, 50, 0.6);
       width: 100%;
@@ -1486,7 +1490,7 @@ body {
   .basket-container .item__group {
     margin: .4rem auto;
     display: grid;
-    grid-template-columns: 1fr min-content 6fr 1fr;
+    grid-template-columns: min-content 6fr 1fr;
     align-items: center;
     font-size: 1.8rem;
     text-transform: uppercase;
@@ -1497,11 +1501,15 @@ body {
     color: rgba(3, 116, 50, 0.8);
     text-align: center; }
     .basket-container .item__group--confirm {
-      grid-template-columns: minmax(3rem, min-content) 1fr min-content minmax(13rem, min-content) minmax(13rem, min-content); }
+      grid-template-columns: min-content 1fr 1fr 1fr; }
       @media (min-width: 900px) {
         .basket-container .item__group--confirm {
-          grid-template-columns: minmax(3rem, min-content) 1fr min-content minmax(15rem, min-content) minmax(15rem, min-content) minmax(3rem, min-content); } }
+          grid-template-columns: min-content 1fr 1fr 1fr; } }
+    .basket-container .item__group .currencyinput {
+      display: flex;
+      align-items: center; }
     .basket-container .item__group input[type=number] {
+      margin-left: .3rem;
       padding: 2rem;
       width: 50%;
       text-align: center;

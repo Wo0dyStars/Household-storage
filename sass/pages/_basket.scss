@@ -56,7 +56,12 @@
 	animation: ConnectFromBottom 1s ease;
 
 	&__inner {
-		padding: 3rem;
+		padding: .2rem;
+		padding-top: 1rem;
+
+		@include tablet-landscape {
+			padding: 3rem;
+		}
 
 		.basket-title {
 			background-color: rgba($Main-color-green, .6);
@@ -79,7 +84,7 @@
 	.item__group {
 		margin: .4rem auto;
 		display: grid;
-		grid-template-columns: 1fr min-content 6fr 1fr;
+		grid-template-columns: min-content 6fr 1fr;
 		align-items: center;
 		font-size: 1.8rem;
 		text-transform: uppercase;
@@ -91,16 +96,20 @@
 		text-align: center;
 
 		&--confirm {
-			grid-template-columns: minmax(3rem, min-content) 1fr min-content minmax(13rem, min-content)
-				minmax(13rem, min-content);
+			grid-template-columns: min-content 1fr 1fr 1fr;
 
 			@include tablet-landscape {
-				grid-template-columns: minmax(3rem, min-content) 1fr min-content minmax(15rem, min-content)
-					minmax(15rem, min-content) minmax(3rem, min-content);
+				grid-template-columns: min-content 1fr 1fr 1fr;
 			}
 		}
 
+		.currencyinput {
+			display: flex;
+			align-items: center;
+		}
+
 		input[type=number] {
+			margin-left: .3rem;
 			padding: 2rem;
 			width: 50%;
 			text-align: center;

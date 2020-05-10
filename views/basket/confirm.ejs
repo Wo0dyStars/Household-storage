@@ -16,17 +16,18 @@
                 <% if (Basket && Basket.items.length) { %>
                     <% Basket.items.forEach((item, idx) => { %>
                         <div class="item__group item__group--confirm">
-                            <span class="item__group__number"><%= idx + 1 %></span>
-                            <span class="item__group__name"><%= item.name %></span>
                             <input type="hidden" name="id[<%= idx %>]" value="<%= item.id %>">
                             <span class="item__group__image"><img src="<%= item.image %>" alt=""></span>
+                            <span class="item__group__name"><%= item.name %></span>
                             <div class="item__group__form">
                                 <input type="number" id="basket-quantity" class="item__group-input" name="quantity[<%= idx %>]" placeholder="Qty" min="1" required onchange="CalculateRealTimePrices(<%= idx %>)">
                                 
                             </div>
                             <div class="item__group__form">
-                                £
-                                <input type="number" id="basket-price" class="item__group-input" name="price[<%= idx %>]" placeholder="Price" min="0.1" step="0.01" required onchange="CalculateRealTimePrices(<%= idx %>)">
+                                <span class="currencyinput">
+                                    £<input type="number" id="basket-price" class="item__group-input" name="price[<%= idx %>]" placeholder="Price" min="0.1" step="0.01" required onchange="CalculateRealTimePrices(<%= idx %>)">
+                                </span>
+                
                                 
                             </div>
                             <div class="item__subtotal item__subtotal_<%= idx %>"></div>
