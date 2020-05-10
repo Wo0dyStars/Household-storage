@@ -23,13 +23,14 @@
 	}
 
 	input[type="date"] {
+		display: block;
+		text-align: right;
 		width: 90%;
 		padding: 1.1rem;
 		border-radius: .4rem;
 		border: 1px dashed rgba(0, 0, 0, .1);
 		margin-right: .4rem;
 		color: rgba(0, 0, 0, .7);
-		text-align: center;
 		box-shadow: .1rem .1rem .6rem rgba(0, 0, 0, .3);
 		-webkit-appearance: none;
 		-moz-appearance: none;
@@ -39,6 +40,8 @@
 		}
 
 		@include tablet-landscape {
+			display: inline-block;
+			text-align: center;
 			width: 75%;
 		}
 
@@ -48,7 +51,6 @@
 
 		&::-webkit-input-placeholder {
 			color: rgba(0, 0, 0, .4);
-			margin-right: 2rem;
 		}
 
 		&:focus {

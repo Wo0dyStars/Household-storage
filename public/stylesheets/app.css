@@ -1614,13 +1614,14 @@ body {
     color: rgba(0, 0, 0, 0.8);
     font-size: 1.1rem; }
   .search-purchases input[type="date"] {
+    display: block;
+    text-align: right;
     width: 90%;
     padding: 1.1rem;
     border-radius: .4rem;
     border: 1px dashed rgba(0, 0, 0, 0.1);
     margin-right: .4rem;
     color: rgba(0, 0, 0, 0.7);
-    text-align: center;
     box-shadow: 0.1rem 0.1rem 0.6rem rgba(0, 0, 0, 0.3);
     -webkit-appearance: none;
     -moz-appearance: none; }
@@ -1628,12 +1629,13 @@ body {
       content: attr(placeholder); }
     @media (min-width: 900px) {
       .search-purchases input[type="date"] {
+        display: inline-block;
+        text-align: center;
         width: 75%; } }
     .search-purchases input[type="date"]::-webkit-inner-spin-button {
       display: none; }
     .search-purchases input[type="date"]::-webkit-input-placeholder {
-      color: rgba(0, 0, 0, 0.4);
-      margin-right: 2rem; }
+      color: rgba(0, 0, 0, 0.4); }
     .search-purchases input[type="date"]:focus {
       outline: none; }
   .search-purchases .search-button {
