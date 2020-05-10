@@ -91,7 +91,7 @@ router.post('/register', middleware.isNotLoggedIn, [ Validators['register'] ], (
 	}
 });
 
-router.post('/login', function(req, res, next) {
+router.post('/login', middleware.isNotLoggedIn, function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err) {
 			req.flash('error', err.message);
