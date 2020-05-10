@@ -99,7 +99,12 @@ router.post('/search', middleware.isLoggedIn, async (req, res) => {
 									});
 								} else {
 									req.flash('error', 'There are no purchases for the provided period');
-									res.render('purchases/index', { purchases: null });
+									res.render('purchases/index', {
+										purchases: null,
+										TotalPurchase: Total,
+										fromDate: '',
+										toDate: ''
+									});
 								}
 							}
 						});
@@ -107,11 +112,21 @@ router.post('/search', middleware.isLoggedIn, async (req, res) => {
 				});
 		} else {
 			req.flash('error', 'You must supply a valid range for the dates.');
-			res.render('purchases/index', { purchases: null });
+			res.render('purchases/index', {
+				purchases: null,
+				TotalPurchase: 0,
+				fromDate: '',
+				toDate: ''
+			});
 		}
 	} else {
 		req.flash('error', 'You have not provided valid dates.');
-		res.render('purchases/index', { purchases: null });
+		res.render('purchases/index', {
+			purchases: null,
+			TotalPurchase: 0,
+			fromDate: '',
+			toDate: ''
+		});
 	}
 });
 

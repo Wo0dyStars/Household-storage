@@ -30,7 +30,7 @@
 			background: linear-gradient(to top, rgba(255, 255, 255, .5) 35%, rgba($Main-color-green, .2));
 
 			display: grid;
-			grid-template-rows: repeat(3, 1fr) min-content min-content min-content;
+			grid-template-rows: repeat(3, 1fr) min-content min-content min-content min-content;
 			grid-template-columns: repeat(3, minmax(min-content, 1fr));
 
 			&-avatar {
@@ -60,7 +60,7 @@
 			}
 
 			&-favitems {
-				grid-row: 4 / 5;
+				grid-row: 5 / 6;
 				grid-column: 1 / 4;
 				box-shadow: .3rem .3rem 4rem rgba($Main-color-green, .2);
 				padding: .5rem;
@@ -181,6 +181,7 @@
 
 				button {
 					background-color: $Main-color-green;
+					margin-top: 2rem;
 				}
 			}
 
@@ -203,8 +204,8 @@
 			}
 
 			&-spending {
-				grid-row: 3 / 4;
-				grid-column: 2 / 4;
+				grid-row: 4 / 5;
+				grid-column: 1 / 4;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -214,6 +215,7 @@
 				background: linear-gradient(to left, rgba(255, 255, 255, .8), transparent);
 
 				@include tablet-landscape {
+					grid-row: 3 / 4;
 					grid-column: 2 / 3;
 				}
 
@@ -223,7 +225,7 @@
 			}
 
 			&-name {
-				grid-row: 5 / 6;
+				grid-row: 6 / 7;
 				grid-column: 1 / 4;
 				font-size: 1rem;
 				padding: 1rem;
@@ -232,7 +234,7 @@
 			}
 
 			&-team {
-				grid-row: 6 / 7;
+				grid-row: 7 / 8;
 				grid-column: 1 / 4;
 				font-size: 1rem;
 				padding: 1rem;

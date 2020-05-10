@@ -9,7 +9,7 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: repeat(3, 1fr);
-		grid-gap: 2rem;
+		grid-gap: .2rem;
 
 		@include tablet-landscape {
 			grid-template-columns: repeat(2, 1fr);
@@ -22,13 +22,8 @@
 		font-size: 1.1rem;
 	}
 
-	&__label {
-		padding: 1rem;
-		color: rgba(0, 0, 0, .7);
-		font-size: 1.1rem;
-	}
-
 	input[type="date"] {
+		width: 50%;
 		padding: 1.1rem;
 		border-radius: .4rem;
 		border: 1px dashed rgba(0, 0, 0, .1);
@@ -36,6 +31,10 @@
 		color: rgba(0, 0, 0, .7);
 		text-align: center;
 		box-shadow: .1rem .1rem .6rem rgba(0, 0, 0, .3);
+
+		&:before {
+			content: attr(placeholder);
+		}
 
 		@include tablet-landscape {
 			width: 75%;

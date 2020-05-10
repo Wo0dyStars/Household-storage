@@ -70,7 +70,7 @@ const middlewares = [
 		saveUninitialized: true,
 		unset: 'destroy',
 		cookie: {
-			maxAge: 2000000
+			maxAge: 24 * 60 * 60 * 1000
 		},
 		store: store
 	}),
