@@ -1632,7 +1632,8 @@ body {
     .search-purchases input[type="date"]::-webkit-inner-spin-button {
       display: none; }
     .search-purchases input[type="date"]::-webkit-input-placeholder {
-      color: rgba(0, 0, 0, 0.4); }
+      color: rgba(0, 0, 0, 0.4);
+      margin-right: 2rem; }
     .search-purchases input[type="date"]:focus {
       outline: none; }
   .search-purchases .search-button {
