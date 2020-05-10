@@ -3,11 +3,6 @@
 <div class="register">
     <form class="register__form" action="/register" method="POST" autocomplete="off">
         <div class="register__form-group">
-            <input type="text" class="register__form-input" name="username" placeholder="Username" required>
-            <label for="register[username]" class="register__form-label">Username</label>
-            <span></span>
-        </div>
-        <div class="register__form-group">
             <input type="text" class="register__form-input" name="register[firstname]" placeholder="First name" required>
             <label for="register[firstname]" class="register__form-label">First name</label>
         </div>
@@ -18,6 +13,11 @@
         <div class="register__form-group">
             <input type="text" class="register__form-input" name="register[lastname]" placeholder="Last name" required>
             <label for="register[lastname]" class="register__form-label">Last name</label>
+        </div>
+        <div class="register__form-group">
+            <input type="text" class="register__form-input" name="username" placeholder="Username" required>
+            <label for="register[username]" class="register__form-label">Username</label>
+            <span></span>
         </div>
         <div class="register__form-group">
             <input type="email" class="register__email" name="register[email]" placeholder="Email address" required>
