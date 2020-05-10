@@ -186,7 +186,7 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 			async (err, purchase) => {
 				if (err) {
 					req.flash('error', 'An error occurred creating your purchase.');
-					res.redirect('/basket');
+					res.redirect('/basket/confirm');
 				} else {
 					// Add elements to stock
 					stock.forEach((item, idx) => {
@@ -223,13 +223,13 @@ router.post('/new', middleware.isLoggedIn, async (req, res) => {
 					});
 
 					req.flash('success', 'You have successfully created a new purchase!');
-					res.redirect('/basket');
+					res.redirect('/basket/confirm');
 				}
 			}
 		);
 	} else {
 		req.flash('error', 'You have not added items in your basket.');
-		res.redirect('/basket');
+		res.redirect('/basket/confirm');
 	}
 });
 

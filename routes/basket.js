@@ -14,15 +14,15 @@ router.get('/', middleware.isLoggedIn, async (req, res) => {
 		req.session.baskets.forEach((basket) => {
 			if (basket.id.equals(req.user._id)) {
 				foundUser = true;
-				res.render('basket/', { Basket: basket });
+				res.render('basket', { Basket: basket });
 			}
 		});
 
 		if (!foundUser) {
-			res.render('basket/', { Basket: null });
+			res.render('basket', { Basket: null });
 		}
 	} else {
-		res.render('basket/', { Basket: null });
+		res.render('basket', { Basket: null });
 	}
 });
 
@@ -110,7 +110,7 @@ router.delete('/:id', middleware.isLoggedIn, async (req, res) => {
 					if (item.id === req.params.id) {
 						basket.items.splice(idx, 1);
 						req.flash('success', 'You have successfully removed this item.');
-						res.redirect('back');
+						res.render('basket', { Basket: basket });
 					}
 				});
 			}

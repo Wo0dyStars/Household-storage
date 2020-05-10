@@ -232,10 +232,11 @@
 
 			&--group {
 				display: grid;
-				grid-template-columns: repeat(3, 1fr);
+				grid-template-columns: 3fr 1fr 1fr;
 				justify-items: center;
 				padding: 1rem;
 				border-top: 1px solid rgba($Main-color-green-dark, .2);
+				font-size: .9rem;
 			}
 
 			& > * {

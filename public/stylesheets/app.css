@@ -1760,10 +1760,11 @@ body {
       background-color: rgba(255, 255, 255, 0.6); }
       .purchases-container .purchase__items--group {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 3fr 1fr 1fr;
         justify-items: center;
         padding: 1rem;
-        border-top: 1px solid rgba(3, 68, 30, 0.2); }
+        border-top: 1px solid rgba(3, 68, 30, 0.2);
+        font-size: .9rem; }
       .purchases-container .purchase__items > * {
         padding: .3rem;
         text-transform: uppercase; }
