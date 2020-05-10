@@ -46,27 +46,27 @@
 
 		@include tablet-portrait {
 			&:nth-child(1) {
-				// Username
-				grid-row: 2 / 3;
-				grid-column: 2 / 3;
-			}
-
-			&:nth-child(2) {
 				// First name
 				grid-row: 2 / 3;
 				grid-column: 1 / 2;
 			}
 
-			&:nth-child(3) {
+			&:nth-child(2) {
 				// Middle name
 				grid-row: 3 / 4;
 				grid-column: 1 / 2;
 			}
 
-			&:nth-child(4) {
+			&:nth-child(3) {
 				// Last name
 				grid-row: 4 / 5;
 				grid-column: 1 / 2;
+			}
+
+			&:nth-child(4) {
+				// Username
+				grid-row: 2 / 3;
+				grid-column: 2 / 3;
 			}
 
 			&:nth-child(5) {

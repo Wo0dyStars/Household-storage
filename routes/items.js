@@ -78,7 +78,7 @@ router.post('/new', middleware.isLoggedIn, Upload.single('image'), [ Validators[
 		});
 	} else {
 		const { name, category, store } = req.body.items;
-		let image = req.file ? req.file.filename : 'no_image.png';
+		let filename = req.file ? req.user._id + '.' + req.file.originalname : 'no_image.png';
 
 		if (req.file && !req.file.originalname.match(/\.(jpg|JPG|jfif|JFIF|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
 			// NOT AN IMAGE FILE WAS SELECTED
@@ -86,51 +86,52 @@ router.post('/new', middleware.isLoggedIn, Upload.single('image'), [ Validators[
 			res.redirect('back');
 		} else {
 			// CHECK IF NAME ALREADY EXISTS
-			const filename = req.user._id + '.' + req.file.originalname;
-			const params = {
-				Bucket: 'house-storage-items',
-				Key: filename,
-				Body: req.file.buffer,
-				ContentType: req.file.mimetype,
-				ACL: 'public-read'
-			};
+			if (req.file) {
+				const params = {
+					Bucket: 'house-storage-items',
+					Key: filename,
+					Body: req.file.buffer,
+					ContentType: req.file.mimetype,
+					ACL: 'public-read'
+				};
 
-			s3.upload(params, async function(err, data) {
-				if (err) {
-					req.flash('error', 'Error occurred while updating your image.');
+				s3.upload(params, async function(err, data) {
+					if (err) {
+						req.flash('error', 'Error occurred while updating your image.');
+						res.redirect('back');
+					}
+				});
+			}
+
+			await Items.find({ name: name.toLowerCase() }).then(async (found_item) => {
+				if (found_item.length) {
+					req.flash('error', 'Item with this name already exists.');
 					res.redirect('back');
 				} else {
-					await Items.find({ name: name.toLowerCase() }).then(async (found_item) => {
-						if (found_item.length) {
-							req.flash('error', 'Item with this name already exists.');
+					const Item = {
+						name: name.toLowerCase(),
+						image: process.env.S3_BUCKETITEM + filename,
+						category_id: category,
+						store,
+						created_at: Date.now()
+					};
+
+					await Items.create(Item).then(async (item, err) => {
+						if (err) {
+							req.flash('error', 'An error occurred creating your item.');
 							res.redirect('back');
 						} else {
-							const Item = {
-								name: name.toLowerCase(),
-								image: process.env.S3_BUCKETITEM + filename,
-								category_id: category,
-								store,
-								created_at: Date.now()
-							};
-
-							await Items.create(Item).then(async (item, err) => {
+							await Categories.findByIdAndUpdate(
+								category,
+								{ $push: { items: item._id } },
+								{ new: true, useFindAndModify: false }
+							).then((category_, err) => {
 								if (err) {
-									req.flash('error', 'An error occurred creating your item.');
+									req.flash('error', 'An error occurred updating the category of the item.');
 									res.redirect('back');
 								} else {
-									await Categories.findByIdAndUpdate(
-										category,
-										{ $push: { items: item._id } },
-										{ new: true, useFindAndModify: false }
-									).then((category_, err) => {
-										if (err) {
-											req.flash('error', 'An error occurred updating the category of the item.');
-											res.redirect('back');
-										} else {
-											req.flash('success', 'You just successfully added a new item!');
-											res.redirect('back');
-										}
-									});
+									req.flash('success', 'You just successfully added a new item!');
+									res.redirect('back');
 								}
 							});
 						}

@@ -9,7 +9,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 // **********************************
 const UsersSchema = new mongoose.Schema({
 	username: String,
-	avatar: { type: String, default: '/avatars/no-avatar.png' },
+	avatar: { type: String, default: 'https://house-storage-avatars.s3.eu-west-2.amazonaws.com/no-avatar.png' },
 	firstname: String,
 	middlename: String,
 	lastname: String,
