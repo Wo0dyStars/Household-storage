@@ -433,7 +433,7 @@ body {
       text-decoration: none; }
   .authentication__credentials--avatar {
     position: absolute;
-    top: 16%;
+    top: 23%;
     right: 5%;
     width: 12rem;
     height: 12rem;
@@ -1504,13 +1504,16 @@ body {
       grid-template-columns: min-content 1fr 1fr 1fr; }
       @media (min-width: 900px) {
         .basket-container .item__group--confirm {
-          grid-template-columns: min-content 1fr 1fr 1fr; } }
+          grid-template-columns: min-content 1fr 1fr 1fr min-content; } }
     .basket-container .item__group .currencyinput {
       display: flex;
-      align-items: center; }
+      align-items: center;
+      height: 100%; }
+    .basket-container .item__group__form {
+      height: 50%; }
     .basket-container .item__group input[type=number] {
       margin-left: .3rem;
-      padding: 2rem;
+      height: 100%;
       width: 50%;
       text-align: center;
       font-size: 1rem;
